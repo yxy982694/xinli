@@ -1,0 +1,52 @@
+@import "./variable";
+// 为6个模块添加圆角和背景色
+.page-container
+  padding: 0 15px
+.content-radius
+  border-radius: 4px
+  background: #fff
+  padding: 0 5px 10px
+  margin-top: 10px
+  overflow: hidden
+  box-shadow: 0 0 2px 2px #dfdfdf
+// 每个模块的标题部分
+.section-title
+    display: flex
+    align-items: center
+    justify-content: space-between
+    color: $color-gray
+    font-size: $font-size-medium
+    border-bottom: 1px solid #DCDFE6
+    padding: 10px 5px
+    margin-bottom: 8px
+    .section-title-click // 可点击的编辑或全部按钮
+      cursor: pointer
+// 快速通道和短信定制样式
+.fast-item
+  width:50%
+  transition: all 0.38s ease-out
+  padding: 15px 0
+  cursor: pointer
+  &:hover
+    background-color: rgb(42,148,226)
+    color: #fff
+// 为6个模块设置内容字体大小和颜色
+.font-smallnum
+   font-size: $font-size-small
+   color: $color-gray
+.main-tabs .el-tabs__content
+    min-height: 120px
+    width: 80px
+    overflow: auto
+    position: relative
+    display: none
+.tab-down-menu
+    z-index: 3333
+    background: #fff
+    border-radius: 4px
+    font-size: 12px
+    box-shadow: 2px 2px 3px 0 rgba(0,0,0,.3)
+    line-height: 15px
+    p
+      padding: 7px 16px
+      cursor: pointer

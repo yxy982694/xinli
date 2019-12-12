@@ -1,0 +1,179 @@
+@import "./variable";
+// 顶部header部分样式
+.headbar
+     position: fixed
+     top: 0
+     left:0
+     right: 0
+     z-index: 1030
+     height: 60px
+     border-color: rgba(180, 190, 190, 0.8)
+     padding:0 15px
+     display: flex
+     justify-content: space-between
+     background: url(../image/headerImg.png) no-repeat
+     background-size: 100% 100%
+     @media screen and (max-width: 1200px)
+      padding:0 8px
+// header中logo样式
+.hamburg
+   display: flex
+   align-items: center
+   justify-content: space-between
+   h1
+    height: 60px
+    display: flex
+    align-items: center
+    margin-right: 10px
+   .divide-logo
+     height: 40%
+     width: 2px
+     background: #fff
+   h3
+     color: #fff
+     font-size: 16px
+     margin-left: 10px
+     line-height: 18px
+   @media screen and (max-width: 1200px)
+    h3
+     font-size: 14px
+     line-height: 16px
+@media screen and (max-width: 1200px)
+ .hamburg img
+   height: 40px
+@media screen and (max-width: 1100px)
+ .hamburg img
+   height: 30px
+// 导航菜单的样式
+.navbar
+   flex: 1
+.root-title
+.el-menu-item
+  font-size: 16px !important
+  @media screen and (max-width: 1200px)
+    font-size: 14px !important
+// 修改element-ui插件导航栏样式
+.el-submenu
+  padding: 0 10px
+  @media screen and (max-width: 1200px)
+    // padding: 0 5px
+// 导航菜单中每一项的样式
+.el-submenu__title
+    padding: 0 10px !important
+    @media screen and (max-width: 1200px)
+      // padding: 0 5px !important
+// 导航菜单鼠标放上的样式
+.menuRoot:hover,
+.el-submenu:hover,
+.el-menu-item:hover,
+.el-submenu__title:hover
+    background: rgb(16,70,176) !important
+// 下拉菜单的背景色
+.el-menu--popup
+   background: rgb(42,148,226) !important
+// 导航菜单箭头的样式
+.el-submenu__title i
+    color: #fff !important
+    right: -7px !important
+// 导航菜单水平布局
+.el-menu.el-menu--horizontal
+  display: flex
+  justify-content: space-between
+  align-items: center
+  border: none !important
+  height: 60px
+  padding: 0 6px 0 5px
+  @media screen and (max-width: 1200px)
+    padding: 0 0 0 8px
+// 修改element-ui导航菜单中下拉菜单的样式
+.el-menu--collapse .el-menu .el-submenu, .el-menu--popup
+    min-width: 150px !important
+// 右边信封和个人信息样式
+.toolbar
+   cursor: pointer
+   min-width: 100px
+   display: flex
+   align-items: center
+   .el-menu
+     .el-menu-item
+       padding: 0 12px !important
+     @media screen and (max-width: 1200px)
+      .el-menu-item
+        padding: 0 0 0 15px!important
+// 个人信息样式
+.user-info
+   font-size: 16px
+   color: #fff
+   display: flex
+   align-items: center
+   img
+     width: 36px
+     height: 36px
+     border-radius: 10px
+     margin: 10px 0px 10px 10px
+     float: right
+     @media screen and (max-width: 1200px)
+       width: 24px
+       height: 24px
+       margin: 18px 0px 18px 5px
+// 右边信封的样式
+.fa-envelope-o
+  color: #fff
+@media screen and (max-width: 1200px)
+  .fa-lg
+    font-size: 18px !important
+// 信封上面数字的样式
+.badge
+   line-height: 18px
+   margin: 0 12px 0 6px
+   @media screen and (max-width: 1200px)
+     margin: 0 8px 0 4px
+// 切换菜单的样式
+.tab-container
+    height: 40px
+    border-bottom: 1px solid #edfbf2
+// 切换菜单左边的样式，修改element-ui切换菜单 激活时的样式
+.el-tabs--card>.el-tabs__header .el-tabs__item.is-active
+  background-color: $color-lightgray !important
+  border: none !important
+// 修改element-ui切换菜单 去掉框架自带的边框
+.el-tabs--card>.el-tabs__header .el-tabs__nav
+  border: none !important
+.el-tabs--card>.el-tabs__header
+  border-bottom: none !important
+.el-tabs--card>.el-tabs__header
+  border-bottom: none !important
+  margin: 0 !important
+// 切换菜单背景色
+.tabs
+  position: fixed
+  top: 60px
+  right: 0
+  left: 0px
+  z-index: 1020
+  height: 40px
+  line-height: 40px
+  font-size: 14px
+  padding-left: 20px
+  background-color: $color-lightblue
+// 右边快捷键的样式
+  .tabs-tools
+    position: fixed !important
+    top: 60px
+    right: 0
+    z-index: 1020
+    height: 40px
+    font-size: 14px
+    line-height: 40px
+    cursor: pointer
+    background-color:rgb(255,255,255)
+    border-left: 1px solid rgba(200, 206, 206, 0.5)
+    &:hover
+      background: $color-lightgray
+// 快捷键的宽度
+  .down-icon
+    font-size:20px
+    width:50px
+// 右边快捷键箭头的颜色
+  .el-dropdown
+    color: $color-blue !important

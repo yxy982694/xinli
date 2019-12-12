@@ -1,0 +1,49 @@
+<template>
+  <div class="menuRoot">
+    <el-submenu v-if="menu.children && menu.children.length >= 1" :index="'' + menu.id">
+      <template slot="title">
+        <span slot="title" class="root-title">{{menu.name}}</span>
+      </template>
+      <MenuTree v-for="item in menu.children" :key="item.id" :menu="item"></MenuTree>
+    </el-submenu>
+    <el-menu-item v-else :index="'' + menu.id" @click="handleRoute(menu)">
+      <span slot="title" class="root-maintitle">{{menu.name}}</span>
+    </el-menu-item>
+  </div>
+</template>
+
+<script>
+  import { getIFrameUrl, getIFramePath } from '@/utils/iframe'
+  export default {
+    name: 'MenuTree',
+    props: {
+      menu: {
+        type: Object,
+        required: true
+      }
+    },
+    methods: {
+      handleRoute (menu) {
+        // 如果是嵌套页面，转换成iframe的path
+        // console.log(menu)
+        let path = getIFramePath(menu.location)
+          // console.log(menu.location)
+        if(!path) {
+          path = menu.location
+        }
+        // 通过菜单URL跳转至指定路由
+        this.$router.push("/" + path)
+      }
+    }
+  }
+</script>
+<style scoped lang="stylus" rel="stylesheet/stylus">
+  @import "../../common/stylus/variable"
+  @import "../../common/stylus/mixin"
+  .root-title
+    width: 100%
+    display: inline-block
+  .root-maintitle
+    min-width: 85px
+    display: inline-block
+</style>
