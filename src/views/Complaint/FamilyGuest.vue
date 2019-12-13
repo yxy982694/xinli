@@ -162,7 +162,14 @@ export default {
 		},
 		// 批量删除
 		handleDelete: function (data) {
-			this.$api.user.batchDelete(data.params).then(data!=null?data.callback:'')
+			this.$api.user.batchDelete(data.params).then(res => {
+          if(res.code == 200) {
+            this.$message({message: '删除成功', type: 'success'})
+            this.findPage()
+          } else {
+            this.$message({message: '操作失败, ' + res.msg, type: 'error'})
+          }
+        })
 		},
 		// 显示新增界面
 		handleAdd: function () {

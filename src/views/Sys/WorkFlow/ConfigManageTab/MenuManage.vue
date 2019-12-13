@@ -87,7 +87,8 @@
     border: 1px solid #EBEEF5
     background-color: #FFF
     color: #303133
-    min-height: 250px
+    min-height: 418px
+    box-sizing: border-box
     .children-tab-p
       height: 25px
       line-height: 25px

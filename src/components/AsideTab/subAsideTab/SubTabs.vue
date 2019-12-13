@@ -18,7 +18,7 @@
     import { mapMutations } from 'vuex'
     export default {
         components: { SubMain },
-        props: ['cchList'],
+        props: ['leftList'],
         computed: {
           contextMenuFlag: {
             get: function () {
@@ -108,12 +108,12 @@
               window.location.reload()
             },
             initData: function () {
-              this.setCurrentTabLabel(this.cchList[0].location)
+              this.setCurrentTabLabel(this.leftList[0].location)
               this.setEditableTabs([{
-                  label: this.cchList[0].label,
-                  name: this.cchList[0].location
+                  label: this.leftList[0].label,
+                  name: this.leftList[0].location
               }])
-              this.setExistTabs([this.cchList[0].location])
+              this.setExistTabs([this.leftList[0].location])
               this.hasDownMenu = this.contextMenuFlag
             },
             addTab(targetLabel,name) {

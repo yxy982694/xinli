@@ -129,6 +129,7 @@ export default {
 				pageNum: 1,
         pageSize: 10
       },
+      tempArr: [],
       // showShortCut: false,
       // loading: false,  // 加载标识
       selections: []  // 列表选中列
@@ -142,6 +143,7 @@ export default {
       }
     },
     cellClass: function ({row, column, rowIndex, columnIndex}) {
+
       if (columnIndex == 0) {
         return 'align-left'
       }
@@ -150,20 +152,22 @@ export default {
       }
     },
     handleClass: function (row,id) {
+      // this.tempArr.push(row)
+      // console.log(this.tempArr)
         return 'clrow'+row.row.id
     },
     // 分页查询
     findPage: function () {
         // this.loading = true
         let callback = res => {
-          // this.loading = false
+          this.loading = false
         }
       this.$emit('findPage', {pageRequest:this.pageRequest, callback:callback})
     },
-    loadData: function () {
-      this.$emit('loadData')
-      // this.loading = true
-    },
+    // loadData: function () {
+    //   this.$emit('loadData')
+    //   // this.loading = true
+    // },
     // 选择切换
     selectionChange: function (selections) {
       this.selections = selections
@@ -183,13 +187,16 @@ export default {
     },
     // 编辑
 		handleEdit: function (index, row) {
-      console.log(index)
-      console.log(row)
-      // this.$emit('handleEdit', {index:index, row:row})
+      this.$emit('handleEdit', row.id)
 		},
     // 删除
 		handleDelete: function (index, row) {
-			this.delete(row.id)
+        if (row.parentId) {
+          this.delete(row.id)
+        } else {
+          this.$alert('根节点不可删除')
+        }
+        
 		},
 		// 批量删除
 		handleBatchDelete: function () {
@@ -198,6 +205,7 @@ export default {
 		},
 		// 删除操作
 		delete: function (ids) {
+      // alert('delete')
 			this.$confirm('确认删除选中记录吗？', '提示', {
 				type: 'warning'
 			}).then(() => {
@@ -206,24 +214,18 @@ export default {
 				for(var i=0; i<idArray.length; i++) {
 					params.push({'id':idArray[i]})
         }
-        // this.loading = true
-        let callback = res => {
-          if(res.code == 200) {
-            this.$message({message: '删除成功', type: 'success'})
-            this.findPage()
-          } else {
-            this.$message({message: '操作失败, ' + res.msg, type: 'error'})
-          }
-          // this.loading = false
+        if (idArray.length == 1) {
+          this.$emit('handleDelete', ids)
+        } else if (idArray.length > 1){
+          this.$emit('handleDelete', {params:params})
         }
-        this.$emit('handleDelete', {params:params, callback:callback})
 			}).catch(() => {
 			})
 		}
   },
   mounted() {
     this.refreshPageRequest(1)
-    this.loadData()
+    // this.findPage()
   }
 }
 </script>

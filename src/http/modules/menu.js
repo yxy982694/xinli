@@ -12,7 +12,7 @@ export const save = (data) => {
         data
     })
 }
-// 删除
+// 批量删除
 export const batchDelete = (data) => {
     return axios({
         url: '/menu/delete',
@@ -51,5 +51,27 @@ export const addResource = (res) => {
     url: '/menu/addResource',
     method: 'post',
     data: res
+  })
+}
+// 编辑资源
+export const editResource = (res) => {
+  return axios({
+    url: '/menu/editResource',
+    method: 'post',
+    data: res
+  })
+}
+// 查询资源实体对象  /menu/findResources/{menuId}
+export const searchResource = (id) => {
+  return axios({
+    url: '/menu/findResources/'+id,
+    method: 'get'
+  })
+}
+// 删除当前行以及子节点  /menu/delResources/{id}
+export const deleteResource = (id) => {
+  return axios({
+    url: '/menu/delResources/'+id,
+    method: 'get'
   })
 }

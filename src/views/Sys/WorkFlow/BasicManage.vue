@@ -1,6 +1,6 @@
 <template>
   <div>
-    <aside-tab :cchList="cchList"></aside-tab>
+    <aside-tab :leftList="leftList"></aside-tab>
   </div>
 </template>
 
@@ -12,7 +12,7 @@
         },
         data() {
             return {
-                cchList:[
+                leftList:[
                     {   id: '1',
                         location: '/ConfigManageTab/MenuManage',
                         label: '基础管理'

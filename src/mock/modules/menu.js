@@ -2588,12 +2588,25 @@ export function setParentName(data) {
   }
 }
 
-
+// 添加资源
 export function addResource() {
   return {
     url: '/menu/addResource',
     type: 'post',
     isOpen: true,
+    data: {
+      "code": 200,
+      "msg": null,
+      "data": 1
+    }
+  }
+}
+// 编辑资源
+export function editResource() {
+  return {
+    url: '/menu/editResource',
+    type: 'post',
+    isOpen: false,
     data: {
       "code": 200,
       "msg": null,

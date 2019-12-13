@@ -1,7 +1,7 @@
 <template>
   <el-container class="el-con">
     <el-aside width="180px">
-      <div v-for="v in cchList" :key="v.location" class="text-item" @click="addSubTab(v.label,v.location)">
+      <div v-for="v in leftList" :key="v.location" class="text-item" @click="addSubTab(v.label,v.location)">
         <p class="aside-title">
           <span class="el-icon-thumb"></span>
           <span>{{ v.label }}</span>
@@ -10,7 +10,7 @@
     </el-aside>
     <el-container class="el-con2">
       <el-main>
-        <sub-tabs ref="subTabs" :cchList="cchList"></sub-tabs>
+        <sub-tabs ref="subTabs" :leftList="leftList"></sub-tabs>
       </el-main>
     </el-container>
   </el-container>
@@ -23,7 +23,7 @@
         components:{
             SubTabs
         },
-        props: ['cchList'],
+        props: ['leftList'],
         methods: {
             addSubTab(targetName,name){
               this.$refs.subTabs.addTab(targetName,name)
