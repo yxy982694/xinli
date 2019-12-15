@@ -36,23 +36,27 @@ function fnCreate (mod, isOpen = true) {
   if (isOpen) {
     for (var key in mod) {
       ((res) => {
+        // console.log(res)
         if (res.isOpen !== false) {
           let url = baseUrl
-          if (typeof String.prototype.endsWith != 'function') {
-            String.prototype.endsWith = function(suffix) {
-              return this.indexOf(suffix, this.length - suffix.length) !== -1
-             }
-          }
+          // if (typeof String.prototype.endsWith != 'function') {
+          //   String.prototype.endsWith = function(suffix) {
+          //     return this.indexOf(suffix, this.length - suffix.length) !== -1
+          //    }
+          // }
           if(!url.endsWith("/")) {
             url = url + "/"
           }
           url = url + res.url
+          // console.log(url)
           // 模拟后台接口,当前台axios的url和type匹配mock中的url和type时,会执行mock里面的回调函数
           // 回调函数返回的数据,就是axios请求后响应的数据
           // opts参数是axios中传入的配置参数
           Mock.mock(new RegExp(url), res.type, (opts) => {
+            // console.log(res.data)
             opts['data'] = opts.body ? JSON.parse(opts.body) : null
             delete opts.body
+            // console.log(res.data)
             // console.log('\n')
             // console.log('%cmock拦截, 请求: ', 'color:blue', opts)
             // console.log('%cmock拦截, 响应: ', 'color:blue', res.data)

@@ -4,6 +4,7 @@
 
 // 获取导航菜单树
 export function findNavTree() {
+    // console.log('findNavTree')
   /*const navTreeData = {
     "code": 200,
     "msg": null,
@@ -2591,7 +2592,7 @@ export function setParentName(data) {
 // 添加资源
 export function addResource() {
   return {
-    url: '/menu/addResource',
+    url: 'menu/addResource',
     type: 'post',
     isOpen: true,
     data: {
@@ -2604,7 +2605,7 @@ export function addResource() {
 // 编辑资源
 export function editResource() {
   return {
-    url: '/menu/editResource',
+    url: 'menu/editResource',
     type: 'post',
     isOpen: false,
     data: {
@@ -2615,133 +2616,430 @@ export function editResource() {
   }
 }
 
-export function loadData () {
+export function loadData() {
+    // console.log('loadData')
   const resourceData = {
-    "code": 200,
-    "msg": null,
-    "data": {
-          "content": [{
-            "id": 1,
+    "code": "200",
+    "msg": "null",
+    "data": [{
+        "id": 1,
+        "nameCn": "中文名称",
+        "name": "名称",
+        "location": "路径",
+        "type": "1",
+        "isWebpage": "1",
+        "orderby": "11",
+        "status": "1",
+        "remark": "菜单描述",
+        "image": "菜单图标路径",
+        "createTime":"创建时间", // (new Date()).toLocaleString()
+        "creator": "aimin",//sessionStorage.getItem('user'),
+        "parentId": "",
+        "children": [{
+            "id": 11,
             "nameCn": "中文名称",
             "name": "名称",
             "location": "路径",
-            "type": "菜单类型",
-            "isWebpage": "是否网页",
-            "order": "排序序号",
-            "status": "状态",
+            "type": "1",
+            "isWebpage": "1",
+            "orderby": "11",
+            "status": "1",
             "remark": "菜单描述",
             "image": "菜单图标路径",
-            "createTime": "创建时间",
-            "creator": "创建人",
-            "parentId": "父id",
-            "children": [{
-                "id": 11,
-                "nameCn": "中文名称",
-                "name": "名称",
-                "location": "路径",
-                "type": "菜单类型",
-                "isWebpage": "是否网页",
-                "order": "排序序号",
-                "status": "状态",
-                "remark": "菜单描述",
-                "image": "菜单图标路径",
-                "createTime": "创建时间",
-                "creator": "创建人",
-                "parentId": "父id",
-                "children": [{
-                    "id": 111,
-                    "nameCn": "中文名称",
-                    "name": "名称",
-                    "location": "路径",
-                    "type": "菜单类型",
-                    "isWebpage": "是否网页",
-                    "order": "排序序号",
-                    "status": "状态",
-                    "remark": "菜单描述",
-                    "image": "菜单图标路径",
-                    "createTime": "创建时间",
-                    "creator": "创建人",
-                    "parentId": "父id",
-                  }, {
-                    "id": 112,
-                    "nameCn": "中文名称",
-                    "name": "名称",
-                    "location": "路径",
-                    "type": "菜单类型",
-                    "isWebpage": "是否网页",
-                    "order": "排序序号",
-                    "status": "状态",
-                    "remark": "菜单描述",
-                    "image": "菜单图标路径",
-                    "createTime": "创建时间",
-                    "creator": "创建人",
-                    "parentId": "父id",
-                }]
-              }, {
-                "id": 12,
-                "nameCn": "中文名称",
-                "name": "名称",
-                "location": "路径",
-                "type": "菜单类型",
-                "isWebpage": "是否网页",
-                "order": "排序序号",
-                "status": "状态",
-                "remark": "菜单描述",
-                "image": "菜单图标路径",
-                "createTime": "创建时间",
-                "creator": "创建人",
-                "parentId": "父id",
-            }]
-          },{
-            "id": 2,
+            "createTime":"创建时间", // (new Date()).toLocaleString()
+            "creator": "aimin",//sessionStorage.getItem('user'),
+            "parentId": "",
+        },{
+            "id": 12,
             "nameCn": "中文名称",
             "name": "名称",
             "location": "路径",
-            "type": "菜单类型",
-            "isWebpage": "是否网页",
-            "order": "排序序号",
-            "status": "状态",
+            "type": "1",
+            "isWebpage": "1",
+            "orderby": "11",
+            "status": "1",
             "remark": "菜单描述",
             "image": "菜单图标路径",
-            "createTime": "创建时间",
-            "creator": "创建人",
-            "parentId": "父id",
+            "createTime":"创建时间", // (new Date()).toLocaleString()
+            "creator": "aimin",//sessionStorage.getItem('user'),
+            "parentId": "",
+        }]
+    },{
+        "id": 2,
+        "nameCn": "中文名称",
+        "name": "名称",
+        "location": "路径",
+        "type": "1",
+        "isWebpage": "1",
+        "orderby": "11",
+        "status": "1",
+        "remark": "菜单描述",
+        "image": "菜单图标路径",
+        "createTime":"创建时间", // (new Date()).toLocaleString()
+        "creator": "aimin",//sessionStorage.getItem('user'),
+        "parentId": "",
+        "children": [{
+            "id": 21,
+            "nameCn": "中文名称",
+            "name": "名称",
+            "location": "路径",
+            "type": "1",
+            "isWebpage": "1",
+            "orderby": "11",
+            "status": "1",
+            "remark": "菜单描述",
+            "image": "菜单图标路径",
+            "createTime":"创建时间", // (new Date()).toLocaleString()
+            "creator": "aimin",//sessionStorage.getItem('user'),
+            "parentId": "",
+        },{
+            "id": 22,
+            "nameCn": "中文名称",
+            "name": "名称",
+            "location": "路径",
+            "type": "1",
+            "isWebpage": "1",
+            "orderby": "11",
+            "status": "1",
+            "remark": "菜单描述",
+            "image": "菜单图标路径",
+            "createTime":"创建时间", // (new Date()).toLocaleString()
+            "creator": "aimin",//sessionStorage.getItem('user'),
+            "parentId": "",
+        }]
+    },{
+        "id": 3,
+        "nameCn": "中文名称",
+        "name": "名称",
+        "location": "路径",
+        "type": "1",
+        "isWebpage": "1",
+        "orderby": "11",
+        "status": "1",
+        "remark": "菜单描述",
+        "image": "菜单图标路径",
+        "createTime":"创建时间", // (new Date()).toLocaleString()
+        "creator": "aimin",//sessionStorage.getItem('user'),
+        "parentId": "",
+        "children": [{
+            "id": 31,
+            "nameCn": "中文名称",
+            "name": "名称",
+            "location": "路径",
+            "type": "1",
+            "isWebpage": "1",
+            "orderby": "11",
+            "status": "1",
+            "remark": "菜单描述",
+            "image": "菜单图标路径",
+            "createTime":"创建时间", // (new Date()).toLocaleString()
+            "creator": "aimin",//sessionStorage.getItem('user'),
+            "parentId": "",
             "children": [{
-                "id": 21,
+                "id": 311,
                 "nameCn": "中文名称",
                 "name": "名称",
                 "location": "路径",
-                "type": "菜单类型",
-                "isWebpage": "是否网页",
-                "order": "排序序号",
-                "status": "状态",
+                "type": "1",
+                "isWebpage": "1",
+                "orderby": "11",
+                "status": "1",
                 "remark": "菜单描述",
                 "image": "菜单图标路径",
-                "createTime": "创建时间",
-                "creator": "创建人",
-                "parentId": "父id",
-              }, {
-                "id": 22,
+                "createTime":"创建时间", // (new Date()).toLocaleString()
+                "creator": "aimin",//sessionStorage.getItem('user'),
+                "parentId": "",
+            },{
+                "id": 312,
                 "nameCn": "中文名称",
                 "name": "名称",
                 "location": "路径",
-                "type": "菜单类型",
-                "isWebpage": "是否网页",
-                "order": "排序序号",
-                "status": "状态",
+                "type": "1",
+                "isWebpage": "1",
+                "orderby": "11",
+                "status": "1",
                 "remark": "菜单描述",
                 "image": "菜单图标路径",
-                "createTime": "创建时间",
-                "creator": "创建人",
-                "parentId": "父id",
+                "createTime":"创建时间", // (new Date()).toLocaleString()
+                "creator": "aimin",//sessionStorage.getItem('user'),
+                "parentId": "",
+            },{
+                "id": 313,
+                "nameCn": "中文名称",
+                "name": "名称",
+                "location": "路径",
+                "type": "1",
+                "isWebpage": "1",
+                "orderby": "11",
+                "status": "1",
+                "remark": "菜单描述",
+                "image": "菜单图标路径",
+                "createTime":"创建时间", // (new Date()).toLocaleString()
+                "creator": "aimin",//sessionStorage.getItem('user'),
+                "parentId": "",
             }]
-          }]
-        }
+        },{
+            "id": 32,
+            "nameCn": "中文名称",
+            "name": "名称",
+            "location": "路径",
+            "type": "1",
+            "isWebpage": "1",
+            "orderby": "11",
+            "status": "1",
+            "remark": "菜单描述",
+            "image": "菜单图标路径",
+            "createTime":"创建时间", // (new Date()).toLocaleString()
+            "creator": "aimin",//sessionStorage.getItem('user'),
+            "parentId": "",
+        }]
+    },{
+        "id": 4,
+        "nameCn": "中文名称",
+        "name": "名称",
+        "location": "路径",
+        "type": "1",
+        "isWebpage": "1",
+        "orderby": "11",
+        "status": "1",
+        "remark": "菜单描述",
+        "image": "菜单图标路径",
+        "createTime":"创建时间", // (new Date()).toLocaleString()
+        "creator": "aimin",//sessionStorage.getItem('user'),
+        "parentId": "",
+        "children": [{
+            "id": 41,
+            "nameCn": "中文名称",
+            "name": "名称",
+            "location": "路径",
+            "type": "1",
+            "isWebpage": "1",
+            "orderby": "11",
+            "status": "1",
+            "remark": "菜单描述",
+            "image": "菜单图标路径",
+            "createTime":"创建时间", // (new Date()).toLocaleString()
+            "creator": "aimin",//sessionStorage.getItem('user'),
+            "parentId": "",
+        },{
+            "id": 42,
+            "nameCn": "中文名称",
+            "name": "名称",
+            "location": "路径",
+            "type": "1",
+            "isWebpage": "1",
+            "orderby": "11",
+            "status": "1",
+            "remark": "菜单描述",
+            "image": "菜单图标路径",
+            "createTime":"创建时间", // (new Date()).toLocaleString()
+            "creator": "aimin",//sessionStorage.getItem('user'),
+            "parentId": "",
+        }]
+    },{
+        "id": 5,
+        "nameCn": "中文名称",
+        "name": "名称",
+        "location": "路径",
+        "type": "1",
+        "isWebpage": "1",
+        "orderby": "11",
+        "status": "1",
+        "remark": "菜单描述",
+        "image": "菜单图标路径",
+        "createTime":"创建时间", // (new Date()).toLocaleString()
+        "creator": "aimin",//sessionStorage.getItem('user'),
+        "parentId": "",
+        "children": [{
+            "id": 51,
+            "nameCn": "中文名称",
+            "name": "名称",
+            "location": "路径",
+            "type": "1",
+            "isWebpage": "1",
+            "orderby": "11",
+            "status": "1",
+            "remark": "菜单描述",
+            "image": "菜单图标路径",
+            "createTime":"创建时间", // (new Date()).toLocaleString()
+            "creator": "aimin",//sessionStorage.getItem('user'),
+            "parentId": "",
+        },{
+            "id": 52,
+            "nameCn": "中文名称",
+            "name": "名称",
+            "location": "路径",
+            "type": "1",
+            "isWebpage": "1",
+            "orderby": "11",
+            "status": "1",
+            "remark": "菜单描述",
+            "image": "菜单图标路径",
+            "createTime":"创建时间", // (new Date()).toLocaleString()
+            "creator": "aimin",//sessionStorage.getItem('user'),
+            "parentId": "",
+        }]
+    },{
+        "id": 6,
+        "nameCn": "中文名称",
+        "name": "名称",
+        "location": "路径",
+        "type": "1",
+        "isWebpage": "1",
+        "orderby": "11",
+        "status": "1",
+        "remark": "菜单描述",
+        "image": "菜单图标路径",
+        "createTime":"创建时间", // (new Date()).toLocaleString()
+        "creator": "aimin",//sessionStorage.getItem('user'),
+        "parentId": "",
+        "children": [{
+            "id": 61,
+            "nameCn": "中文名称",
+            "name": "名称",
+            "location": "路径",
+            "type": "1",
+            "isWebpage": "1",
+            "orderby": "11",
+            "status": "1",
+            "remark": "菜单描述",
+            "image": "菜单图标路径",
+            "createTime":"创建时间", // (new Date()).toLocaleString()
+            "creator": "aimin",//sessionStorage.getItem('user'),
+            "parentId": "",
+        },{
+            "id": 62,
+            "nameCn": "中文名称",
+            "name": "名称",
+            "location": "路径",
+            "type": "1",
+            "isWebpage": "1",
+            "orderby": "11",
+            "status": "1",
+            "remark": "菜单描述",
+            "image": "菜单图标路径",
+            "createTime":"创建时间", // (new Date()).toLocaleString()
+            "creator": "aimin",//sessionStorage.getItem('user'),
+            "parentId": "",
+        }]
+    },{
+        "id": 8,
+        "nameCn": "中文名称",
+        "name": "名称",
+        "location": "路径",
+        "type": "1",
+        "isWebpage": "1",
+        "orderby": "11",
+        "status": "1",
+        "remark": "菜单描述",
+        "image": "菜单图标路径",
+        "createTime":"创建时间", // (new Date()).toLocaleString()
+        "creator": "aimin",//sessionStorage.getItem('user'),
+        "parentId": "",
+        "children": [{
+            "id": 81,
+            "nameCn": "中文名称",
+            "name": "名称",
+            "location": "路径",
+            "type": "1",
+            "isWebpage": "1",
+            "orderby": "11",
+            "status": "1",
+            "remark": "菜单描述",
+            "image": "菜单图标路径",
+            "createTime":"创建时间", // (new Date()).toLocaleString()
+            "creator": "aimin",//sessionStorage.getItem('user'),
+            "parentId": "",
+        },{
+            "id": 82,
+            "nameCn": "中文名称",
+            "name": "名称",
+            "location": "路径",
+            "type": "1",
+            "isWebpage": "1",
+            "orderby": "11",
+            "status": "1",
+            "remark": "菜单描述",
+            "image": "菜单图标路径",
+            "createTime":"创建时间", // (new Date()).toLocaleString()
+            "creator": "aimin",//sessionStorage.getItem('user'),
+            "parentId": "",
+        }]
+    },{
+        "id": 9,
+        "nameCn": "中文名称",
+        "name": "名称",
+        "location": "路径",
+        "type": "1",
+        "isWebpage": "1",
+        "orderby": "11",
+        "status": "1",
+        "remark": "菜单描述",
+        "image": "菜单图标路径",
+        "createTime":"创建时间", // (new Date()).toLocaleString()
+        "creator": "aimin",//sessionStorage.getItem('user'),
+        "parentId": "",
+        "children": [{
+            "id": 91,
+            "nameCn": "中文名称",
+            "name": "名称",
+            "location": "路径",
+            "type": "1",
+            "isWebpage": "1",
+            "orderby": "11",
+            "status": "1",
+            "remark": "菜单描述",
+            "image": "菜单图标路径",
+            "createTime":"创建时间", // (new Date()).toLocaleString()
+            "creator": "aimin",//sessionStorage.getItem('user'),
+            "parentId": "",
+        },{
+            "id": 92,
+            "nameCn": "中文名称",
+            "name": "名称",
+            "location": "路径",
+            "type": "1",
+            "isWebpage": "1",
+            "orderby": "11",
+            "status": "1",
+            "remark": "菜单描述",
+            "image": "菜单图标路径",
+            "createTime":"创建时间", // (new Date()).toLocaleString()
+            "creator": "aimin",//sessionStorage.getItem('user'),
+            "parentId": "",
+        }]
+    }]
   }
   return {
-    url: '/menu/resourceManageList',
+    url: 'menu/resourceManageList',
     type: 'get',
-    isOpen: false,
     data: resourceData,
+  }
+}
+// 获取某一行数据资源
+export function searchResource() {
+  return {
+    url: 'menu/findResources/1',
+    type: 'get',
+    // isOpen: false,
+    data: {
+      "code": 200,
+      "msg": null,
+      "data": {
+        "id": 1,
+        "nameCn": "中文名称",
+        "name": "名称",
+        "location": "路径",
+        "type": "1",
+        "isWebpage": "1",
+        "orderby": "11",
+        "status": "1",
+        "remark": "菜单描述",
+        "image": "菜单图标路径",
+        "createTime":"创建时间", // (new Date()).toLocaleString()
+        "creator": "aimin",//sessionStorage.getItem('user'),
+        "parentId": 1
+      }
+    }
   }
 }

@@ -110,8 +110,8 @@ export default {
       default: false
     },
     treeProps: {
-      type: Object,
-      default: null
+      // type: Object,
+      // default: null
     },
     loading: {
       type: Boolean,
@@ -137,6 +137,7 @@ export default {
   },
   methods: {
     clickCell: function (row,column,cell,event) {
+      console.log(this.data.content)
       if (column.label=='路径' && row.location) {
         console.log(row.location)
         this.$router.push('/complaint/personal')
@@ -164,10 +165,6 @@ export default {
         }
       this.$emit('findPage', {pageRequest:this.pageRequest, callback:callback})
     },
-    // loadData: function () {
-    //   this.$emit('loadData')
-    //   // this.loading = true
-    // },
     // 选择切换
     selectionChange: function (selections) {
       this.selections = selections
@@ -224,7 +221,12 @@ export default {
 		}
   },
   mounted() {
-    this.refreshPageRequest(1)
+    // console.log(this.columns)
+    // this.$nextTick(function () {
+      // console.log(this.data)
+    // })
+    // this.refreshPageRequest(1)
+    // this.pageRequest.pageNum = 1
     // this.findPage()
   }
 }

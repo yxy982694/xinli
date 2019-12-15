@@ -100,7 +100,7 @@
         parentIdd: null,
         showShortCut: false,
         currentObj: null,
-        loading: true,
+        loading: false,
         statsArr: [{
           id: 0,
           value: '失效'
@@ -162,6 +162,7 @@
     mounted: function () {
       let _this = this
       this.initColumns()
+      this.findPage()
       window.onclick = function () {
         _this.showShortCut = false
       }
@@ -198,9 +199,12 @@
         this.filterColumns = JSON.parse(JSON.stringify(this.columnArr));
       },
       findPage: function () {
-        this.loading = true
+        // this.loading = true
       	this.$api.menu.loadData().then((res) => {
-      		this.tableData.content = res.data
+          this.$set(this.tableData,'content',res.data)
+      		// this.tableData.content = res.data
+          // console.log(this.tableData.content)
+          // console.log(90)
           this.loading = false
           this.getCellRow()
       	})

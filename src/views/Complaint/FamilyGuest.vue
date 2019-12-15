@@ -89,7 +89,7 @@
 <script>
 import "@/common/stylus/sys.styl"
 import PopupTreeInput from "@/components/PopupTreeInput"
-import KtTable from "@/views/Core/KtTable"
+import KtTable from "@/components/KtTable/KtTable"
 import KtButton from "@/components/KtButton/index"
 import KtButtons from "@/components/KtButtons/KtButtons"
 import TableColumnFilterDialog from "@/views/Core/TableColumnFilterDialog"
@@ -100,7 +100,7 @@ export default {
 		KtTable,
 		KtButton,
 		TableColumnFilterDialog,
-    KtButtons
+    	KtButtons
 	},
 	data() {
 		return {
@@ -144,12 +144,13 @@ export default {
 	methods: {
 		// 获取分页数据
 		findPage: function (data) {
-			if(data !== null) {
-				this.pageRequest = data.pageRequest
+			if(data !== null) { // 有问题
+				// this.pageRequest = data.pageRequest
 			}
-			this.pageRequest.columnFilters = {name: {name:'name', value:this.filters.name}}
+			this.pageRequest['columnFilters'] = {name: {name:'name', value:this.filters.name}}
 			this.$api.user.findPage(this.pageRequest).then((res) => {
 				this.pageResult = res.data
+				// console.log(this.pageResult)
 				this.findUserRoles()
 			}).then(data!=null?data.callback:'')
 		},
@@ -269,11 +270,15 @@ export default {
 				// {prop:"lastUpdateTime", label:"更新时间", minWidth:120, formatter:this.dateFormat}
 			]
 			this.filterColumns = JSON.parse(JSON.stringify(this.columns));
+			// console.log(this.filterColumns)
       	}
 	},
 	mounted() {
 		this.findDeptTree()
 		this.initColumns()
+		this.findPage({
+			pageRequest: 1
+		})
 	}
 }
 </script>
