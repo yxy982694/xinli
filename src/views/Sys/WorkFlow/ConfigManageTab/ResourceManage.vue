@@ -203,8 +203,8 @@
       	this.$api.menu.loadData().then((res) => {
           this.$set(this.tableData,'content',res.data)
       		// this.tableData.content = res.data
-          // console.log(this.tableData.content)
-          // console.log(90)
+          console.log(this.tableData.content)
+          console.log(90)
           this.loading = false
           this.getCellRow()
       	})
