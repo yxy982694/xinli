@@ -1,6 +1,6 @@
 <template>
   <div class='children-tab'>
-    <p class="children-tab-p" v-for="item in cchList" :key="item.id" @click="addTab(item.label,item.location)">
+    <p class="children-tab-p" v-for="item in centerList" :key="item.id" @click="addTab(item.label,item.location)">
      <i class="el-icon-thumb"></i>
      <span>{{item.label}}</span>
     </p>
@@ -10,28 +10,7 @@
 <script>
     import { mapMutations } from 'vuex'
     export default {
-        data() {
-            return {
-                cchList:[
-                    {   location: '/sys/ResourceManage',
-                        label: '资源管理',
-                        id: 1
-                    },
-                    {   location: '/sys/Lisi',
-                        label: '职位管理',
-                        id: 2
-                    },
-                    {   location: '/sys/Wangwu',
-                        label: '角色管理',
-                        id: 3
-                    },
-                    {   location: '/sys/Maliu',
-                        label: '机构管理',
-                        id: 4
-                    },
-                ]
-            }
-        },
+        props: ['centerList'],
         computed: {
           existTabs: {
             get: function () {
@@ -78,7 +57,7 @@
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
-  @import "../../../../common/stylus/variable"
+  @import "../../../common/stylus/variable"
   .children-tab
     padding: 0 20px 15px 10px
     display: flex

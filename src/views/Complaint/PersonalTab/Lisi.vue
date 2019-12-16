@@ -1,5 +1,5 @@
 <template>
-  <div style="margin-top: 15px;">职位管理</div>
+  <div class="children-container">职位管理</div>
 </template>
 
 <script>

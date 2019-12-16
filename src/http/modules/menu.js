@@ -39,7 +39,7 @@ export const findMenuTree = () => {
  * 资源管理模块
  */
 // 初始查询
-export const loadData = () => {
+export const loadResource = () => {
   return axios({
     url: '/menu/resourceManageList',
     method: 'get'
@@ -62,7 +62,7 @@ export const editResource = (res) => {
   })
 }
 // 查询资源实体对象  /menu/findResources/{menuId}
-export const searchResource = (id) => {
+export const findResourceById = (id) => {
   return axios({
     url: '/menu/findResources/'+id,
     method: 'get'
@@ -73,5 +73,15 @@ export const deleteResource = (id) => {
   return axios({
     url: '/menu/delResources/'+id,
     method: 'get'
+  })
+}
+// 根据用户名进行查询,返回查询结果
+export const findByName = (userName) => {
+  return axios({
+    url: '/menu/findByName',
+    method: 'post',
+    data: {
+      userName: userName
+    }
   })
 }

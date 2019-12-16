@@ -1210,7 +1210,7 @@ export function findNavTree() {
   				"creator": "operator",
   				"id": "100080101",
   				"isWebpage": "0",
-          "location": "/sys/workFlow/basicManage",
+          "location": "/sys/workFlow/configManage",
   				"name": "配置与管理",
   				"nameCn": "配置与管理",
   				"orderby": 1,
@@ -2615,8 +2615,8 @@ export function editResource() {
     }
   }
 }
-
-export function loadData() {
+// 进入页面时,加载的资源
+export function loadResource() {
     // console.log('loadData')
   const resourceData = {
     "code": "200",
@@ -3013,15 +3013,16 @@ export function loadData() {
   return {
     url: 'menu/resourceManageList',
     type: 'get',
+    // isOpen: false,
     data: resourceData,
   }
 }
 // 获取某一行数据资源
-export function searchResource() {
+export function findResourceById() {
   return {
     url: 'menu/findResources/1',
     type: 'get',
-    // isOpen: false,
+    isOpen: false,
     data: {
       "code": 200,
       "msg": null,
@@ -3041,5 +3042,33 @@ export function searchResource() {
         "parentId": 1
       }
     }
+  }
+}
+// 根据用户名查询的数据资源
+export function findByName() {
+  let findByNameData = {
+    code: 200,
+    msg: null,
+    data: [{
+        "id": 1,
+        "nameCn": "中文名称",
+        "name": "名称",
+        "location": "路径",
+        "type": "1",
+        "isWebpage": "1",
+        "orderby": "11",
+        "status": "1",
+        "remark": "菜单描述",
+        "image": "菜单图标路径",
+        "createTime":"创建时间", // (new Date()).toLocaleString()
+        "creator": "aimin",//sessionStorage.getItem('user'),
+        "parentId": "",
+    }]
+  }
+  return {
+    url: 'menu/findByName',
+    type: 'post',
+    // isOpen: false,
+    data: findByNameData
   }
 }

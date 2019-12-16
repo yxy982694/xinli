@@ -1,5 +1,5 @@
 <template>
-  <div class="children-container">机构管理</div>
+  <div class="children-container">欢迎访问</div>
 </template>
 
 <script>

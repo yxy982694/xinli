@@ -1,9 +1,9 @@
 <template>
-<div class="resource-container">
+<div class="children-container">
   <kt-buttons>
     <template slot="toolSearch">
       <el-input v-model="userName" placeholder="用户名"></el-input>
-      <kt-button icon="fa fa-search" :label="$t('action.search')" perms="sys:role:view" type="primary" @click="searchInfo"></kt-button>
+      <kt-button icon="fa fa-search" :label="$t('action.search')" perms="sys:role:view" type="primary" @click="searchInfo(userName)"></kt-button>
       <!-- <kt-button icon="fa fa-plus" :label="$t('action.add')" perms="sys:user:add" type="primary" @click="addInfo(false)"></kt-button> -->
     </template>
   </kt-buttons>
@@ -168,6 +168,11 @@
       }
     },
     methods: {
+      searchInfo: function (userName) {
+        this.$api.menu.queryResource(userName).then(res => {
+          this.$set(this.tableData,'content',res.data)
+        })
+      },
       deleteShortCutInfo: function (id) {
         let _this = this
         if (this.parentIdd) {
@@ -200,7 +205,7 @@
       },
       findPage: function () {
         // this.loading = true
-      	this.$api.menu.loadData().then((res) => {
+      	this.$api.menu.loadResource().then((res) => {
           this.$set(this.tableData,'content',res.data)
       		// this.tableData.content = res.data
           console.log(this.tableData.content)
@@ -334,10 +339,6 @@
       		}
       	})
       },
-      searchInfo: function () {
-        console.log('开始搜索')
-        console.log(this.userName)
-      },
       addInfo: function (flag) {
         console.log('开始添加')
         this.operation = true
@@ -355,7 +356,7 @@
         })
       },
       gainSource: function (id) { // 在点击编辑时，获取某一行的数据
-        this.$api.menu.searchResource(id).then((res) => {
+        this.$api.menu.findResourceById(id).then((res) => {
           if(res.code == 200) {
             this.currentObj = res.data
             this.dataForm = this.currentObj
@@ -385,8 +386,6 @@
   }
 </script>
 <style scoped lang="stylus" rel="stylesheet/stylus">
-  .resource-container
-    position: relative
   .shortcut-container
       position: absolute
       left: 0

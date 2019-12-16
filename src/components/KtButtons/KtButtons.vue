@@ -11,7 +11,7 @@
 </template>
 <style scoped lang="stylus" rel="stylesheet/stylus">
   .button-container
-    padding: 15px 20px 0 20px
+    padding: 0px 20px
     display: flex
     justify-content: space-between
     .el-input

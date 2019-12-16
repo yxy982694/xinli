@@ -193,7 +193,7 @@ export default {
         } else {
           this.$alert('根节点不可删除')
         }
-        
+
 		},
 		// 批量删除
 		handleBatchDelete: function () {

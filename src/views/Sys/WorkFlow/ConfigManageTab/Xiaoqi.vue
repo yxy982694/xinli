@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="children-container">
   333
   </div>
 </template>

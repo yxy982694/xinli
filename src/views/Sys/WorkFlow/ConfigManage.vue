@@ -13,10 +13,14 @@
         data() {
             return {
                 leftList:[
-                    {   id: '1',
-                        location: '/ConfigManageTab/MenuManage',
-                        label: '基础管理'
-                    }
+                    {   id: 2,
+                        location: '/ConfigManageTab/BasicManage',
+                        label: '基础管理1'
+                    },
+                    {   id: 3,
+                        location: '/ConfigManageTab/BasicManagee',
+                        label: '基础管理2'
+                    },
                 ]
             }
         }

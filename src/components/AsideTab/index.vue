@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <el-container class="el-con">
     <el-aside width="180px">
       <div v-for="v in leftList" :key="v.location" class="text-item" @click="addSubTab(v.label,v.location)">
@@ -18,7 +18,7 @@
 
 <script>
     import '@/common/stylus/childrenTab.styl'
-    import SubTabs from "./SubAsideTab/SubTabs";
+    import SubTabs from "./SubAsideTab/SubTabs"
     export default {
         components:{
             SubTabs

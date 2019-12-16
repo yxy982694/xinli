@@ -1,5 +1,5 @@
 <template>
-  <div style="margin-top: 15px;">jueseguanli</div>
+  <div class="children-container">jueseguanli</div>
 </template>
 
 <script>

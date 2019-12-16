@@ -1,14 +1,14 @@
 <template>
   <!--字标签-->
-  <el-tabs class="el-tabs-container" v-model="currentTabLabel" type="card" closable @tab-remove="removeTab" @tab-click="tabClick">
+  <el-tabs :closable="true" class="el-tabs-container" v-model="currentTabLabel" type="card" @tab-remove="removeTab" @tab-click="tabClick">
     <div v-show="contextMenuFlag" class="tab-down-menu" :style="{position: 'absolute',top: '0px',left: childContextLeft}">
       <p @click="closeCurrentHandle">关闭</p>
       <p @click="closeOtherHandle">关闭其它</p>
       <p @click="closeAllHandle">关闭全部</p>
       <p @click="refreshCurrentHandle">刷新</p>
     </div>
-    <el-tab-pane v-for="(item, index) in editableTabs" :key="item.name" :label="item.label" :name="item.name">
-      <sub-main :targetLocation="currentTabLabel"></sub-main>
+    <el-tab-pane v-for="item in editableTabs" :key="item.name" :label="item.label" :name="item.name">
+      <sub-main :who="who"></sub-main>
     </el-tab-pane>
   </el-tabs>
 </template>
@@ -17,6 +17,11 @@
     import SubMain from "./SubMain"
     import { mapMutations } from 'vuex'
     export default {
+        data: function () {
+          return {
+            who: null
+          }
+        },
         components: { SubMain },
         props: ['leftList'],
         computed: {
@@ -76,7 +81,49 @@
             _this.setContextMenuFlag(false)
           })
         },
+        watch: {
+          currentTabLabel: {
+            handler: function () {
+              let array = this.currentTabLabel.split('/')
+              this.who = array[array.length-1]
+              this.bindShortcut()
+            },
+            immediate: true
+          }
+        },
         methods: {
+            bindShortcut: function () {
+              let _this = this
+              this.$nextTick(function () {
+                setTimeout(function () {
+                  let domTabs = document.querySelectorAll('.el-container .el-tabs__item')
+                  document.querySelector('.el-container .el-tabs__item .el-icon-close').style.display = 'none'
+                  let domCloses = document.querySelectorAll('.el-icon-close')
+                  Array.prototype.forEach.call(domCloses,function (item) {
+                    item.onclick = null
+                    item.onclick = function () {
+                      _this.setContextMenuFlag(false)
+                    }
+                  })
+                  Array.prototype.forEach.call(domTabs,function(item,index){
+                    item.oncontextmenu = null
+                    item.oncontextmenu = function (e) {
+                      e.stopPropagation()
+                      e.preventDefault()
+                      _this.setContextMenuFlag(true)
+                      let array = item.id.split('/')
+                      let x = e.clientX - 180
+                      _this.setSwitch('/'+array[1]+'/'+array[2])
+                      _this.setSwitchLabel(item.childNodes[0].data)
+                      _this.setChildContextLeft(x+'px')
+                      if (document.querySelector('.main-tabs .el-tabs__content')) {
+                        document.querySelector('.main-tabs .el-tabs__content').style.display = 'none'
+                      }
+                    }
+                  })
+                },500)
+              })
+            },
             ...mapMutations({
               'setContextMenuFlag': 'setContextMenuFlag',
               'setEditableTabs': 'setEditableTabs',
@@ -85,36 +132,52 @@
               'addExistTabs': 'addExistTabs',
               'setCurrentTabLabel': 'setCurrentTabLabel',
               'setCurrentTitle': 'setCurrentTitle',
+              'setSwitch': 'setSwitch',
+              'setSwitchLabel': 'setSwitchLabel',
+              'setChildContextLeft': 'setChildContextLeft'
             }),
             closeCurrentHandle: function () {
               this.removeTab(this.clickedSwitch)
             },
             closeOtherHandle: function () {
               this.setEditableTabs([{
+                label: '主页',
+                name: '/SubAsideTab/MainPage'
+              },{
                   label: this.clickedLabel,
                   name: this.clickedSwitch
               }])
-              this.setExistTabs([this.clickedSwitch])
-              this.existTabs = [this.clickedSwitch]
+              this.setExistTabs(['/SubAsideTab/MainPage',this.clickedSwitch])
+              // this.existTabs = ['/SubAsideTab/MainPage',this.clickedSwitch]
               this.setCurrentTabLabel(this.clickedSwitch)
+              this.setCurrentTitle(this.clickedLabel)
             },
             closeAllHandle: function () {
-               this.setEditableTabs([])
-               this.setExistTabs([])
-               this.setCurrentTabLabel(null)
-               this.setCurrentTitle(null)
+              this.initData()
+               // this.setEditableTabs([])
+               // this.setExistTabs([])
+               // this.setCurrentTabLabel(null)
+               // this.setCurrentTitle(null)
             },
             refreshCurrentHandle: function () {
               window.location.reload()
             },
             initData: function () {
-              this.setCurrentTabLabel(this.leftList[0].location)
+              this.setCurrentTabLabel('/SubAsideTab/MainPage')
               this.setEditableTabs([{
-                  label: this.leftList[0].label,
-                  name: this.leftList[0].location
+                  label: '主页',
+                  name: '/SubAsideTab/MainPage'
               }])
-              this.setExistTabs([this.leftList[0].location])
-              this.hasDownMenu = this.contextMenuFlag
+              console.log(this.currentTabLabel)
+              this.setExistTabs(['/SubAsideTab/MainPage'])
+              this.setCurrentTitle('主页')
+              // this.setCurrentTabLabel(this.leftList[0].location)
+              // this.setEditableTabs([{
+              //     label: this.leftList[0].label,
+              //     name: this.leftList[0].location
+              // }])
+              // this.setExistTabs([this.leftList[0].location])
+              // this.hasDownMenu = this.contextMenuFlag
             },
             addTab(targetLabel,name) {
               this.setCurrentTabLabel(name)
@@ -128,6 +191,10 @@
               }
             },
             removeTab(targetName) {
+                if (targetName == '/SubAsideTab/MainPage') {
+                  this.$alert('主页不可关闭')
+                  return
+                }
                 let tabs = this.editableTabs
                 let existabs = this.existTabs
                 let activeName = this.currentTabLabel
