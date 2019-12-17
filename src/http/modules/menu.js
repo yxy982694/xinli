@@ -85,3 +85,10 @@ export const findByName = (userName) => {
     }
   })
 }
+// 查询全部资源信息
+export const resourceManage = (id) => {
+  return axios({
+    url: '/resourceManage/'+id,
+    method: 'get'
+  })
+}

@@ -32,7 +32,8 @@
       },
       created() {
           this.$api.home.getExpertDutyList().then((res) => {
-              const result = res;
+              console.log(res)
+              const result = res
               this.dutyData = result.data
           })
       }

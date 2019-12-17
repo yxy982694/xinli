@@ -8,7 +8,7 @@
       <p @click="refreshCurrentHandle">刷新</p>
     </div>
     <el-tab-pane v-for="item in editableTabs" :key="item.name" :label="item.label" :name="item.name">
-      <sub-main :who="who"></sub-main>
+      <sub-main :who="who" :iframeUrl="iframeUrl" :locationUrl="locationUrl"></sub-main>
     </el-tab-pane>
   </el-tabs>
 </template>
@@ -19,7 +19,9 @@
     export default {
         data: function () {
           return {
-            who: null
+            who: '',
+            iframeUrl: '',
+            locationUrl: ''
           }
         },
         components: { SubMain },
@@ -84,8 +86,15 @@
         watch: {
           currentTabLabel: {
             handler: function () {
-              let array = this.currentTabLabel.split('/')
-              this.who = array[array.length-1]
+              this.locationUrl = this.currentTabLabel
+              if (this.currentTabLabel.indexOf('http') > -1) {
+                this.who = ''
+                this.iframeUrl = this.currentTabLabel
+              } else {
+                this.iframeUrl = ''
+                let array = this.currentTabLabel.split('/')
+                this.who = array[array.length-2]+array[array.length-1]
+              }
               this.bindShortcut()
             },
             immediate: true

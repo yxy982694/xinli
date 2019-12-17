@@ -1,26 +1,27 @@
 <template>
   <!--页面导航-->
   <div>
-    <component :is="who"></component>
+    <iframe v-if="!who" :src="iframeUrl" frameborder="0" style="width:100%;height:415px;"></iframe>
+    <component v-else :is="who"></component>
   </div>
 </template>
 <script>
     // import { mapMutations } from 'vuex'
     export default {
         components: {
-          Zhangsan: resolve => require(['@/views/Complaint/PersonalTab/Zhangsan'], resolve),
-          Lisi: resolve => require(['@/views/Complaint/PersonalTab/Lisi'], resolve),
-          Wangwu: resolve => require(['@/views/Complaint/PersonalTab/Wangwu'], resolve),
-          Maliu: resolve => require(['@/views/Sys/WorkFlow/ConfigManageTab/Maliu'], resolve),
-          BasicManage: resolve => require(['@/views/Sys/WorkFlow/ConfigManageTab/BasicManage'], resolve),
-          BasicManagee: resolve => require(['@/views/Sys/WorkFlow/ConfigManageTab/BasicManagee'], resolve),
-          Xiaoqi: resolve => require(['@/views/Sys/WorkFlow/ConfigManageTab/Xiaoqi'], resolve),
-          Heiba: resolve => require(['@/views/Sys/WorkFlow/ConfigManageTab/Heiba'], resolve),
-          ResourceManage: resolve => require(['@/views/Sys/WorkFlow/ConfigManageTab/ResourceManage'], resolve),
-          UserManage: resolve => require(['@/views/Sys/WorkFlow/ConfigManageTab/UserManage'], resolve),
-          MainPage: resolve => require(['@/components/AsideTab/SubAsideTab/MainPage'], resolve),
+          PersonalTabZhangsan: resolve => require(['@/views/Complaint/PersonalTab/Zhangsan'], resolve),
+          PersonalTabLisi: resolve => require(['@/views/Complaint/PersonalTab/Lisi'], resolve),
+          PersonalTabWangwu: resolve => require(['@/views/Complaint/PersonalTab/Wangwu'], resolve),
+          ConfigManageTabMaliu: resolve => require(['@/views/SysManage/OperProcess/ConfigManageTab/Maliu'], resolve),
+          ConfigManageTabBasicManage: resolve => require(['@/views/SysManage/OperProcess/ConfigManageTab/BasicManage'], resolve),
+          ConfigManageTabBasicManagee: resolve => require(['@/views/SysManage/OperProcess/ConfigManageTab/BasicManagee'], resolve),
+          ConfigManageTabXiaoqi: resolve => require(['@/views/SysManage/OperProcess/ConfigManageTab/Xiaoqi'], resolve),
+          ConfigManageTabHeiba: resolve => require(['@/views/SysManage/OperProcess/ConfigManageTab/Heiba'], resolve),
+          ConfigManageTabResourceManage: resolve => require(['@/views/SysManage/OperProcess/ConfigManageTab/ResourceManage'], resolve),
+          ConfigManageTabUserManage: resolve => require(['@/views/SysManage/OperProcess/ConfigManageTab/UserManage'], resolve),
+          SubAsideTabMainPage: resolve => require(['@/components/AsideTab/SubAsideTab/MainPage'], resolve),
         },
-        props: ['who'],
+        props: ['who','iframeUrl'],
         // computed: {
         //   contextMenuFlag: {
         //     get: function () {
@@ -76,31 +77,29 @@
     }
 </script>
 
-<style scoped lang="scss">
-  .el-collapse{
-    border: 1px solid #EBEEF5 !important;
-    border-bottom-width: 10px!important;
-  }
-  .board-item {
-    cursor: pointer;
-    margin: 6px 0px 10px 2px;
-    display: block;
-  }
-  .board-item li {
-    float: left;
-    width: 20%;
-    border: 1px solid #e9e9e9;
-    margin: -1px 0 0 -2px;
-    position: relative;
-    background: #fff;
-    list-style-type:none;
-    height: 70px;
-    text-align: center;
-    line-height: 70px;
-  }
-
-  a {
-    color: #1296db;
-  }
+<style scoped lang="stylus" rel="stylesheet/stylus">
+  // .iframe-container
+  //   width: 100%
+  //   height: 420px
+  .el-collapse
+    border: 1px solid #EBEEF5 !important
+    border-bottom-width: 10px!important
+  .board-item
+    cursor: pointer
+    margin: 6px 0px 10px 2px
+    display: block
+  .board-item li
+    float: left
+    width: 20%
+    border: 1px solid #e9e9e9
+    margin: -1px 0 0 -2px
+    position: relative
+    background: #fff
+    list-style-type:none
+    height: 70px
+    text-align: center
+    line-height: 70px
+  a
+    color: #1296db
 
 </style>

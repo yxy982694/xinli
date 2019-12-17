@@ -1210,7 +1210,7 @@ export function findNavTree() {
   				"creator": "operator",
   				"id": "100080101",
   				"isWebpage": "0",
-          "location": "/sys/workFlow/configManage",
+          "location": "/sysManage/operProcess/configManage",
   				"name": "配置与管理",
   				"nameCn": "配置与管理",
   				"orderby": 1,

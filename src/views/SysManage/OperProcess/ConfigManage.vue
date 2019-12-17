@@ -13,13 +13,13 @@
         data() {
             return {
                 leftList:[
-                    {   id: 2,
-                        location: '/ConfigManageTab/BasicManage',
+                    {   id: 1,
+                        location: '/SysManage/OperProcess/ConfigManageTab/BasicManage',
                         label: '基础管理1'
                     },
-                    {   id: 3,
-                        location: '/ConfigManageTab/BasicManagee',
-                        label: '基础管理2'
+                    {   id: 2,
+                        location: 'http://www.baidu.com/',
+                        label: '百度'
                     },
                 ]
             }

@@ -8,23 +8,23 @@
         data() {
             return {
                 centerList:[
-                    {   location: '/sys/ResourceManage',
+                    {   location: '/SysManage/OperProcess/ConfigManage/ResourceManage',
                         label: '资源管理1',
                         id: 1
                     },
-                    {   location: '/sys/Lisi',
+                    {   location: '/Complaint/PersonalTab/Lisi',
                         label: '职位管理1',
                         id: 2
                     },
-                    {   location: '/sys/Wangwu',
+                    {   location: '/Complaint/PersonalTab/Wangwu',
                         label: '角色管理1',
                         id: 3
                     },
-                    {   location: '/sys/Maliu',
+                    {   location: '/SysManage/OperProcess/ConfigManage/Maliu',
                         label: '机构管理1',
                         id: 4
                     },
-                    {   location: '/sys/UserManage',
+                    {   location: '/SysManage/OperProcess/ConfigManage/UserManage',
                         label: '用户管理1',
                         id: 5
                     },

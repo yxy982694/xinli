@@ -139,6 +139,9 @@
           }
         })
       }
+      // this.$api.menu.resourceManage(200000).then((res) => {
+      //   console.log(res)
+      // })
     },
     watch: {
       $route: 'handleRoute'
