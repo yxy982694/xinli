@@ -1,6 +1,6 @@
 <template>
-	<div class="user-container">
-    <el-table :borer="true" :data="outData" :highlight-current-row="false" :show-header="true">
+	<div class="user-container" ref="userContainer">
+    <!-- <el-table :border="true" :data="outData" :highlight-current-row="false" :show-header="true">
       <el-table-column label="姓名" prop="name" width="180px">
         <template slot-scope="scope">
           <div class="user-left">
@@ -41,8 +41,8 @@
           </div>
         </template>
       </el-table-column>
-    </el-table>
-		<!-- <div class="user-left">
+    </el-table> -->
+		<div class="user-left" ref="userLeft">
 			<div class="expand-container">
 				<kt-button @click="openAll" icon="el-icon-folder-checked">展开所有节点</kt-button>
 				<kt-button @click="closeAll" icon="el-icon-folder-delete">关闭所有节点</kt-button>
@@ -50,8 +50,9 @@
 			<div class="tree-container">
 				<el-tree :data="treeData" node-key="id" ref="tree" @node-click="handleNodeClick"></el-tree>
 			</div>
-		</div> -->
-		<!-- <div class="user-right">
+		</div>
+		<div class="user-middle" ref="userMiddle"></div>
+		<div class="user-right" ref="userRight">
 			<div class="right-top">
 				<p>111</p>
 				<p>111</p>
@@ -73,7 +74,7 @@
 					</el-table-column>
 				</el-table>
 			</div>
-		</div> -->
+		</div>
 	</div>
 </template>
 
@@ -83,10 +84,10 @@
 	export default {
 		data: function() {
 			return {
-        outData: [{
-          name: '',
-          age: ''
-        }],
+		        outData: [{
+		          name: '',
+		          age: ''
+		        }],
 				treeData: [{
 					label: '一级 1右移',
 					id: 1,
@@ -222,12 +223,37 @@
 				}]
 			}
 		},
+		mounted: function () {
+			let _this = this
+			this.$refs.userMiddle.addEventListener('mousedown',function (e) {
+				let startX = e.clientX
+				let middleLeft = _this.$refs.userMiddle.offsetLeft
+				console.log( _this.$refs.userMiddle.offsetLeft)
+				document.onmousemove = function (e) {
+					let endX = e.clientX
+					let moveLen = middleLeft + (endX - startX)
+					// let maxT = _this.$refs.userContainer.clientWidth - _this.$refs.userMiddle.offsetWidth
+					// console.log(maxT)
+			      	if(moveLen<180) moveLen = 180 
+			      	// if(moveLen>maxT-180) moveLen = maxT-180
+			      	// _this.$refs.userMiddle.style.left = moveLen;
+			      	_this.$refs.userLeft.style.width = moveLen + "px";
+			      	// _this.$refs.userRight.style.width = (_this.$refs.userContainer.clientWidth - moveLen - 10) + "px";
+				}
+				document.onmouseup = function (e) {
+					document.onmousemove = null
+					document.onmouseup = null
+					_this.$refs.userMiddle.setCapture && _this.$refs.userMiddle.setCapture()
+				}
+				_this.$refs.userMiddle.setCapture && _this.$refs.userMiddle.setCapture()
+				return false
+			})
+		},
 		components: {
 			KtButton
 		},
 		methods: {
 			openAll: function() {
-        console.log(this.$refs.tree.store._getAllNodes())
 				for(var i=0;i<this.$refs.tree.store._getAllNodes().length;i++){
 				  this.$refs.tree.store._getAllNodes()[i].expanded=true
 				}
@@ -248,15 +274,30 @@
 <style scoped lang="stylus" rel="stylesheet/stylus">
     .user-container
       border: 1px solid black
-      overflow: overflow
+      overflow: hidden
       box-sizing: border-box
       height: 250px
+      position: relative
+      white-space: nowrap
+      width: 1000px
+      overflow-x: auto
     .user-left
       border: 1px solid red
       float: left
       box-sizing: border-box
       height: 100%
       background-color: #fff
+      overflow: hidden
+      .tree-container
+        height: 150px
+        overflow: auto
+    .user-middle
+      float: left
+      width: 5px
+      height: 100%
+      cursor: move
+      box-sizing: border-box
+      background-color: #ff0
     .user-right
       width: 70%
       border: 1px solid red

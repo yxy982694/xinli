@@ -20,11 +20,11 @@
                         label: '角色管理1',
                         id: 3
                     },
-                    {   location: '/SysManage/OperProcess/ConfigManage/Maliu',
+                    {   location: '/SysManage/OperProcess/ConfigManageTab/Maliu',
                         label: '机构管理1',
                         id: 4
                     },
-                    {   location: '/SysManage/OperProcess/ConfigManage/UserManage',
+                    {   location: '/SysManage/OperProcess/ConfigManageTab/UserManage',
                         label: '用户管理1',
                         id: 5
                     },
