@@ -21,6 +21,7 @@
   export default {
     data () {
       return {
+        tempActive: null
       }
     },
     computed: {
@@ -36,9 +37,6 @@
             // 获取缓存的路由列表
             return this.$store.state.keepAliveList;
         },
-        // ...mapState({
-        //   mainContextMenuFlag: state=>state.contextMenu.mainContextMenuFlag
-        // })
     },
     mounted: function () {
       var _this = this
@@ -51,36 +49,38 @@
     },
     methods: {
       ...mapMutations({
-        'setContextMenuFlag': 'setContextMenuFlag',
+        'setContextMenuFlag': 'setContextMenuFlag'
       }),
-        renderTab: function () {
-          var _this = this
-          this.$nextTick(function () {
-            setTimeout(function () {
-              Array.prototype.forEach.call(document.querySelectorAll('.main-tabs .el-tabs__item'),function (item) {
-                item.oncontextmenu = null
-                window.onclick = null
-                item.oncontextmenu = function (e) {
-                  console.log('ToggleNav.vue')
-                  _this.setContextMenuFlag(false)
-                  e.preventDefault()
+      renderTab: function () {
+        var _this = this
+        this.$nextTick(function () {
+          setTimeout(function () {
+            document.querySelector('.el-tabs__nav-scroll .el-tabs__item .el-icon-close').style.display = 'none'
+            Array.prototype.forEach.call(document.querySelectorAll('.main-tabs .el-tabs__item'),function (item) {
+              item.oncontextmenu = null
+              window.onclick = null
+              item.oncontextmenu = function (e) {
+                _this.tempActive =item.id.substr(4)
+                _this.setContextMenuFlag(false)
+                e.preventDefault()
+                if (document.querySelector('.main-tabs .el-tabs__content')) {
+                  document.querySelector('.main-tabs .el-tabs__content').style.display = 'block'
+                  document.querySelector('.main-tabs .el-tabs__content').style.left = e.clientX - 20 + 'px'
+                }
+                window.onclick = function () {
                   if (document.querySelector('.main-tabs .el-tabs__content')) {
-                    document.querySelector('.main-tabs .el-tabs__content').style.display = 'block'
-                    document.querySelector('.main-tabs .el-tabs__content').style.left = e.clientX - 20 + 'px'
-                  }
-                  window.onclick = function () {
-                    if (document.querySelector('.main-tabs .el-tabs__content')) {
-                      document.querySelector('.main-tabs .el-tabs__content').style.display = 'none'
-                    }
+                    document.querySelector('.main-tabs .el-tabs__content').style.display = 'none'
                   }
                 }
-              })
-            },500)
-          })
-        },
+              }
+            })
+          },500)
+        })
+      },
       // tabs, 选中tab
       selectedTabHandle (tab) {
         tab = this.mainTabs.filter(item => item.name === tab.name)
+        sessionStorage.setItem('id', tab[0].id)
         if (tab.length >= 1) {
           this.$router.push({ name: tab[0].name })
         }
@@ -97,32 +97,50 @@
           if (tabName === this.mainTabsActiveName) {
             this.$router.push({ name: this.mainTabs[this.mainTabs.length - 1].name }, () => {
               this.mainTabsActiveName = this.$route.name
+              this.tempActive = this.$route.name
             })
+            sessionStorage.setItem('id', this.$router.meta.index)
           }
         } else {
+          this.mainTabs = [{
+            name: '首页',
+            title: '首页',
+            icon: 'fa fa-home fa-lg',
+            id: 0
+          }]
           this.$router.push("/")
+          this.mainTabsActiveName = '首页'
         }
 
       },
       // tabs, 关闭当前
       tabsCloseCurrentHandle () {
-        this.removeTabHandle(this.mainTabsActiveName)
+        this.removeTabHandle(this.tempActive)
       },
       // tabs, 关闭其它
       tabsCloseOtherHandle () {
-        this.mainTabs = this.mainTabs.filter(item => item.name === this.mainTabsActiveName)
+        this.mainTabs = this.mainTabs.filter(item => item.name === this.tempActive || item.name==="首页")
+        sessionStorage.setItem('id', this.mainTabs[1].id)
+        this.$router.push({ name: this.tempActive})
       },
       // tabs, 关闭全部
       tabsCloseAllHandle () {
-        this.mainTabs = []
+        this.mainTabs = [{
+          name: '首页',
+          title: '首页',
+          icon: 'fa fa-home fa-lg',
+          id: 0
+        }]
         this.$router.push("/")
+        this.mainTabsActiveName = '首页'
       },
       // tabs, 刷新当前
       tabsRefreshCurrentHandle () {
+        console.log(sessionStorage.getItem('id'))
         let tempTabName = this.mainTabsActiveName
-        this.removeTabHandle(tempTabName)
+        // this.removeTabHandle(tempTabName)
         this.$nextTick(() => {
-          this.$router.push({ name: tempTabName })
+          this.$router.push({ name: tempTabName})
         })
       }
     },

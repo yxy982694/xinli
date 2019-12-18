@@ -25,14 +25,22 @@
     methods: {
       handleRoute (menu) {
         // 如果是嵌套页面，转换成iframe的path
-        // console.log(menu)
         let path = getIFramePath(menu.location)
-          // console.log(menu.location)
+        sessionStorage.setItem('id', menu.id)
         if(!path) {
           path = menu.location
         }
         // 通过菜单URL跳转至指定路由
-        this.$router.push("/" + path)
+
+        // this.$router.push({
+        //   name: menu.name,
+        //   params: {
+        //     id: menu.id
+        //   }
+        // })
+        this.$router.push({
+          path: "/" + path
+        })
       }
     }
   }

@@ -5,7 +5,9 @@ export default {
     // 当前标签页名
     mainTabsActiveName: '',
     //保存缓存的列表
-    keepAliveList: ''
+    keepAliveList: '',
+    // 点击主菜单跳转页面时,获取的数据
+    tabChildId: null
   },
   mutations: {
     updateMainTabs (state, tabs) {
@@ -15,7 +17,10 @@ export default {
       state.mainTabsActiveName = name
     },
     setKeepAliveLists(state,arrListString){
-      state.keepAliveList = arrListString;
-    }
+      state.keepAliveList = arrListString
+    },
+    setTabChildId(state,id){
+      state.tabChildId = id
+    },
   }
 }

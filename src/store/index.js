@@ -13,6 +13,7 @@ import tagsView from "./modules/tagsView"
 import contextMenu from "./modules/showContextmenu"
 import showTab from "./modules/showTab"
 import tableCurrentId from "./modules/tableCurrentId"
+import centerMenu from "./modules/centerMenu"
 
 const store = new vuex.Store({
   modules: {
@@ -24,7 +25,8 @@ const store = new vuex.Store({
     tagsView: tagsView,
     contextMenu: contextMenu,
     showTab: showTab,
-    tableCurrentId: tableCurrentId
+    tableCurrentId: tableCurrentId,
+    centerMenu: centerMenu
   }
 })
 

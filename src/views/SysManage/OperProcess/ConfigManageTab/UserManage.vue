@@ -1,47 +1,5 @@
 <template>
 	<div class="user-container" ref="userContainer">
-    <!-- <el-table :border="true" :data="outData" :highlight-current-row="false" :show-header="true">
-      <el-table-column label="姓名" prop="name" width="180px">
-        <template slot-scope="scope">
-          <div class="user-left">
-          	<div class="expand-container">
-          		<kt-button @click="openAll" icon="el-icon-folder-checked">展开所有节点</kt-button>
-          		<kt-button @click="closeAll" icon="el-icon-folder-delete">关闭所有节点</kt-button>
-          	</div>
-          	<div class="tree-container">
-          		<el-tree :data="treeData" node-key="id" ref="tree" @node-click="handleNodeClick"></el-tree>
-          	</div>
-          </div>
-        </template>
-      </el-table-column>
-      <el-table-column label="年龄" prop="age">
-        <template slot-scope="scope">
-          <div class="user-right">
-          	<div class="right-top">
-          		<p>111</p>
-          		<p>111</p>
-          		<p>111</p>
-          		<p>111</p>
-          		<p>111</p>
-          	</div>
-          	<div class="right-bottom">
-          		<el-table :data="tableData.content" :border="true" height=200>
-          			<el-table-column type="selection" width="40"></el-table-column>
-          			<el-table-column v-for="column in columns" header-align="center" align="center" :prop="column.prop" :label="column.label"
-          			 :min-width="column.minWidth" :key="column.prop" :sortable="true">
-          			</el-table-column>
-          			<el-table-column :label="$t('action.operation')" width="185" fixed="right" header-align="center" align="center">
-          				<template slot-scope="scope">
-          					<kt-button icon="fa fa-edit" :label="$t('action.edit')"></kt-button>
-          					<kt-button icon="fa fa-trash" :label="$t('action.delete')" type="danger"></kt-button>
-          				</template>
-          			</el-table-column>
-          		</el-table>
-          	</div>
-          </div>
-        </template>
-      </el-table-column>
-    </el-table> -->
 		<div class="user-left" ref="userLeft">
 			<div class="expand-container">
 				<kt-button @click="openAll" icon="el-icon-folder-checked">展开所有节点</kt-button>
@@ -79,7 +37,7 @@
 </template>
 
 <script>
-	import '../../../../common/stylus/user.styl'
+	import '../../../../common/stylus/userManage.styl'
 	import KtButton from "@/components/KtButton/index"
 	export default {
 		data: function() {
@@ -92,28 +50,28 @@
 					label: '一级 1右移',
 					id: 1,
 					children: [{
-						label: '二级 1-1一级 1右移一级 1右移',
+						label: '二级 1-1一级 1右',
 						id: 11,
 						children: [{
-							label: '三级 1-1-1一级 1右移一级 1右移',
+							label: '三级 1-1-1一级',
 							id: 111
 						}]
 					}]
 				}, {
-					label: '一级 2一级 1右移一级 1右移',
+					label: '一级 2一级 1右移一级',
 					id: 2,
 					children: [{
-						label: '二级 2-1一级 1右移一级 1右移',
+						label: '二级 2-1一级',
 						id: 21,
 						children: [{
-							label: '三级 2-1-1一级 1右移一级 1右移',
+							label: '三级 2-1-1一级2-1-1一级2-1-1一级',
 							id: 211
 						}]
 					}, {
-						label: '二级 2-2一级 1右移一级 1右移一级 1右移',
+						label: '二级 2-2一级 1',
 						id: 22,
 						children: [{
-							label: '三级 2-2-1一级 1右移一级 1右移一级 1右移',
+							label: '三级 2-2-1一级',
 							id: 221
 						}]
 					}]
@@ -234,7 +192,7 @@
 					let moveLen = middleLeft + (endX - startX)
 					// let maxT = _this.$refs.userContainer.clientWidth - _this.$refs.userMiddle.offsetWidth
 					// console.log(maxT)
-			      	if(moveLen<180) moveLen = 180 
+			      	if(moveLen<180) moveLen = 180
 			      	// if(moveLen>maxT-180) moveLen = maxT-180
 			      	// _this.$refs.userMiddle.style.left = moveLen;
 			      	_this.$refs.userLeft.style.width = moveLen + "px";
@@ -273,23 +231,23 @@
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
     .user-container
+      display: flex
       border: 1px solid black
       overflow: hidden
       box-sizing: border-box
-      height: 250px
+      height: 300px
       position: relative
-      white-space: nowrap
-      width: 1000px
-      overflow-x: auto
     .user-left
       border: 1px solid red
       float: left
       box-sizing: border-box
       height: 100%
       background-color: #fff
-      overflow: hidden
+      overflow-x: auto
+      width: 180px
       .tree-container
-        height: 150px
+        height: 253px
+        width: 100%
         overflow: auto
     .user-middle
       float: left
@@ -300,12 +258,13 @@
       background-color: #ff0
     .user-right
       width: 70%
+      flex: 1
       border: 1px solid red
       float: left
       box-sizing: border-box
       height: 100%
     .right-bottom
-      height: 150px
+      height: 250px
       overflow: auto
       border: 1px solid green
 </style>

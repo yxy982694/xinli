@@ -32,7 +32,7 @@
 
 <script>
   import "@/common/stylus/header.styl"
-  import { mapState } from 'vuex'
+  import { mapState, mapMutations } from 'vuex'
   import mock from "@/mock/index"
   import Hamburger from "@/components/Hamburger"
   import ThemePicker from "@/components/ThemePicker"
@@ -63,6 +63,9 @@
       // onCollapse: function() {
       //   this.$store.commit('onCollapse')
       // },
+      ...mapMutations({
+        'setTabChildId': 'setTabChildId'
+      }),
       // 切换主题
       onThemeChange: function(themeColor) {
         this.$store.commit('setThemeColor', themeColor)
@@ -79,29 +82,34 @@
       },
       // 路由操作处理
       handleRoute (route) {
+        // console.log(route.query.id)
         // tab标签页选中, 如果不存在则先添加
         let tab = this.mainTabs.filter(item => item.name === route.name)[0]
+        // console.log(tab)
+        // console.log(route)
         if (!tab) {
           tab = {
             name: route.name,
             title: route.name,
-            icon: route.meta.icon
+            icon: route.meta.icon,
+            id: route.meta.index
           }
           if(this.mainTabs.length === 0 && tab.name !== '首页'){
               let homeTab = [
                   {
                       name: '首页',
                       title: '首页',
-                      icon: 'fa fa-home fa-lg'
+                      icon: 'fa fa-home fa-lg',
+                      id: 0
                   }
               ]
               this.mainTabs = this.mainTabs.concat(homeTab)
+              this.mainTabs = this.mainTabs.concat(tab)
           }else{
               this.mainTabs = this.mainTabs.concat(tab)
           }
-          // console.log("cuicuciucicuicucicuicuciu"+tab.name+"-"+tab.title)
-
         }
+        sessionStorage.setItem('id', route.meta.index)
         this.mainTabsActiveName = tab.name
         // 切换标签页时同步更新高亮菜单
         if(this.$refs.navmenu != null) {

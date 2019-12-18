@@ -1,7 +1,7 @@
 <template>
   <el-container class="el-con">
     <el-aside width="180px">
-      <div v-for="v in leftList" :key="v.location" class="text-item" @click="addSubTab(v.label,v.location)">
+      <div v-for="v in leftList" :key="v.location" class="text-item" @click="addSubTab(v.label,v.location,v.id)">
         <p class="aside-title">
           <span class="el-icon-thumb"></span>
           <span>{{ v.label }}</span>
@@ -17,6 +17,7 @@
 </template>
 
 <script>
+    import { mapMutations } from 'vuex'
     import '@/common/stylus/childrenTab.styl'
     import SubTabs from "./SubAsideTab/SubTabs"
     export default {
@@ -25,7 +26,11 @@
         },
         props: ['leftList'],
         methods: {
-            addSubTab(targetName,name){
+            ...mapMutations({
+              'setCcenterMenuId': 'setCcenterMenuId'
+            }),
+            addSubTab(targetName,name,id){
+              this.setCcenterMenuId(id)
               this.$refs.subTabs.addTab(targetName,name)
             }
         },

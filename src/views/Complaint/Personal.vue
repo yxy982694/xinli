@@ -30,6 +30,18 @@
                     }
                 ]
             }
+        },
+        mounted: function () {
+          let id
+          if (this.$route.meta.index) {
+            id = this.$route.meta.index
+          } else {
+            id = sessionStorage.getItem('id')
+          }
+          console.log(id)
+          this.$api.menu.resourceManage(id).then((res) => {
+            // this.leftList = res.data
+          })
         }
     }
 </script>

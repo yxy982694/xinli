@@ -143,7 +143,8 @@
               'setCurrentTitle': 'setCurrentTitle',
               'setSwitch': 'setSwitch',
               'setSwitchLabel': 'setSwitchLabel',
-              'setChildContextLeft': 'setChildContextLeft'
+              'setChildContextLeft': 'setChildContextLeft',
+              'setCcenterMenuId': 'setCcenterMenuId'
             }),
             closeCurrentHandle: function () {
               this.removeTab(this.clickedSwitch)
@@ -225,8 +226,9 @@
                 this.setEditableTabs(remainTabs)
             },
             tabClick(objectTab) {
-                // this.currentTabLabel = objectTab.name
-                this.setCurrentTabLabel(objectTab.name)
+              // this.currentTabLabel = objectTab.name
+              this.setCurrentTabLabel(objectTab.name)
+              this.setCcenterMenuId(objectTab.id)
             }
         }
     }
