@@ -12,11 +12,35 @@
 		<div class="user-middle" ref="userMiddle"></div>
 		<div class="user-right" ref="userRight">
 			<div class="right-top">
-				<p>111</p>
-				<p>111</p>
-				<p>111</p>
-				<p>111</p>
-				<p>111</p>
+				<div class="date-container">
+					<p>创建时间:</p>
+					<el-date-picker
+				      v-model="value1"
+				      type="date"
+				      placeholder="选择日期">
+				    </el-date-picker>
+				    <el-date-picker
+				      v-model="value2"
+				      type="date"
+				      placeholder="选择日期">
+				    </el-date-picker>
+				    <kt-button icon="fa fa-calendar" :label="$t('action.search')"></kt-button>
+				    <kt-button icon="fa fa-calendar" :label="$t('action.reset')"></kt-button>
+				</div>
+				<div class="search-container">
+					<!-- <input type="text"> -->
+				</div>
+			</div>
+			<div class="right-center">
+				<div class="bread-crumb">部门</div>
+				<div class="btn-container">
+					<kt-button icon="fa fa-calendar" :label="$t('action.add')"></kt-button>
+					<kt-button icon="fa fa-calendar" label="详情"></kt-button>
+					<kt-button icon="fa fa-calendar" label="授权"></kt-button>
+					<kt-button icon="fa fa-calendar" label="批量授权"></kt-button>
+					<kt-button icon="fa fa-calendar" label="启用"></kt-button>
+					<kt-button icon="fa fa-calendar" label="停用"></kt-button>
+				</div>
 			</div>
 			<div class="right-bottom">
 				<el-table :data="tableData.content" :border="true">
@@ -42,6 +66,8 @@
 	export default {
 		data: function() {
 			return {
+				value1: '',
+				value2: '',
 		        outData: [{
 		          name: '',
 		          age: ''
@@ -263,8 +289,27 @@
       float: left
       box-sizing: border-box
       height: 100%
+      padding-top: 15px
+    .date-container
+      display: flex
+      justify-content: center
+      align-items: center
     .right-bottom
-      height: 250px
+      height: 155px
       overflow: auto
       border: 1px solid green
+    .bread-crumb
+	    height: 30px
+	    line-height: 30px
+	    background-color: #abcdef
+	    border: 1px solid blue
+	    box-sizing: border-box
+	    text-align: left
+	    padding: 0 10px
+	.btn-container
+	   display: flex
+	   border: 1px solid green
+	   border-top: none
+	.el-button+.el-button
+	   margin-left: 0
 </style>
