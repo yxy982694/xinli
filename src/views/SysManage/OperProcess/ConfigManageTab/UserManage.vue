@@ -1,4 +1,4 @@
-<template>
+﻿<template>
 	<div class="user-container" ref="userContainer">
 		<div class="user-left" ref="userLeft">
 			<div class="expand-container">
@@ -28,7 +28,12 @@
 				    <kt-button icon="fa fa-calendar" :label="$t('action.reset')"></kt-button>
 				</div>
 				<div class="search-container">
-					<!-- <input type="text"> -->
+          <div class="checkbox-more">
+            <input type="checkbox" v-model="checkedBox">查询更多条件
+          </div>
+          <div class="search-container-border">
+
+          </div>
 				</div>
 			</div>
 			<div class="right-center">
@@ -68,6 +73,7 @@
 			return {
 				value1: '',
 				value2: '',
+        checkedBox: false,
 		        outData: [{
 		          name: '',
 		          age: ''
@@ -294,6 +300,11 @@
       display: flex
       justify-content: center
       align-items: center
+    .search-container
+       margin: 15px 0
+    .search-container-border
+       margin: 0 15px
+       border: 1px solid red
     .right-bottom
       height: 155px
       overflow: auto
