@@ -13,7 +13,7 @@
 		<div class="user-right" ref="userRight">
 			<div class="right-top">
 				<div class="date-container">
-					<p>创建时间:</p>
+					<p class="input-left">创建时间:</p>
 					<el-date-picker
 				      v-model="value1"
 				      type="date"
@@ -28,12 +28,30 @@
 				    <kt-button icon="fa fa-calendar" :label="$t('action.reset')"></kt-button>
 				</div>
 				<div class="search-container">
-          <div class="checkbox-more">
-            <input type="checkbox" v-model="checkedBox">查询更多条件
-          </div>
-          <div class="search-container-border">
-
-          </div>
+		          <div class="checkbox-more">
+		            <el-checkbox v-model="checkedBox" @change="changeBox">查询更多条件</el-checkbox>
+		          </div>
+		          <div class="search-container-border" :style="{borderTop:'1px solid red',borderLeft:showBorder,borderRight:showBorder,borderBottom:showBorder}">
+					<div class="search-container-input" v-show="checkedBox">
+						<p class="input-left input-name">用户名:</p>
+						<el-input type="text" placeholder="请输入..."></el-input>
+					</div>
+					<div class="search-container-input search-container-middle" v-show="checkedBox">
+						<p class="input-left">账号类型:</p>
+						<el-select placeholder="请选择">
+							<el-option value="全选" label="全选"></el-option>
+							<el-option value="PC" label="PC"></el-option>
+							<el-option value="APP" label="APP"></el-option>
+							<el-option value="PC+APP" label="PC+APP"></el-option>
+						</el-select>
+					</div>
+					<div class="search-container-input" v-show="checkedBox">
+						<p class="input-left">是否授权:</p>
+						<el-radio v-model="radio" label="all">全部</el-radio>
+						<el-radio v-model="radio" label="yes">是</el-radio>
+						<el-radio v-model="radio" label="no">否</el-radio>
+					</div>
+		          </div>
 				</div>
 			</div>
 			<div class="right-center">
@@ -73,7 +91,8 @@
 			return {
 				value1: '',
 				value2: '',
-        checkedBox: false,
+        		checkedBox: false,
+        		showBorder: 'none',
 		        outData: [{
 		          name: '',
 		          age: ''
@@ -255,6 +274,13 @@
 			},
 			handleNodeClick: function() {
 				console.log('点击')
+			},
+			changeBox: function () {
+				if (checkedBox) {
+					this.showBorder = '1px solid red'
+				} else {
+					this.showBorder = 'none'
+				}
 			}
 		}
 	}
@@ -267,7 +293,7 @@
       border: 1px solid black
       overflow: hidden
       box-sizing: border-box
-      height: 300px
+      height: 380px
       position: relative
     .user-left
       border: 1px solid red
@@ -302,9 +328,33 @@
       align-items: center
     .search-container
        margin: 15px 0
+       position: relative
+       min-height: 10px
+    .checkbox-more
+      position: absolute
+      left: 20px
+      top: -15px
+      background-color: #ddd
+      width: 130px
+      height: 30px
+      display: flex
+      justify-content: center
+      align-items: center
+      input
+        margin-right: 10px
     .search-container-border
-       margin: 0 15px
-       border: 1px solid red
+       margin: 0 10px
+       display: flex
+       padding: 0 20px
+       justify-content: center
+    .search-container-input
+       display: flex
+       align-items: center
+       margin: 15px 0 10px 0
+    .search-container-middle
+       margin: 0 30px
+    .input-name
+       width: 54px
     .right-bottom
       height: 155px
       overflow: auto
@@ -323,4 +373,6 @@
 	   border-top: none
 	.el-button+.el-button
 	   margin-left: 0
+	.input-left
+	  margin-right: 10px
 </style>
