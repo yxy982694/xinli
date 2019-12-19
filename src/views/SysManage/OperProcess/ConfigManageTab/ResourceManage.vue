@@ -72,7 +72,7 @@
   		<el-button :size="size" type="primary" @click.native="submitForm" >{{$t('action.submit')}}</el-button>
   	</div><!-- :loading="editLoading" -->
   </el-dialog>
-  <div class="shortcut-container" v-show="showShortCut"><!--  v-if="ifShortCut" -->
+  <div class="shortcut-container" v-show="showShortCut" :style="{position: 'absolute',top: resourceTop,left: resourceLeft}"><!--  v-if="ifShortCut" -->
     <kt-button icon="fa fa-plus" :label="$t('action.add')" @click="addInfo" />
     <kt-button icon="fa fa-edit" :label="$t('action.edit')" @click="editInfoShortCut()" />
     <kt-button icon="fa fa-trash" :label="$t('action.delete')" @click="deleteShortCutInfo(currentId)" />
@@ -80,6 +80,7 @@
 </div>
 </template>
 <script>
+  import { mapMutations } from 'vuex'
   import KtButton from "@/components/KtButton/index"
   import KtTable from "@/components/KtTable/KtTable"
   import KtButtons from "@/components/KtButtons/KtButtons"
@@ -100,7 +101,7 @@
         parentIdd: null,
         showShortCut: false,
         currentObj: null,
-        loading: false,
+        loading: true,
         statsArr: [{
           id: 0,
           value: '失效'
@@ -167,7 +168,25 @@
         _this.showShortCut = false
       }
     },
+    computed: {
+      resourceLeft: {
+        get: function () {
+          return this.$store.state.resourceLeftTop.resourceLeft
+        },
+        set: function () {}
+      },
+      resourceTop: {
+        get: function () {
+          return this.$store.state.resourceLeftTop.resourceTop
+        },
+        set: function () {}
+      },
+    },
     methods: {
+      ...mapMutations({
+        'setResourceLeft': 'setResourceLeft',
+        'setResourceTop': 'setResourceTop'
+      }),
       searchInfo: function (userName) {
         this.$api.menu.queryResource(userName).then(res => {
           this.$set(this.tableData,'content',res.data)
@@ -208,8 +227,8 @@
       	this.$api.menu.loadResource().then((res) => {
           this.$set(this.tableData,'content',res.data)
       		// this.tableData.content = res.data
-          console.log(this.tableData.content)
-          console.log(90)
+          // console.log(this.tableData.content)
+          // console.log(90)
           this.loading = false
           this.getCellRow()
       	})
@@ -256,11 +275,19 @@
               // console.log(offsetTopCon2)
               // console.log(offsetTopCon)
               let x = e.clientX-180
-              let y = e.clientY+scrollTop+offsetTopElMain-140
+              let y = e.clientY+scrollTop+offsetTopElMain-150
+              // console.log('x:'+x)
+              // console.log('y:'+y)
+              _this.setResourceLeft(x+'px')
+              _this.setResourceTop(y+'px')
+
+              // document.querySelector('.shortcut-container').style.display = 'block'
+              // console.log(document.querySelector('.shortcut-container'))
               // console.log(offsetTop)
               // console.log('index:'+index)
-              document.querySelector('.shortcut-container').style.left = x + 'px'
-              document.querySelector('.shortcut-container').style.top = y + 'px'
+              // document.querySelector('.shortcut-container').style.position = 'absolute'
+              // document.querySelector('.shortcut-container').style.left = x + 'px'
+              // document.querySelector('.shortcut-container').style.top = y + 'px'
             }
           })
         })

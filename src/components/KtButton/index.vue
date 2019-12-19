@@ -6,7 +6,7 @@
 5.用户的权限，perms，根据权限来决定按钮是否可用 -->
 <template>
   <el-button :size="size" :type="type" :icon="icon"
-    :loading="loading" :disabled="!hasPerms(perms)" @click="handleClick">
+    :loading="loading" @click="handleClick">  <!-- :disabled="!hasPerms(perms)" -->
     {{label}}
   </el-button>
 </template>

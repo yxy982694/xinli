@@ -13,6 +13,7 @@
 </template>
 
 <script>
+  import { mapMutations } from 'vuex'
   import { getIFrameUrl, getIFramePath } from '@/utils/iframe'
   export default {
     name: 'MenuTree',
@@ -22,8 +23,31 @@
         required: true
       }
     },
+    computed: {
+      routerObj: {
+        get: function () {
+          return this.$store.state.routerIdData.routerObj
+        },
+        set: function () {}
+      },
+    },
     methods: {
+      ...mapMutations({
+        'setRouterObj': 'setRouterObj',
+        'setRouterId': 'setRouterId'
+      }),
       handleRoute (menu) {
+        this.setRouterId(menu.id)
+        console.log(menu.id)
+        this.$api.menu.resourceManage(menu.id).then((res) => {
+          console.log(res)
+          sessionStorage.setItem('arr', res.data)
+          this.setRouterObj({
+            id: menu.id,
+            arr: res
+          })
+        })
+        // console.log(this.routerObj)
         // 如果是嵌套页面，转换成iframe的path
         let path = getIFramePath(menu.location)
         sessionStorage.setItem('id', menu.id)

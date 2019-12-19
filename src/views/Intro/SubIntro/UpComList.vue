@@ -56,8 +56,9 @@
         },
         created() {  //  在 created 中，data 和 methods 都已经被初始化好了！如果要调用 methods 中的方法，或者操作 data 中的数据，最早，只能在 created 中操作return axios({
             this.$api.home.getUpComList().then((res) => {
-                // const result = eval('('+res+')')
-                let result = res
+                const result = eval('('+res+')')
+                // let result = res
+                // console.log(result)
                 this.tableData = result.data.content
                 this.pageNum = Number.parseInt(result.data.pageNum)
                 this.pageSize = Number.parseInt(result.data.pageSize)

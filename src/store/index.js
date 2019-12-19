@@ -14,6 +14,8 @@ import contextMenu from "./modules/showContextmenu"
 import showTab from "./modules/showTab"
 import tableCurrentId from "./modules/tableCurrentId"
 import centerMenu from "./modules/centerMenu"
+import routerIdData from "./modules/routerIdData"
+import resourceLeftTop from "./modules/resourceLeftTop"
 
 const store = new vuex.Store({
   modules: {
@@ -26,7 +28,9 @@ const store = new vuex.Store({
     contextMenu: contextMenu,
     showTab: showTab,
     tableCurrentId: tableCurrentId,
-    centerMenu: centerMenu
+    centerMenu: centerMenu,
+    routerIdData: routerIdData,
+    resourceLeftTop: resourceLeftTop
   }
 })
 

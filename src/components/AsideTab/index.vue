@@ -27,11 +27,14 @@
         props: ['leftList'],
         methods: {
             ...mapMutations({
-              'setCcenterMenuId': 'setCcenterMenuId'
+              'setCenterMenuId': 'setCenterMenuId'
             }),
             addSubTab(targetName,name,id){
-              this.setCcenterMenuId(id)
-              this.$refs.subTabs.addTab(targetName,name)
+              // 点击左侧导航时,获取所点击按钮的id
+              this.setCenterMenuId(id)
+              // 并把id传到对应的中间部分切换tab的导航中
+              // 为了后期在点击切换tab导航时，根据id找到对应平铺按钮的数据
+              this.$refs.subTabs.addTab(targetName,name,id)
             }
         },
         mounted() {
@@ -44,7 +47,7 @@
   @import "../../common/stylus/mixin"
   .el-aside
     font-size: 14px
-    background-color: rgb(205,244,253)
+    // background-color: rgb(205,244,253)
     // background-color: rgb(48, 65, 86)
     position: fixed
     top: 100px

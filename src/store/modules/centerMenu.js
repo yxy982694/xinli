@@ -1,14 +1,14 @@
 export default {
     state: {
-        centerMenu: {},  // 
+        centerMenu: {},  //
         centerMenuId: null
     },
     mutations: {
-      setCcenterMenuId(state,id){  // 用户权限标识集合
+      setCenterMenuId(state,id){  // 用户权限标识集合
           state.centerMenuId = id
       },
-      setCenterMenu(state,id, obj){  //
-          state.centerMenu[id] = obj
+      setCenterMenu(state,obj){  //
+          state.centerMenu[obj.id] = obj.arr
       }
     },
 }

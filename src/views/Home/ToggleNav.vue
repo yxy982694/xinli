@@ -49,7 +49,9 @@
     },
     methods: {
       ...mapMutations({
-        'setContextMenuFlag': 'setContextMenuFlag'
+        'setContextMenuFlag': 'setContextMenuFlag',
+        'setRouterId': 'setRouterId',
+        'setRouterObj': 'setRouterObj',
       }),
       renderTab: function () {
         var _this = this
@@ -81,6 +83,8 @@
       selectedTabHandle (tab) {
         tab = this.mainTabs.filter(item => item.name === tab.name)
         sessionStorage.setItem('id', tab[0].id)
+        // sessionStorage.setItem('arr', this.setRouterObj[tab[0].id].data)
+        this.setRouterId(tab[0].id)
         if (tab.length >= 1) {
           this.$router.push({ name: tab[0].name })
         }
@@ -99,7 +103,9 @@
               this.mainTabsActiveName = this.$route.name
               this.tempActive = this.$route.name
             })
-            sessionStorage.setItem('id', this.$router.meta.index)
+            sessionStorage.setItem('id', this.$route.meta.index)
+            this.setRouterId(this.$route.meta.index)
+            // sessionStorage.setItem('arr', this.setRouterObj[this.$route.meta.index].data)
           }
         } else {
           this.mainTabs = [{
@@ -121,6 +127,8 @@
       tabsCloseOtherHandle () {
         this.mainTabs = this.mainTabs.filter(item => item.name === this.tempActive || item.name==="首页")
         sessionStorage.setItem('id', this.mainTabs[1].id)
+        this.setRouterId(this.mainTabs[1].id)
+        // sessionStorage.setItem('arr', this.setRouterObj[this.mainTabs[1].id].data)
         this.$router.push({ name: this.tempActive})
       },
       // tabs, 关闭全部

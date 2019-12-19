@@ -1,8 +1,8 @@
 <template>
   <div class='children-tab'>
-    <p class="children-tab-p" v-for="item in centerList" :key="item.id" @click="addTab(item.label,item.location)">
-     <i class="el-icon-thumb"></i>
-     <span>{{item.label}}</span>
+    <p class="children-tab-p" v-for="item in centerList" :key="item.id" @click="addTab(item.label,item.location,item.id)">
+     <img src="../../../common/image/contentImg22.png" class="children-tab-image" />
+     <span class="children-tab-text">{{item.label}}</span>
     </p>
   </div>
 </template>
@@ -38,13 +38,14 @@
               'setCurrentTabLabel': 'setCurrentTabLabel',
               'setCurrentTitle': 'setCurrentTitle',
             }),
-           addTab(targetLabel,name) {
+           addTab(targetLabel,name,id) {
                 this.setCurrentTabLabel(name)
                 this.setCurrentTitle(targetLabel)
                 if(!this.existTabs.includes(name)){
                     this.addEditableTabs({
                         label: targetLabel,
-                        name: name
+                        name: name,
+                        id: id
                     })
                     this.addExistTabs(name)
                 }
@@ -66,16 +67,31 @@
     border: 1px solid #EBEEF5
     background-color: #FFF
     color: #303133
-    min-height: 418px
+    min-height: 420px
     box-sizing: border-box
     .children-tab-p
-      height: 25px
-      line-height: 25px
+      width: 150px
+      height: 120px
       text-align: center
       box-shadow: 0 0 1px 1px $color-lightgray
-      padding:3px 8px
+      border-radius: 5px
       cursor: pointer
       margin-left: 10px
       margin-top: 15px
-
+      position: relative
+  .children-tab-image
+    display: block
+    position:absolute
+    left: 0
+    top: 0
+    width: 150px
+    height: 80px
+    border-radius: 5px 5px 0 0
+  .children-tab-text
+    display: block
+    position:absolute
+    left: 0
+    bottom: 10px
+    width: 100%
+    text-align: center
 </style>

@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import KtButton from "@/views/Core/KtButton"
+import KtButton from "@/components/KtButton/index"
 export default {
   name: 'KtTable',
   components:{

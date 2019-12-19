@@ -74,7 +74,13 @@
               return this.$store.state.showTab.currentTitle
             },
             set: function () {}
-          }
+          },
+          routerId: {
+            get: function () {
+              return this.$store.state.routerIdData.routerId
+            },
+            set: function () {}
+          },
         },
         mounted: function () {
           this.initData()
@@ -120,9 +126,10 @@
                       e.stopPropagation()
                       e.preventDefault()
                       _this.setContextMenuFlag(true)
-                      let array = item.id.split('/')
+                      // let array = item.id.split('/')
                       let x = e.clientX - 180
-                      _this.setSwitch('/'+array[1]+'/'+array[2])
+                      _this.setSwitch(item.id.slice(4))
+                      console.log(_this.clickedSwitch)
                       _this.setSwitchLabel(item.childNodes[0].data)
                       _this.setChildContextLeft(x+'px')
                       if (document.querySelector('.main-tabs .el-tabs__content')) {
@@ -144,9 +151,10 @@
               'setSwitch': 'setSwitch',
               'setSwitchLabel': 'setSwitchLabel',
               'setChildContextLeft': 'setChildContextLeft',
-              'setCcenterMenuId': 'setCcenterMenuId'
+              'setCenterMenuId': 'setCenterMenuId'
             }),
             closeCurrentHandle: function () {
+              console.log(this.clickedSwitch)
               this.removeTab(this.clickedSwitch)
             },
             closeOtherHandle: function () {
@@ -176,7 +184,8 @@
               this.setCurrentTabLabel('/SubAsideTab/MainPage')
               this.setEditableTabs([{
                   label: '主页',
-                  name: '/SubAsideTab/MainPage'
+                  name: '/SubAsideTab/MainPage',
+                  id: 0
               }])
               console.log(this.currentTabLabel)
               this.setExistTabs(['/SubAsideTab/MainPage'])
@@ -189,13 +198,14 @@
               // this.setExistTabs([this.leftList[0].location])
               // this.hasDownMenu = this.contextMenuFlag
             },
-            addTab(targetLabel,name) {
+            addTab(targetLabel,name,id) {
               this.setCurrentTabLabel(name)
               this.setCurrentTitle(targetLabel)
               if(!this.existTabs.includes(name)){
                   this.addEditableTabs({
                       label: targetLabel,
-                      name: name
+                      name: name,
+                      id: id
                   })
                   this.addExistTabs(name)
               }
@@ -227,8 +237,17 @@
             },
             tabClick(objectTab) {
               // this.currentTabLabel = objectTab.name
+              // console.log(objectTab)
+              console.log(this.editableTabs)
+              console.log(objectTab)
+              // 点击tab切换导航时，对应id相应的数据
+              for (var i=0;i<this.editableTabs.length;i++) {
+                if (this.editableTabs[i].label == objectTab.label) {
+                  let id = this.editableTabs[i].id
+                  this.setCenterMenuId(id)
+                }
+              }
               this.setCurrentTabLabel(objectTab.name)
-              this.setCcenterMenuId(objectTab.id)
             }
         }
     }
