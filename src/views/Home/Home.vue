@@ -22,6 +22,14 @@
       HeadBar,
       MainContent,
       FooterBar,
+    },
+    computed: {
+      routerId: {
+        get: function () {
+          return this.$store.state.routerIdData.routerId
+        },
+        set: function () {}
+      },
     }
   };
 </script>
@@ -29,5 +37,5 @@
   .main-footer
     background:url('../../common/image/contentImg.png') no-repeat
     background-size: 100% 100%
-    // min-height: calc(100vh-100px)
+    overflow: auto
 </style>

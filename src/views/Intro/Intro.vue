@@ -52,12 +52,13 @@
         </div>
       </el-col>
     </el-row>
+    <!-- <footer-bar></footer-bar> -->
   </div>
 </template>
 
 <script>
     import "@/common/stylus/intro.styl"
-
+    // import FooterBar from "../Home/FooterBar"
     export default {
         components: {
             turbe: require("./SubIntro/Turbe.vue").default, //快速通道
@@ -66,7 +67,8 @@
             smsCus: require("./SubIntro/SmsCus.vue").default, // 短信定制组件
             latestNews: require("./SubIntro/LatestNews.vue").default, // 最新公告
             myTodo: require("./SubIntro/MyTodo.vue").default, // 我的待办
-            messageBoard: require("./SubIntro/Message.vue").default // 留言板
+            messageBoard: require("./SubIntro/Message.vue").default, // 留言板
+            // FooterBar
         },
         data() {
             return {
@@ -108,7 +110,8 @@
 
             }
         },
-        created() {
+        mounted() {
+          window.onresize = null
         }
     };
 </script>

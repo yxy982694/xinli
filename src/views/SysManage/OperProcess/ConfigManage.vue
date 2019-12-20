@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <aside-tab :leftList="leftList"></aside-tab>
-  </div>
+  <aside-tab :leftList="leftList"></aside-tab>
 </template>
 
 <script>

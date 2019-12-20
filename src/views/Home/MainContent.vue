@@ -14,10 +14,12 @@
 
 <script>
   import ToggleNav from "./ToggleNav"
+  import Intro from "../Intro/Intro"
   export default {
     name: 'MainContent',
     components:{
-      ToggleNav
-    }
+      ToggleNav,
+      Intro
+    },
   }
 </script>

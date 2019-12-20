@@ -9,7 +9,7 @@
 </template>
 <style scoped lang="stylus" rel="stylesheet/stylus">
   .foot-info
-    padding: 30px 0 20px 0
+    padding: 30px 0 10px 0
   .info-text
     margin-left: 60px
 </style>

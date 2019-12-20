@@ -1,4 +1,4 @@
-﻿<template>
+<template>
 	<div class="user-container" ref="userContainer">
 		<div class="user-left" ref="userLeft">
 			<div class="expand-container">
@@ -13,49 +13,47 @@
 		<div class="user-right" ref="userRight">
 			<div class="right-top">
 				<div class="date-container">
-					<p class="input-left">创建时间:</p>
+					<p>创建时间:</p>
 					<el-date-picker
-				      v-model="value1"
-				      type="date"
-				      placeholder="选择日期">
-				    </el-date-picker>
-				    <el-date-picker
-				      v-model="value2"
-				      type="date"
-				      placeholder="选择日期">
-				    </el-date-picker>
-				    <kt-button icon="fa fa-calendar" :label="$t('action.search')"></kt-button>
-				    <kt-button icon="fa fa-calendar" :label="$t('action.reset')"></kt-button>
+            v-model="dateValue"
+            type="datetimerange"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+            :default-time="['12:00:00','12:00:00']">
+          </el-date-picker>
+				  <kt-button icon="fa fa-calendar" class="user-search-btn" :label="$t('action.search')" @click="searchDate"></kt-button>
+				  <kt-button icon="fa fa-calendar" :label="$t('action.reset')" @click="resetDate"></kt-button>
 				</div>
 				<div class="search-container">
 		          <div class="checkbox-more">
 		            <el-checkbox v-model="checkedBox" @change="changeBox">查询更多条件</el-checkbox>
 		          </div>
-		          <div class="search-container-border" :style="{borderTop:'1px solid red',borderLeft:showBorder,borderRight:showBorder,borderBottom:showBorder}">
-					<div class="search-container-input" v-show="checkedBox">
-						<p class="input-left input-name">用户名:</p>
-						<el-input type="text" placeholder="请输入..."></el-input>
-					</div>
-					<div class="search-container-input search-container-middle" v-show="checkedBox">
-						<p class="input-left">账号类型:</p>
-						<el-select placeholder="请选择">
-							<el-option value="全选" label="全选"></el-option>
-							<el-option value="PC" label="PC"></el-option>
-							<el-option value="APP" label="APP"></el-option>
-							<el-option value="PC+APP" label="PC+APP"></el-option>
-						</el-select>
-					</div>
-					<div class="search-container-input" v-show="checkedBox">
-						<p class="input-left">是否授权:</p>
-						<el-radio v-model="radio" label="all">全部</el-radio>
-						<el-radio v-model="radio" label="yes">是</el-radio>
-						<el-radio v-model="radio" label="no">否</el-radio>
-					</div>
+              <div class="more-line"></div>
+		          <div class="search-container-border" v-show="checkedBox">
+                <div class="search-container-input">
+                  <p class="input-left input-name">用户名:</p>
+                  <el-input type="text" placeholder="请输入..."></el-input>
+                </div>
+                <div class="search-container-input search-container-middle">
+                  <p class="input-left">账号类型:</p>
+                  <el-select placeholder="请选择" v-model="selectedVal">
+                    <el-option value="全选" label="全选"></el-option>
+                    <el-option value="PC" label="PC"></el-option>
+                    <el-option value="APP" label="APP"></el-option>
+                    <el-option value="PC+APP" label="PC+APP"></el-option>
+                  </el-select>
+                </div>
+                <div class="search-container-input">
+                  <p class="input-left">是否授权:</p>
+                  <el-radio v-model="radioVal" label="all">全部</el-radio>
+                  <el-radio v-model="radioVal" label="yes">是</el-radio>
+                  <el-radio v-model="radioVal" label="no">否</el-radio>
+                </div>
 		          </div>
 				</div>
 			</div>
 			<div class="right-center">
-				<div class="bread-crumb">部门</div>
+				<div class="bread-crumb">部门>杭州东方通信软件技术有限公司</div>
 				<div class="btn-container">
 					<kt-button icon="fa fa-calendar" :label="$t('action.add')"></kt-button>
 					<kt-button icon="fa fa-calendar" label="详情"></kt-button>
@@ -65,7 +63,7 @@
 					<kt-button icon="fa fa-calendar" label="停用"></kt-button>
 				</div>
 			</div>
-			<div class="right-bottom">
+			<div class="right-bottom" :style="{height: tableHeight}">
 				<el-table :data="tableData.content" :border="true">
 					<el-table-column type="selection" width="40"></el-table-column>
 					<el-table-column v-for="column in columns" header-align="center" align="center" :prop="column.prop" :label="column.label"
@@ -79,6 +77,11 @@
 					</el-table-column>
 				</el-table>
 			</div>
+      <div class="user-toolbar">
+        <el-pagination layout="total, prev, pager, next, jumper"
+          :current-page="1" :page-size="10" :total="87">
+        </el-pagination>
+      </div>
 		</div>
 	</div>
 </template>
@@ -89,10 +92,11 @@
 	export default {
 		data: function() {
 			return {
-				value1: '',
-				value2: '',
+            dateValue: '',
         		checkedBox: false,
-        		showBorder: 'none',
+            selectedVal: '',
+            radioVal: '',
+            tableHeight: '220px',
 		        outData: [{
 		          name: '',
 		          age: ''
@@ -147,6 +151,78 @@
 				}],
 				tableData: {
 					content: [{
+						name: "yxy",
+						nameCn: '袁晓宇',
+						zhanghao: 'yxy90',
+						bumen: '技术部',
+						keyong: '可用',
+						shemin: '是',
+						jibie: '一般',
+						creator: '创建者',
+						createTime: '2015-12-29 15:17:51',
+						startTime: '2017-09-28 00:00:00',
+						endTime: '2019-09-28 00:00:00'
+					}, {
+						name: "yxy",
+						nameCn: '袁晓宇',
+						zhanghao: 'yxy90',
+						bumen: '技术部',
+						keyong: '可用',
+						shemin: '是',
+						jibie: '一般',
+						creator: '创建者',
+						createTime: '2015-12-29 15:17:51',
+						startTime: '2017-09-28 00:00:00',
+						endTime: '2019-09-28 00:00:00'
+					}, {
+						name: "yxy",
+						nameCn: '袁晓宇',
+						zhanghao: 'yxy90',
+						bumen: '技术部',
+						keyong: '可用',
+						shemin: '是',
+						jibie: '一般',
+						creator: '创建者',
+						createTime: '2015-12-29 15:17:51',
+						startTime: '2017-09-28 00:00:00',
+						endTime: '2019-09-28 00:00:00'
+					}, {
+						name: "yxy",
+						nameCn: '袁晓宇',
+						zhanghao: 'yxy90',
+						bumen: '技术部',
+						keyong: '可用',
+						shemin: '是',
+						jibie: '一般',
+						creator: '创建者',
+						createTime: '2015-12-29 15:17:51',
+						startTime: '2017-09-28 00:00:00',
+						endTime: '2019-09-28 00:00:00'
+					}, {
+						name: "yxy",
+						nameCn: '袁晓宇',
+						zhanghao: 'yxy90',
+						bumen: '技术部',
+						keyong: '可用',
+						shemin: '是',
+						jibie: '一般',
+						creator: '创建者',
+						createTime: '2015-12-29 15:17:51',
+						startTime: '2017-09-28 00:00:00',
+						endTime: '2019-09-28 00:00:00'
+					}, {
+						name: "yxy",
+						nameCn: '袁晓宇',
+						zhanghao: 'yxy90',
+						bumen: '技术部',
+						keyong: '可用',
+						shemin: '是',
+						jibie: '一般',
+						creator: '创建者',
+						createTime: '2015-12-29 15:17:51',
+						startTime: '2017-09-28 00:00:00',
+						endTime: '2019-09-28 00:00:00'
+					}, {
 						name: "yxy",
 						nameCn: '袁晓宇',
 						zhanghao: 'yxy90',
@@ -275,13 +351,19 @@
 			handleNodeClick: function() {
 				console.log('点击')
 			},
-			changeBox: function () {
-				if (checkedBox) {
-					this.showBorder = '1px solid red'
-				} else {
-					this.showBorder = 'none'
-				}
-			}
+      changeBox: function () {
+        if (this.checkedBox) {
+          this.tableHeight = '170px'
+        } else {
+          this.tableHeight = '220px'
+        }
+      },
+      searchDate: function () {
+        console.log(this.dateValue)
+      },
+      resetDate: function () {
+        this.dateValue = ''
+      }
 		}
 	}
 </script>
@@ -290,13 +372,13 @@
 <style scoped lang="stylus" rel="stylesheet/stylus">
     .user-container
       display: flex
-      border: 1px solid black
+      border: 1px solid #666
       overflow: hidden
       box-sizing: border-box
-      height: 380px
+      height: 420px
       position: relative
     .user-left
-      border: 1px solid red
+      // border: 1px solid red
       float: left
       box-sizing: border-box
       height: 100%
@@ -304,7 +386,7 @@
       overflow-x: auto
       width: 180px
       .tree-container
-        height: 253px
+        height: 380px
         width: 100%
         overflow: auto
     .user-middle
@@ -313,21 +395,24 @@
       height: 100%
       cursor: move
       box-sizing: border-box
-      background-color: #ff0
+      background-color: #FAECD8
     .user-right
       width: 70%
       flex: 1
-      border: 1px solid red
+      // border: 1px solid red
       float: left
       box-sizing: border-box
       height: 100%
       padding-top: 15px
+      position: relative
     .date-container
       display: flex
       justify-content: center
       align-items: center
+    .user-search-btn
+      margin-right: 15px
     .search-container
-       margin: 15px 0
+       margin: 15px
        position: relative
        min-height: 10px
     .checkbox-more
@@ -340,23 +425,32 @@
       display: flex
       justify-content: center
       align-items: center
+      z-index: 22
       input
         margin-right: 10px
+    .more-line
+      position: absolute
+      left: 0
+      top: 0
+      height: 1px
+      width: 100%
+      background-color: #999
+      z-index: 11
     .search-container-border
-       margin: 0 10px
+       border: 1px solid #999
+       border-top: none
        display: flex
        padding: 0 20px
        justify-content: center
     .search-container-input
        display: flex
        align-items: center
-       margin: 15px 0 10px 0
+       margin: 23px 0 10px 0
     .search-container-middle
-       margin: 0 30px
+       margin: 23px 30px 10px 30px
     .input-name
        width: 54px
     .right-bottom
-      height: 155px
       overflow: auto
       border: 1px solid green
     .bread-crumb
@@ -364,6 +458,7 @@
 	    line-height: 30px
 	    background-color: #abcdef
 	    border: 1px solid blue
+     font-size: 13px
 	    box-sizing: border-box
 	    text-align: left
 	    padding: 0 10px
@@ -375,4 +470,9 @@
 	   margin-left: 0
 	.input-left
 	  margin-right: 10px
+  .user-toolbar
+    position: absolute
+    bottom: 7px
+    left: 0
+    width: 100%
 </style>
