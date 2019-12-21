@@ -66,7 +66,7 @@ export default {
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
   .el-button
-    padding: 7px 15px
-    font-size: 12px
-    border-radius: 3px
+    //padding: 7px 15px
+    font-size: 13px
+    //border-radius: 3px
 </style>

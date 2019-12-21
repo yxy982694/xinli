@@ -2,8 +2,8 @@
 	<div class="user-container" ref="userContainer">
 		<div class="user-left" ref="userLeft">
 			<div class="expand-container">
-				<kt-button @click="openAll" icon="el-icon-folder-checked">展开所有节点</kt-button>
-				<kt-button @click="closeAll" icon="el-icon-folder-delete">关闭所有节点</kt-button>
+				<kt-button label="展开所有节点" @click="openAll" icon="fa fa-angle-double-down"></kt-button>
+				<kt-button label="关闭所有节点" @click="closeAll" icon="fa fa-angle-double-up"></kt-button>
 			</div>
 			<div class="tree-container">
 				<el-tree :data="treeData" node-key="id" ref="tree" @node-click="handleNodeClick"></el-tree>
@@ -12,55 +12,59 @@
 		<div class="user-middle" ref="userMiddle"></div>
 		<div class="user-right" ref="userRight">
 			<div class="right-top">
-				<div class="date-container">
+				<!-- <div class="date-container">
 					<p>创建时间:</p>
 					<el-date-picker
-            v-model="dateValue"
-            type="datetimerange"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
-            :default-time="['12:00:00','12:00:00']">
-          </el-date-picker>
-				  <kt-button icon="fa fa-calendar" class="user-search-btn" :label="$t('action.search')" @click="searchDate"></kt-button>
-				  <kt-button icon="fa fa-calendar" :label="$t('action.reset')" @click="resetDate"></kt-button>
-				</div>
+			            v-model="dateValue"
+			            type="datetimerange"
+			            start-placeholder="开始日期"
+			            end-placeholder="结束日期"
+			            :default-time="['12:00:00','12:00:00']">
+			        </el-date-picker>
+				    <kt-button icon="fa fa-calendar" class="user-search-btn" :label="$t('action.search')" @click="searchDate"></kt-button>
+				    <kt-button icon="fa fa-calendar" :label="$t('action.reset')" @click="resetDate"></kt-button>
+				</div> -->
 				<div class="search-container">
-		          <div class="checkbox-more">
+					<!-- <p class="input-left input-name">用户名:</p> -->
+	                <el-input type="text"  placeholder="用户名"></el-input>
+	                <kt-button icon="fa fa-search" type="primary" class="user-search-btn" :label="$t('action.search')" @click="searchDate"></kt-button>
+		          <!-- <div class="checkbox-more">
 		            <el-checkbox v-model="checkedBox" @change="changeBox">查询更多条件</el-checkbox>
-		          </div>
-              <div class="more-line"></div>
-		          <div class="search-container-border" v-show="checkedBox">
-                <div class="search-container-input">
-                  <p class="input-left input-name">用户名:</p>
-                  <el-input type="text" placeholder="请输入..."></el-input>
-                </div>
-                <div class="search-container-input search-container-middle">
-                  <p class="input-left">账号类型:</p>
-                  <el-select placeholder="请选择" v-model="selectedVal">
-                    <el-option value="全选" label="全选"></el-option>
-                    <el-option value="PC" label="PC"></el-option>
-                    <el-option value="APP" label="APP"></el-option>
-                    <el-option value="PC+APP" label="PC+APP"></el-option>
-                  </el-select>
-                </div>
-                <div class="search-container-input">
-                  <p class="input-left">是否授权:</p>
-                  <el-radio v-model="radioVal" label="all">全部</el-radio>
-                  <el-radio v-model="radioVal" label="yes">是</el-radio>
-                  <el-radio v-model="radioVal" label="no">否</el-radio>
-                </div>
-		          </div>
+		          </div> -->
+                <!-- <div class="more-line"></div> -->
+		          <!-- <div class="search-container-border">  --><!-- v-show="checkedBox" -->
+	               <!--  <div class="search-container-input">
+	                  <p class="input-left input-name">用户名:</p>
+	                  <el-input type="text" placeholder="请输入..."></el-input>
+	                  <kt-button icon="fa fa-calendar" class="user-search-btn" :label="$t('action.search')" @click="searchDate"></kt-button>
+	                </div> -->
+	                <!-- <div class="search-container-input search-container-middle">
+	                  <p class="input-left">账号类型:</p>
+	                  <el-select placeholder="请选择" v-model="selectedVal">
+	                    <el-option value="全选" label="全选"></el-option>
+	                    <el-option value="PC" label="PC"></el-option>
+	                    <el-option value="APP" label="APP"></el-option>
+	                    <el-option value="PC+APP" label="PC+APP"></el-option>
+	                  </el-select>
+	                </div>
+	                <div class="search-container-input">
+	                  <p class="input-left">是否授权:</p>
+	                  <el-radio v-model="radioVal" label="all">全部</el-radio>
+	                  <el-radio v-model="radioVal" label="yes">是</el-radio>
+	                  <el-radio v-model="radioVal" label="no">否</el-radio>
+	                </div> -->
+		          <!-- </div> -->
 				</div>
 			</div>
 			<div class="right-center">
-				<div class="bread-crumb">部门>杭州东方通信软件技术有限公司</div>
+				<!-- <div class="bread-crumb">部门>杭州东方通信软件技术有限公司</div> -->
 				<div class="btn-container">
-					<kt-button icon="fa fa-calendar" :label="$t('action.add')"></kt-button>
-					<kt-button icon="fa fa-calendar" label="详情"></kt-button>
-					<kt-button icon="fa fa-calendar" label="授权"></kt-button>
-					<kt-button icon="fa fa-calendar" label="批量授权"></kt-button>
-					<kt-button icon="fa fa-calendar" label="启用"></kt-button>
-					<kt-button icon="fa fa-calendar" label="停用"></kt-button>
+					<kt-button type="primary" icon="fa fa-calendar" :label="$t('action.add')"></kt-button>
+					<kt-button type="primary" icon="fa fa-calendar" label="详情"></kt-button>
+					<kt-button type="primary" icon="fa fa-calendar" label="授权"></kt-button>
+					<kt-button type="primary" icon="fa fa-calendar" label="批量授权"></kt-button>
+					<kt-button type="primary" icon="fa fa-calendar" label="启用"></kt-button>
+					<kt-button type="primary" icon="fa fa-calendar" label="停用"></kt-button>
 				</div>
 			</div>
 			<div class="right-bottom" :style="{height: tableHeight}">
@@ -319,7 +323,7 @@
 					let moveLen = middleLeft + (endX - startX)
 					// let maxT = _this.$refs.userContainer.clientWidth - _this.$refs.userMiddle.offsetWidth
 					// console.log(maxT)
-			      	if(moveLen<180) moveLen = 180
+			      	if(moveLen<240) moveLen = 240
 			      	// if(moveLen>maxT-180) moveLen = maxT-180
 			      	// _this.$refs.userMiddle.style.left = moveLen;
 			      	_this.$refs.userLeft.style.width = moveLen + "px";
@@ -375,36 +379,43 @@
       border: 1px solid #666
       overflow: hidden
       box-sizing: border-box
-      height: 420px
+      height: 100%
       position: relative
     .user-left
-      // border: 1px solid red
-      float: left
       box-sizing: border-box
       height: 100%
       background-color: #fff
-      overflow-x: auto
-      width: 180px
+      overflow: hidden
+      width: 240px
+      display: flex
+      flex-direction: column
+      .expand-container
+         display: flex
+         justify-content: center
       .tree-container
-        height: 380px
         width: 100%
         overflow: auto
+        flex: 1
     .user-middle
-      float: left
+      // float: left
       width: 5px
       height: 100%
       cursor: move
       box-sizing: border-box
       background-color: #FAECD8
+      overflow: hidden
     .user-right
       width: 70%
       flex: 1
+      display: flex
+      flex-direction: column
       // border: 1px solid red
-      float: left
+      // float: left
       box-sizing: border-box
       height: 100%
-      padding-top: 15px
+      // padding-top: 15px
       position: relative
+      overflow: hidden
     .date-container
       display: flex
       justify-content: center
@@ -412,9 +423,11 @@
     .user-search-btn
       margin-right: 15px
     .search-container
-       margin: 15px
-       position: relative
-       min-height: 10px
+        padding: 5px 20px
+        display: flex
+       // margin: 15px
+       // position: relative
+       // min-height: 10px
     .checkbox-more
       position: absolute
       left: 20px
@@ -450,29 +463,35 @@
        margin: 23px 30px 10px 30px
     .input-name
        width: 54px
+    .right-center
+      border-top: 1px solid #999
     .right-bottom
       overflow: auto
-      border: 1px solid green
+      flex: 1
+      overflow: auto
+      // border: 1px solid green
     .bread-crumb
 	    height: 30px
 	    line-height: 30px
 	    background-color: #abcdef
-	    border: 1px solid blue
+	    // border: 1px solid blue
      font-size: 13px
 	    box-sizing: border-box
 	    text-align: left
 	    padding: 0 10px
 	.btn-container
 	   display: flex
-	   border: 1px solid green
+	   // border: 1px solid green
 	   border-top: none
-	.el-button+.el-button
-	   margin-left: 0
+	.btn-container .el-button+.el-button
+	  margin-left: 0
 	.input-left
 	  margin-right: 10px
   .user-toolbar
-    position: absolute
-    bottom: 7px
-    left: 0
-    width: 100%
+  	// background-color: #fff
+  	margin: 5px 0
+    // position: absolute
+    // bottom: 7px
+    // left: 0
+    // width: 100%
 </style>

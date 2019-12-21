@@ -1,4 +1,5 @@
 <template>
+  <div class="header-container">
   <div class="headbar">
     <!-- 导航收缩 -->
     <div class="hamburg">
@@ -27,6 +28,7 @@
         <personal-panel :user="user"></personal-panel>
       </el-popover>
     </div> -->
+  </div>
   </div>
 </template>
 

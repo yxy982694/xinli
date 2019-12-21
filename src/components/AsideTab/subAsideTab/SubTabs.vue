@@ -255,8 +255,14 @@
 <style scoped lang="stylus" rel="stylesheet/stylus">
   @import "../../../common/stylus/variable"
   @import "../../../common/stylus/mixin"
-  .el-tabs
+  .el-con .el-tabs
     height: 100%
+    display: flex
+    flex-direction: column
+    justity-content: space-between
+    overflow: hidden
+  .el-con .el-tabs__content
+     flex: 1   
   .drop-down-container
     border: 1px solid $color-lightgra
     top: 175px !important

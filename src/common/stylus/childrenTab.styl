@@ -24,6 +24,7 @@
   margin-left: 5px
 .el-container .el-main
   padding: 0 !important
+  height: 100%
 .el-container .el-tabs--card>.el-tabs__header
   padding: 5px 0
   border: 1px solid $color-lightgray
@@ -43,11 +44,33 @@
   margin-left: 180px
 .el-container .el-tabs__content
     width: 100%
-    overflow: auto
+    overflow: hidden
+    flex: 1
+    // overflow: auto
     position: relative
-    height: 422px
+    // height: 422px
     border: 1px solid $color-lightgray
     box-sizing: border-box
 .children-container
   position: relative
-  margin-top: 15px
+  height: 100%
+  overflow: auto
+  display: flex
+  flex-direction: column
+  justity-content: space-between
+  // margin-top: 5px
+  .table-container
+   flex: 1
+.left-right-container
+  height: 100%
+.left-right-container
+  display: flex
+  flex-direction: column
+  justity-content: space-between
+.left-right-container .footer-container
+  margin-top: 20px
+.el-con2 .el-tab-pane
+  height: 100%
+  overflow: hidden
+.el-con2 .el-table
+  overflow: auto

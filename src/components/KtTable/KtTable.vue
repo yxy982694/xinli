@@ -221,6 +221,12 @@ export default {
 		}
   },
   mounted() {
+    // document.querySelector('.el-con .table-container').style.height = document.querySelector('.el-con .el-tabs__content').style.height-40 + 'px'
+      // var _this = this
+      // document.querySelector('.table-container').style.height = document.body.clientHeight-210 + 'px'
+      // window.addEventListener('resize',function () {
+      //   document.querySelector('.table-container').style.height = document.body.clientHeight-210 + 'px'
+      // })
     // console.log(this.columns)
     // this.$nextTick(function () {
       // console.log(this.data)
@@ -228,14 +234,22 @@ export default {
     // this.refreshPageRequest(1)
     // this.pageRequest.pageNum = 1
     // this.findPage()
+    // this.$nextTick(function () {
+    //   window.addEventListener('resize',function () {
+
+    //   })
+    // })
   }
 }
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
   .el-table
-    margin-top: 15px
+    // margin-top: 5px
   .table-container
     position: relative
-    padding: 0 5px 10px 5px
+    padding: 0 5px 0px 5px
+    overflow: auto
+    // height: 40px
+    margin-top: 5px
 </style>

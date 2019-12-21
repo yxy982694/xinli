@@ -8,6 +8,7 @@
     </template>
   </kt-buttons>
   <kt-table ref="ktTable" :loading="loading" @findPage="findPage" @handleEdit="editInfo" @addInfo="addInfo" @handleDelete="deleteInfo" :columns="filterColumns" :data="tableData" :border="true" :showCheckBox="false" :showPage="false" rowKey="id" :treeProps="treeProps" :defaultExpandAll="false"></kt-table>
+  <!-- <div class="table-seat"></div> -->
   <!--新增编辑界面-->
   <el-dialog :title="operation?'新增':'编辑'" width="40%" :visible.sync="dialogVisible" :close-on-click-modal="false">
   	<el-form :model="dataForm" label-width="100px" :rules="dataFormRules" ref="dataForm" :size="size"
@@ -428,4 +429,7 @@
         margin-left: 0
         width: 65px
         border: none
+  .table-seat
+    height: 10px
+    width: 100%
 </style>

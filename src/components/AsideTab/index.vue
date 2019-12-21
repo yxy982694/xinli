@@ -15,7 +15,7 @@
         </el-main>
       </el-container>
     </el-container>
-    <!-- <footer-bar></footer-bar> -->
+    <footer-bar></footer-bar>
   </div>
 </template>
 
@@ -57,6 +57,8 @@
             // }
         },
         mounted() {
+          document.querySelector('.left-right-container').style.height = document.body.clientHeight-100 + 'px'
+          // document.querySelector('.el-con').style.height = document.body.clientHeight-150 + 'px'
             // var _this = this
             // this.conHeight = this.getClientHeight() -100 + 'px'
             // window.onresize = function () {
@@ -122,10 +124,17 @@
     line-height: 56px
     text-align: left
     padding-left: 15px
-  .el-main
+  .el-con .el-main
     // background-color: #fff
     background: url('../../common/image/contentImg.png') no-repeat
     background-size: 100% 100%
     color: #333
     text-align: center
+    overflow: hidden
+  .el-con
+    flex: 1
+    overflow: hidden
+  .el-con2
+    height: 100%
+    overflow: hidden
 </style>

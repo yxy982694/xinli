@@ -1,5 +1,8 @@
 @import "./variable";
 // 顶部header部分样式
+.header-container
+   height: 60px
+   width: 100%
 .headbar
      position: fixed
      top: 0
@@ -132,10 +135,14 @@
 .tab-container
     height: 40px
     border-bottom: 1px solid #edfbf2
+    // margin-top: 60px
+    box-sizing: border-box
 // 切换菜单左边的样式，修改element-ui切换菜单 激活时的样式
 .el-tabs--card>.el-tabs__header .el-tabs__item.is-active
   background-color: $color-lightgray !important
   border: none !important
+.tab-container .el-tabs__item.is-active
+  height: 39px !important
 // 修改element-ui切换菜单 去掉框架自带的边框
 .el-tabs--card>.el-tabs__header .el-tabs__nav
   border: none !important
@@ -209,3 +216,4 @@
        background: hsla(0, 0%, 53%, 0.4)
      &:hover::-webkit-scrollbar-track
        background: hsla(0, 0%, 53%, 0.1)
+

@@ -1,7 +1,7 @@
 <template>
   <!--页面导航-->
-  <div>
-    <iframe v-if="!who" :src="iframeUrl" frameborder="0" style="width:100%;height:415px;"></iframe>
+  <div class="submain-container">
+    <iframe v-if="!who" :src="iframeUrl" frameborder="0" style="width:100%;height:100%;"></iframe>
     <component v-else :is="who"></component>
   </div>
 </template>
@@ -31,6 +31,9 @@
         //   }
         // },
         mounted: function () {
+          // if (document.querySelector('.el-con .el-tabs__content')) {
+          //   document.querySelector('.el-con .el-tabs__content').style.height = document.body.clientHeight-190 + 'px'
+          // }
           console.log('subMainmounted')
           // this.bindShortcut()
         },
@@ -81,6 +84,9 @@
   // .iframe-container
   //   width: 100%
   //   height: 420px
+  .submain-container
+    height: 100%
+    overflow: hidden
   .el-collapse
     border: 1px solid #EBEEF5 !important
     border-bottom-width: 10px!important

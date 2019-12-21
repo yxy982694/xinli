@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <div class="app-top"></div>
     <router-view/>
   </div>
 </template>
@@ -19,10 +18,5 @@ export default {
   text-align: center;
   color: #2c3e50;
   height:100%;
-  /* overflow:auto; */
-}
-.app-top{
-  height:60px;
-  width: 100%;
 }
 </style>

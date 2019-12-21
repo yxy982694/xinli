@@ -67,11 +67,12 @@
     border: 1px solid #EBEEF5
     background-color: #FFF
     color: #303133
-    min-height: 420px
+    height: 100%
+    overflow: auto
     box-sizing: border-box
     .children-tab-p
-      width: 150px
-      height: 120px
+      width: 120px
+      height: 80px
       text-align: center
       box-shadow: 0 0 1px 1px $color-lightgray
       border-radius: 5px
@@ -84,8 +85,8 @@
     position:absolute
     left: 0
     top: 0
-    width: 150px
-    height: 80px
+    width: 120px
+    height: 40px
     border-radius: 5px 5px 0 0
   .children-tab-text
     display: block

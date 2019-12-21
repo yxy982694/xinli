@@ -1,6 +1,6 @@
 <template>
   <div id="main-container" class="main-container">
-    <toggle-nav></toggle-nav>
+    <!-- <toggle-nav></toggle-nav> -->
     <!-- 主内容区域 -->
     <div class="main-content">
       <keep-alive>
@@ -13,13 +13,13 @@
 </template>
 
 <script>
-  import ToggleNav from "./ToggleNav"
-  import Intro from "../Intro/Intro"
-  export default {
-    name: 'MainContent',
-    components:{
-      ToggleNav,
-      Intro
-    },
-  }
+  // import ToggleNav from "./ToggleNav"
+  // import Intro from "../Intro/Intro"
+  // export default {
+  //   name: 'MainContent',
+  //   components:{
+  //     ToggleNav,
+  //     Intro
+  //   },
+  // }
 </script>
