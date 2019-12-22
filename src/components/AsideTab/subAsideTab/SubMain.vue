@@ -9,14 +9,13 @@
     // import { mapMutations } from 'vuex'
     export default {
         components: {
-          PersonalTabZhangsan: resolve => require(['@/views/Complaint/PersonalTab/Zhangsan'], resolve),
-          PersonalTabLisi: resolve => require(['@/views/Complaint/PersonalTab/Lisi'], resolve),
-          PersonalTabWangwu: resolve => require(['@/views/Complaint/PersonalTab/Wangwu'], resolve),
-          ConfigManageTabMaliu: resolve => require(['@/views/SysManage/OperProcess/ConfigManageTab/Maliu'], resolve),
+          PersonalTabProcessSheet: resolve => require(['@/views/Complaint/PersonalTab/ProcessSheet'], resolve),
+          PersonalTabQualityTest: resolve => require(['@/views/Complaint/PersonalTab/QualityTest'], resolve),
+          PersonalTabSuperviseWarehouse: resolve => require(['@/views/Complaint/PersonalTab/SuperviseWarehouse'], resolve),
+          ConfigManageTabOrganizateManage: resolve => require(['@/views/SysManage/OperProcess/ConfigManageTab/OrganizateManage'], resolve),
           ConfigManageTabBasicManage: resolve => require(['@/views/SysManage/OperProcess/ConfigManageTab/BasicManage'], resolve),
-          ConfigManageTabBasicManagee: resolve => require(['@/views/SysManage/OperProcess/ConfigManageTab/BasicManagee'], resolve),
-          ConfigManageTabXiaoqi: resolve => require(['@/views/SysManage/OperProcess/ConfigManageTab/Xiaoqi'], resolve),
-          ConfigManageTabHeiba: resolve => require(['@/views/SysManage/OperProcess/ConfigManageTab/Heiba'], resolve),
+          ConfigManageTabPositionManage: resolve => require(['@/views/SysManage/OperProcess/ConfigManageTab/PositionManage'], resolve),
+          ConfigManageTabRoleManage: resolve => require(['@/views/SysManage/OperProcess/ConfigManageTab/RoleManage'], resolve),
           ConfigManageTabResourceManage: resolve => require(['@/views/SysManage/OperProcess/ConfigManageTab/ResourceManage'], resolve),
           ConfigManageTabUserManage: resolve => require(['@/views/SysManage/OperProcess/ConfigManageTab/UserManage'], resolve),
           SubAsideTabMainPage: resolve => require(['@/components/AsideTab/SubAsideTab/MainPage'], resolve),

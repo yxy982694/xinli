@@ -12,15 +12,15 @@
                         label: '资源管理',
                         id: 1
                     },
-                    {   location: '/Complaint/PersonalTab/Lisi',
+                    {   location: '/SysManage/OperProcess/ConfigManageTab/PositionManage',
                         label: '职位管理',
                         id: 2
                     },
-                    {   location: '/Complaint/PersonalTab/Wangwu',
+                    {   location: '/SysManage/OperProcess/ConfigManageTab/RoleManage',
                         label: '角色管理',
                         id: 3
                     },
-                    {   location: '/SysManage/OperProcess/ConfigManageTab/Maliu',
+                    {   location: '/SysManage/OperProcess/ConfigManageTab/OrganizateManage',
                         label: '机构管理',
                         id: 4
                     },

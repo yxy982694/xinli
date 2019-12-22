@@ -13,15 +13,15 @@
         return {
           leftList:[
             {   id: '1',
-                location: '/Complaint/PersonalTab/Zhangsan',
+                location: '/Complaint/PersonalTab/ProcessSheet',
                 label: '个人投诉处理工单'
             },
             {   id: '2',
-                location: '/Complaint/PersonalTab/Lisi',
+                location: '/Complaint/PersonalTab/QualityTest',
                 label: '个人投诉质检'
             },
             {   id: '3',
-                location: '/Complaint/PersonalTab/Wangwu',
+                location: '/Complaint/PersonalTab/SuperviseWarehouse',
                 label: '督办遗留库'
             }
         ]}

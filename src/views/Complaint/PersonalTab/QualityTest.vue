@@ -1,5 +1,5 @@
 <template>
-  <div class="children-container">我是张三</div>
+  <div class="children-container">个人投诉质检</div>
 </template>
 
 <script>
