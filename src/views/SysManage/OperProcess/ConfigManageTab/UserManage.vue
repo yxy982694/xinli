@@ -106,24 +106,24 @@
 		          age: ''
 		        }],
 				treeData: [{
-					label: '一级 1右移',
+					label: '一级 1',
 					id: 1,
 					children: [{
-						label: '二级 1-1一级 1右',
+						label: '二级',
 						id: 11,
 						children: [{
-							label: '三级 1-1-1一级',
+							label: '三级',
 							id: 111
 						}]
 					}]
 				}, {
-					label: '一级 2一级 1右移一级',
+					label: '一级 2',
 					id: 2,
 					children: [{
 						label: '二级 2-1一级',
 						id: 21,
 						children: [{
-							label: '三级 2-1-1一级2-1-1一级2-1-1一级',
+							label: '三级 2-1-1一级2-1-1',
 							id: 211
 						}]
 					}, {
@@ -376,7 +376,7 @@
 <style scoped lang="stylus" rel="stylesheet/stylus">
     .user-container
       display: flex
-      border: 1px solid #666
+      border: 1px solid #dfdfdf
       overflow: hidden
       box-sizing: border-box
       height: 100%
@@ -488,8 +488,9 @@
 	.input-left
 	  margin-right: 10px
   .user-toolbar
-  	// background-color: #fff
-  	margin: 5px 0
+  	background-color: #409eff
+  	padding: 5px 0
+  	// color: #fff
     // position: absolute
     // bottom: 7px
     // left: 0
