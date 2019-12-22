@@ -80,9 +80,10 @@
 <style scoped lang="stylus" rel="stylesheet/stylus">
   @import "../../../common/stylus/variable"
   .children-tab
-    padding: 0 20px 15px 10px
+    padding: 0 0px 15px 0px
     display: flex
     flex-wrap: wrap
+    align-content: flex-start
     box-shadow: 0 2px 12px 0 rgba(0,0,0,.1)
     border: 1px solid #EBEEF5
     background-color: #FFF
@@ -91,13 +92,17 @@
     overflow: auto
     box-sizing: border-box
     .children-tab-p
-      width: 120px
+      width: 12%
+      min-width: 100px
       height: 80px
       text-align: center
-      box-shadow: 0 0 1px 1px $color-lightgray
+      border: 1px solid $color-lightgray
+      // box-shadow: 0 0 1px 1px $color-lightgray
       border-radius: 5px
       cursor: pointer
-      margin-left: 10px
+      // margin-left: 10px
+      box-sizing: border-box
+      margin-left: 2%
       margin-top: 15px
       position: relative
   .children-tab-image
@@ -105,8 +110,10 @@
     position:absolute
     left: 0
     top: 0
-    width: 120px
-    height: 40px
+    width: 100%
+    height: 50%
+    // width: 100px
+    // height: 30px
     border-radius: 5px 5px 0 0
   .children-tab-text
     display: block
