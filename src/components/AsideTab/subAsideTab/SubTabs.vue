@@ -21,7 +21,9 @@
           return {
             who: '',
             iframeUrl: '',
-            locationUrl: ''
+            locationUrl: '',
+            shortcutId: null,
+            tabObj: null
           }
         },
         components: { SubMain },
@@ -51,13 +53,13 @@
             },
             set: function () {}
           },
-          editableTabs: {
+          editableTabs: { // 保存的是tab中出现标签的整个对象（id,）
             get: function () {
               return this.$store.state.showTab.editableTabs
             },
             set: function () {}
           },
-          existTabs: {
+          existTabs: { // 保存的tab中出现标签的路径location
             get: function () {
               return this.$store.state.showTab.existTabs
             },
@@ -81,8 +83,15 @@
             },
             set: function () {}
           },
+          mainIdStoreTabObj: {
+            get: function () {
+              return this.$store.state.mainIdStoreTab.mainIdStoreTabObj
+            },
+            set: function () {}
+          },
         },
         mounted: function () {
+          this.tabObj = this.mainIdStoreTabObj[sessionStorage.getItem('id')]
           this.initData()
           var _this = this
           window.addEventListener('click',function () {
@@ -125,11 +134,18 @@
                     item.oncontextmenu = function (e) {
                       e.stopPropagation()
                       e.preventDefault()
+                      console.log(item)
                       _this.setContextMenuFlag(true)
                       // let array = item.id.split('/')
                       let x = e.clientX - 180
                       _this.setSwitch(item.id.slice(4))
-                      console.log(_this.clickedSwitch)
+                      for (let i=0;i<_this.editableTabs.length;i++) {
+                        if (_this.editableTabs[i].name == _this.clickedSwitch) {
+                          _this.shortcutId = _this.editableTabs[i].id
+                        }
+                      }
+                      // console.log(_this.shortcutId)
+                      // console.log(_this.clickedSwitch)
                       _this.setSwitchLabel(item.childNodes[0].data)
                       _this.setChildContextLeft(x+'px')
                       if (document.querySelector('.main-tabs .el-tabs__content')) {
@@ -151,36 +167,37 @@
               'setSwitch': 'setSwitch',
               'setSwitchLabel': 'setSwitchLabel',
               'setChildContextLeft': 'setChildContextLeft',
-              'setCenterMenuId': 'setCenterMenuId'
+              'setCenterMenuId': 'setCenterMenuId',
+              'setMainIdStoreTabObj': 'setMainIdStoreTabObj'
             }),
             closeCurrentHandle: function () {
               console.log(this.clickedSwitch)
               this.removeTab(this.clickedSwitch)
             },
             closeOtherHandle: function () {
+              // console.log(this.shortcutId)
               this.setEditableTabs([{
                 label: '主页',
-                name: '/SubAsideTab/MainPage'
+                name: '/SubAsideTab/MainPage',
+                id: 0
               },{
                   label: this.clickedLabel,
-                  name: this.clickedSwitch
+                  name: this.clickedSwitch,
+                  id: this.shortcutId
               }])
               this.setExistTabs(['/SubAsideTab/MainPage',this.clickedSwitch])
               // this.existTabs = ['/SubAsideTab/MainPage',this.clickedSwitch]
               this.setCurrentTabLabel(this.clickedSwitch)
               this.setCurrentTitle(this.clickedLabel)
+              this.setMainIdStoreTabObj({
+                id: sessionStorage.getItem('id'),
+                editableTabs: this.editableTabs,
+                existTabs: this.existTabs,
+                currentTabLabel: this.currentTabLabel,
+                currentTitle: this.currentTitle
+              })
             },
             closeAllHandle: function () {
-              this.initData()
-               // this.setEditableTabs([])
-               // this.setExistTabs([])
-               // this.setCurrentTabLabel(null)
-               // this.setCurrentTitle(null)
-            },
-            refreshCurrentHandle: function () {
-              window.location.reload()
-            },
-            initData: function () {
               this.setCurrentTabLabel('/SubAsideTab/MainPage')
               this.setEditableTabs([{
                   label: '主页',
@@ -190,6 +207,54 @@
               console.log(this.currentTabLabel)
               this.setExistTabs(['/SubAsideTab/MainPage'])
               this.setCurrentTitle('主页')
+              this.setMainIdStoreTabObj({
+                id: sessionStorage.getItem('id'),
+                editableTabs: this.editableTabs,
+                existTabs: this.existTabs,
+                currentTabLabel: this.currentTabLabel,
+                currentTitle: this.currentTitle
+              })
+               // this.setEditableTabs([])
+               // this.setExistTabs([])
+               // this.setCurrentTabLabel(null)
+               // this.setCurrentTitle(null)
+            },
+            refreshCurrentHandle: function () {
+              window.location.reload()
+            },
+            initData: function () {
+              if (this.tabObj) {
+                this.setCurrentTabLabel(this.tabObj.currentTabLabel)
+                this.setEditableTabs(this.tabObj.editableTabs)
+                this.setExistTabs(this.tabObj.editableTabs)
+                this.setCurrentTitle(this.tabObj.currentTitle)
+              } else {
+                this.setCurrentTabLabel('/SubAsideTab/MainPage')
+                this.setEditableTabs([{
+                    label: '主页',
+                    name: '/SubAsideTab/MainPage',
+                    id: 0
+                }])
+                this.setExistTabs(['/SubAsideTab/MainPage'])
+                this.setCurrentTitle('主页')
+              }
+              // this.setCurrentTabLabel(this.tabObj.currentTabLabel)
+              // this.setEditableTabs(this.tabObj.editableTabs)
+              // console.log(this.currentTabLabel)
+              // this.setExistTabs(this.tabObj.editableTabs)
+              // this.setCurrentTitle('主页')
+              // console.log(this.routerId)
+              // this.mainIdStoreTabObj[this.routerId]
+              // console.log(this.mainIdStoreTabObj[this.routerId])
+              // this.setCurrentTabLabel('/SubAsideTab/MainPage')
+              // this.setEditableTabs([{
+              //     label: '主页',
+              //     name: '/SubAsideTab/MainPage',
+              //     id: 0
+              // }])
+              // console.log(this.currentTabLabel)
+              // this.setExistTabs(['/SubAsideTab/MainPage'])
+              // this.setCurrentTitle('主页')
               // this.setCurrentTabLabel(this.leftList[0].location)
               // this.setEditableTabs([{
               //     label: this.leftList[0].label,
@@ -208,6 +273,15 @@
                       id: id
                   })
                   this.addExistTabs(name)
+                  this.setMainIdStoreTabObj({
+                    id: sessionStorage.getItem('id'),
+                    editableTabs: this.editableTabs,
+                    existTabs: this.existTabs,
+                    currentTabLabel: this.currentTabLabel,
+                    currentTitle: this.currentTitle
+                  })
+                  console.log(sessionStorage.getItem('id'))
+                  console.log(this.mainIdStoreTabObj)
               }
             },
             removeTab(targetName) {
@@ -234,6 +308,13 @@
                 this.setCurrentTabLabel(activeName)
                 let remainTabs = tabs.filter(tab => tab.name !== targetName)
                 this.setEditableTabs(remainTabs)
+                this.setMainIdStoreTabObj({
+                  id: sessionStorage.getItem('id'),
+                  editableTabs: this.editableTabs,
+                  existTabs: this.existTabs,
+                  currentTabLabel: this.currentTabLabel,
+                  currentTitle: this.currentTitle
+                })
             },
             tabClick(objectTab) {
               // this.currentTabLabel = objectTab.name
@@ -245,9 +326,18 @@
                 if (this.editableTabs[i].label == objectTab.label) {
                   let id = this.editableTabs[i].id
                   this.setCenterMenuId(id)
+                  break
                 }
               }
+              this.setCurrentTitle(objectTab.label)
               this.setCurrentTabLabel(objectTab.name)
+              this.setMainIdStoreTabObj({
+                id: sessionStorage.getItem('id'),
+                editableTabs: this.editableTabs,
+                existTabs: this.existTabs,
+                currentTabLabel: this.currentTabLabel,
+                currentTitle: this.currentTitle
+              })
             }
         }
     }

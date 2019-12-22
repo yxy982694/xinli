@@ -18,6 +18,12 @@
             },
             set: function () {}
           },
+          editableTabs: { // 保存的是tab中出现标签的整个对象（id,）
+            get: function () {
+              return this.$store.state.showTab.editableTabs
+            },
+            set: function () {}
+          },
           currentTabLabel: {
             get: function () {
               return this.$store.state.showTab.currentTabLabel
@@ -29,7 +35,13 @@
               return this.$store.state.showTab.currentTitle
             },
             set: function () {}
-          }
+          },
+          mainIdStoreTabObj: {
+            get: function () {
+              return this.$store.state.mainIdStoreTab.mainIdStoreTabObj
+            },
+            set: function () {}
+          },
         },
         methods: {
            ...mapMutations({
@@ -37,6 +49,7 @@
               'addExistTabs': 'addExistTabs',
               'setCurrentTabLabel': 'setCurrentTabLabel',
               'setCurrentTitle': 'setCurrentTitle',
+              'setMainIdStoreTabObj': 'setMainIdStoreTabObj'
             }),
            addTab(targetLabel,name,id) {
                 this.setCurrentTabLabel(name)
@@ -48,6 +61,13 @@
                         id: id
                     })
                     this.addExistTabs(name)
+                    this.setMainIdStoreTabObj({
+                      id: sessionStorage.getItem('id'),
+                      editableTabs: this.editableTabs,
+                      existTabs: this.existTabs,
+                      currentTabLabel: this.currentTabLabel
+                    })
+                    console.log(this.mainIdStoreTabObj)
                 }
             },
         },
