@@ -44,13 +44,13 @@
           //   document.querySelector('.el-con').style.height = document.body.clientHeight-150 + 'px'
           // }
           if (document.querySelector('.left-right-container')) {
-            document.querySelector('.left-right-container').style.height = document.body.clientHeight-100 + 'px'
+            document.querySelector('.left-right-container').style.height = document.body.clientHeight-140 + 'px'
           }
           // if (document.querySelector('.el-con .el-tabs__content')) {
           //   document.querySelector('.el-con .el-tabs__content').style.height = document.body.clientHeight-190 + 'px'
           // }
         },300)
-        
+
       })
     },
     methods: {
@@ -65,8 +65,9 @@
      flex-direction: column
   .main-footer
     flex: 1
-    background:url('../../common/image/contentImg.png') no-repeat
-    background-size: 100% 100%
+    background-color: #f0f2f5
+    // background:url('../../common/image/contentImg.png') no-repeat
+    // background-size: 100% 100%
     // height: calc(100% - 60px)
     /* IE 浏览器 */
     /*三角箭头的颜色*/

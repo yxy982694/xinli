@@ -60,10 +60,14 @@
         this.loading = true
         let userInfo = { account:this.loginForm.account, password:this.loginForm.password,
           captcha:this.loginForm.captcha }
+          console.log('login.vue外：')
         this.$api.login.login(userInfo).then((res) => {  // 调用登录接口
+           console.log('执行成功函数内')
+           console.log(res)
           if(res.msg != null) {
             this.$message({ message: res.msg, type: 'error' })
           } else {
+            console.log('msg没值')
             Cookies.set('token', res.data.token) // 放置token到Cookie
             sessionStorage.setItem('user', userInfo.account) // 保存用户到本地会话
             this.$store.commit('menuRouteLoaded',false)//要求重新加载导航菜单
@@ -71,6 +75,7 @@
           }
           this.loading = false
         }).catch((res) => {
+          console.log('catch函数')
           this.$message({ message: res.message, type: 'error' })
         })
       },

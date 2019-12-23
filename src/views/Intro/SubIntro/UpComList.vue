@@ -71,6 +71,8 @@
 <style scoped lang="stylus" rel="stylesheet/stylus">
   @import "../../../common/stylus/variable"
   @import "../../../common/stylus/mixin"
+   .content-radius
+     height: 350px
    table,tr
      width: 100%
    th,td

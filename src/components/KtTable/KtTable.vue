@@ -17,7 +17,7 @@
 <template>
   <div class="table-container">
     <!--表格栏-->
-    <el-table :data="data.content" :highlight-current-row="highlightCurrentRow" @selection-change="selectionChange"
+    <el-table height="100%" :data="data.content" :highlight-current-row="highlightCurrentRow" @selection-change="selectionChange"
           @current-change="handleCurrentChange" v-loading="loading" :row-class-name="handleClass" :element-loading-text="$t('action.loading')" :border="border" :stripe="stripe"
           :show-overflow-tooltip="showOverflowTooltip" @cell-click="clickCell" :cell-class-name="cellClass"  :size="size" :align="align" style="width:100%;" :tree-props="treeProps"  :default-expand-all="defaultExpandAll" :row-key="rowKey" > <!-- :tree-props="treeProps"  :default-expand-all="defaultExpandAll" :row-key="rowKey" -->
       <el-table-column type="selection" width="40" v-if="showCheckBox"></el-table-column><!-- :max-height="maxHeight" -->

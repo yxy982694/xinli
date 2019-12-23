@@ -16,6 +16,7 @@ export default function $axios(options) {
     instance.interceptors.request.use(
       config => {
         let token = Cookies.get('token')
+        console.log('axios.js'+token)
         // 发送请求时携带token
         if (token) {
           config.headers.token = token

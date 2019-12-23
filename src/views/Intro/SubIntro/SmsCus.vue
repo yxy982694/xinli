@@ -59,6 +59,8 @@
 <style scoped lang="stylus" rel="stylesheet/stylus">
   @import "../../../common/stylus/variable"
   @import "../../../common/stylus/mixin"
+    .content-radius
+      height: 390px
     .fast-container
       display: flex
       flex-wrap: wrap

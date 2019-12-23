@@ -57,7 +57,7 @@
             // }
         },
         mounted() {
-          document.querySelector('.left-right-container').style.height = document.body.clientHeight-100 + 'px'
+          document.querySelector('.left-right-container').style.height = document.body.clientHeight-140 + 'px'
           // document.querySelector('.el-con').style.height = document.body.clientHeight-150 + 'px'
             // var _this = this
             // this.conHeight = this.getClientHeight() -100 + 'px'
@@ -81,7 +81,7 @@
     // background-color: rgb(205,244,253)
     // background-color: rgb(48, 65, 86)
     position: fixed
-    top: 100px
+    top: 140px
     left: 0
     bottom: 62px
     overflow-x: hidden

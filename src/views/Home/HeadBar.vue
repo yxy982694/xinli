@@ -2,19 +2,43 @@
   <div class="header-container">
   <div class="headbar">
     <!-- 导航收缩 -->
-    <div class="hamburg">
-      <h1><img src="../../common/image/ChinaMobile.png" ></h1>
-      <p class="divide-logo"></p>
-      <h3>河南移动集中运维管理系统</h3>
-    </div>
+      <div class="header-left">
+        <h1><img src="../../common/image/ChinaMobile.png" ></h1>
+        <h3>河南移动集中运维管理系统</h3>
+      </div>
+      <div class="header-right">
+        <div class="header-business">
+          <p class="header-business-item user-name">cuipf 欢迎您</p>
+          <p class="header-business-item">
+            <i class="el-icon-bell"></i>
+            <span>消息</span>
+          </p>
+          <p class="header-business-item">
+            <i class="el-icon-switch-button"></i>
+            <span>退出</span>
+          </p>
+          <p class="header-business-item">
+            <i class="el-icon-bell"></i>
+            <span>旧版入口</span>
+          </p>
+          <p class="header-business-item">
+            <i class="el-icon-bell"></i>
+            <span>掌上运维客户端</span>
+          </p>
+          <p class="header-business-item">
+            <i class="el-icon-bell"></i>
+            <span>业务开通</span>
+          </p>
+        </div>
+        <div class="navbar">
+          <el-menu ref="navmenu" mode="horizontal" default-active="1" :class="collapse?'menu-bar-collapse-width':'menu-bar-width'" class="el-menu-demo" background-color="transparent"
+                     :collapse="collapse" :collapse-transition="true" :unique-opened="true" text-color="#fff" active-text-color="#fff"
+                     @open="handleopen" @close="handleclose" @select="handleselect">
+            <menu-tree v-for="item in navTree" :key="item.id" :menu="item"></menu-tree>
+          </el-menu>
+        </div>
+      </div>
     <!-- 导航菜单 -->
-    <div class="navbar">
-      <el-menu ref="navmenu" mode="horizontal" default-active="1" :class="collapse?'menu-bar-collapse-width':'menu-bar-width'" class="el-menu-demo" background-color="transparent"
-                 :collapse="collapse" :collapse-transition="true" :unique-opened="true" text-color="#fff" active-text-color="#fff"
-                 @open="handleopen" @close="handleclose" @select="handleselect">
-        <menu-tree v-for="item in navTree" :key="item.id" :menu="item"></menu-tree>
-      </el-menu>
-    </div>
     <!-- 工具栏 -->
     <!-- <div class="toolbar">
       <el-popover ref="popover-message" placement="bottom-end" trigger="click">
@@ -28,7 +52,12 @@
         <personal-panel :user="user"></personal-panel>
       </el-popover>
     </div> -->
-  </div>
+    </div>
+    <div class="header-center">
+      <p class="header-center-bg1"></p>
+      <p class="header-center-bg2"></p>
+      <p class="header-center-bg3"></p>
+    </div>
   </div>
 </template>
 

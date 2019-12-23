@@ -72,6 +72,8 @@
 <style scoped lang="stylus" rel="stylesheet/stylus">
   @import "../../../common/stylus/variable"
   @import "../../../common/stylus/mixin"
+    .content-radius
+      height: 200px
     .message-item
       display: flex
       justify-content: space-between

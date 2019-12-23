@@ -69,7 +69,7 @@
   @import "../../../common/stylus/variable"
   @import "../../../common/stylus/mixin"
   .content-radius
-    height: 151px
+    height: 240px
   .lastest-item
     display: flex
     justify-content: space-between

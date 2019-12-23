@@ -1,15 +1,24 @@
 <template>
   <div class="content-radius">
-    <div class="section-title">
-      <p>| 我的待办</p>
+    <div class="todo-header">
+      <div class="todo-userimg"></div>
+      <div class="todo-usertext">
+        <p class="toto-username">您好，cuipf</p>
+        <p class="todo-userdep">所属部门：资管室</p>
+      </div>
     </div>
-    <div  v-for="item in dbList" :key="item.id" class="need-item font-smallnum">
-      <p class="need-left">
-        <i class="el-icon-caret-right"></i>
-        <span>{{item.name}}</span>
-      </p>
-      <p class="serial-number">.............................................</p>
-      <p class="label-btn">{{ item.value }}</p>
+    <div class="todo-items">
+      <div v-for="item in dbList" :key="item.id" class="need-item font-smallnum">
+          <i class="el-icon-bell todo-itemicon"></i>
+          <span class="todo-itemname">{{item.name}}</span>
+          <span class="todo-itemvalue">{{item.value}}</span>
+        <!-- <p class="need-left">
+          <i class="el-icon-caret-right"></i>
+          <span>{{item.name}}</span>
+        </p>
+        <p class="serial-number">.............................................</p>
+        <p class="label-btn">{{ item.value }}</p> -->
+      </div>
     </div>
   </div>
 </template>
@@ -44,7 +53,38 @@
   @import "../../../common/stylus/variable"
   @import "../../../common/stylus/mixin"
    .content-radius
-     height: 151px
+     height: 300px
+     display: flex
+     flex-direction: column
+   .todo-header
+     height: 106px
+     width: 100%
+     background-color: #4c83ef
+     // background: url("../../../common/image/contentImg.png") no-repeat
+     // background-size: 100% 100%
+     display: flex
+     justify-content: center
+     align-items: center
+     .todo-userimg
+        height: 60px
+        width: 60px
+        border: 2px solid #fff
+        border-radius: 50%
+        background: url("../../../common/image/contentImg.png") no-repeat
+        background-size: 100% 100%
+     .todo-usertext
+        margin-left: 15px
+        text-align: left
+        color: #fff
+        .todo-userdep
+          margin-top: 10px
+          font-size: $font-size-medium
+        .toto-username
+          font-size: $font-size-medium-x
+          font-weight: bold
+   .todo-items
+     flex: 1
+     padding: 30px 0 30px
    .el-divider--horizontal
      margin: 6px 0 !important
    .need-item
@@ -52,6 +92,7 @@
      align-items: center
      justify-content: space-between
      font-size: $font-size-small
+     padding: 0 30px
      &+.need-item
        margin-top: 12px
      .serial-number

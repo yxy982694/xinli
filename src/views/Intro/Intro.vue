@@ -1,12 +1,13 @@
 <template>
   <div class="page-container">
-    <el-row :gutter="10">
+    <el-row :gutter="15">
       <el-col :span="5" class="colHeight">
         <div class="grid-content bg-purple">
           <!-- 我的待办 -->
           <my-todo></my-todo>
           <!-- 快速通道 -->
-          <turbe></turbe>
+          <expertDuty></expertDuty>
+          <!-- <turbe></turbe> -->
         </div>
       </el-col>
       <el-col :span="14" class="colHeight">
@@ -46,7 +47,8 @@
       <el-col :span="5" class="colHeight">
         <div class="grid-content bg-purple">
           <!-- 专家值班 -->
-          <expertDuty></expertDuty>
+          <turbe></turbe>
+          <!-- <expertDuty></expertDuty> -->
           <!-- 短信定制 -->
           <smsCus></smsCus>
         </div>

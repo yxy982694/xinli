@@ -8,9 +8,13 @@
   </div>
 </template>
 <style scoped lang="stylus" rel="stylesheet/stylus">
+  .footer-container
+    background-color: #d5dee6
+    margin-top: 15px
   .foot-info
-    height: 30px
-    line-height: 30px
+    height: 40px
+    line-height: 40px
+    color: #6c7382
   .info-text
     margin-left: 60px
 </style>

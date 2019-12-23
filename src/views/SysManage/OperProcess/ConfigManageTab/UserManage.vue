@@ -67,8 +67,8 @@
 					<kt-button type="primary" icon="fa fa-calendar" label="停用"></kt-button>
 				</div>
 			</div>
-			<div class="right-bottom" :style="{height: tableHeight}">
-				<el-table :data="tableData.content" :border="true">
+			<div class="right-bottom">
+				<el-table :data="tableData.content" :border="true" height="100%">
 					<el-table-column type="selection" width="40"></el-table-column>
 					<el-table-column v-for="column in columns" header-align="center" align="center" :prop="column.prop" :label="column.label"
 					 :min-width="column.minWidth" :key="column.prop" :sortable="true">
@@ -100,7 +100,6 @@
         		checkedBox: false,
             selectedVal: '',
             radioVal: '',
-            tableHeight: '220px',
 		        outData: [{
 		          name: '',
 		          age: ''
@@ -356,11 +355,6 @@
 				console.log('点击')
 			},
       changeBox: function () {
-        if (this.checkedBox) {
-          this.tableHeight = '170px'
-        } else {
-          this.tableHeight = '220px'
-        }
       },
       searchDate: function () {
         console.log(this.dateValue)
