@@ -2,20 +2,19 @@
     <!-- 专家值班 -->
     <div class="content-radius">
       <div class="section-title">
-        <p>| 专家值班</p>
-        <p class="section-title-click">
-          <i class="el-icon-edit-outline"></i>
-          <span class="cursor-pointer">全部</span>
-        </p>
+        <p>专家值班</p>
+        <p class="section-title-click cursor-pointer">查看全部</p>
       </div>
       <div class="duty-container">
-        <div class="duty-item font-smallnum" v-for="item in dutyData" :key="item.ID">
-          <p class="text-left">
-            <i class="el-icon-s-custom"></i>
-            <span>{{ dutyMap[parseInt(item.SPECIALTY)-1] }}</span>
-          </p>
-          <p class="text-center">{{item.NAME}}</p>
-          <p class="text-right">{{item.MOBILE}}</p>
+        <div class="duty-item" v-for="item in dutyData" :key="item.ID">
+          <div class="duty-userimg"></div>
+          <div class="duty-usertext">
+            <p class="duty-username">
+              <span class="duty-name">{{item.NAME}}</span>
+              <span class="duty-posit">{{ dutyMap[parseInt(item.SPECIALTY)-1] }}</span>
+            </p>
+            <p class="duty-tel">{{item.MOBILE}}</p>
+          </div>
         </div>
       </div>
     </div>
@@ -34,7 +33,9 @@
           this.$api.home.getExpertDutyList().then((res) => {
               console.log(res)
               const result = res
-              this.dutyData = result.data
+              for (let i=0;i<6;i++) {
+                this.dutyData.push(res.data[i])
+              }
           })
       }
   }
@@ -46,18 +47,26 @@
       height: 505px
     .duty-item
       display: flex
-      justify-content: space-between
       align-items: center
       padding-right: 10px
-      .text-left
-        width: 70px
-        text-align: left
-      .text-center
-        flex: 1
-        text-align: center
-      .text-right
-        width: 70px
-        text-align: right
+      margin: 0 30px
       &+.duty-item
-        margin-top: 15px
+        margin-top: 32px
+    .duty-item:first-child
+       margin-top: 20px
+    .duty-userimg
+      width: 40px
+      height: 40px
+      border-radius: 50%
+      background: url("../../../common/image/contentImg.png") no-repeat
+      background-size: 100% 100%
+      margin-right: 10px
+    .duty-name
+      font-size: $font-size-medium
+    .duty-posit
+      font-size: $font-size-small
+    .duty-tel
+      font-size: $font-size-small
+      text-align: left
+      margin-top: 7px
 </style>

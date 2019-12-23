@@ -1,7 +1,7 @@
 <template>
   <div class="content-radius">
     <div class="section-title">
-      <p>| 待办列表</p>
+      <p>待办列表</p>
     </div>
     <table class="font-smallnum">
         <thead>

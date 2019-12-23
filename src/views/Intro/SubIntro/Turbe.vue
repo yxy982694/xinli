@@ -1,11 +1,7 @@
 <template>
   <div class="content-radius">
     <div class="section-title">
-      <p>| 快速通道</p>
-      <p class="section-title-click">
-        <i class="el-icon-edit-outline"></i>
-        <span class="cursor-pointer">编辑</span>
-      </p>
+      <p>快速通道</p>
     </div>
     <div class="fast-container">
       <div class="fast-item font-smallnum" v-for="item in channelList" :key="item.id" :title="item.name">

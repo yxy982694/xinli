@@ -10,10 +10,10 @@
   <!--  + 换一种思路： 当评论成功后，在客户端，手动拼接出一个 最新的评论对象，然后 调用 数组的 unshift 方法， 把最新的评论，追加到  data 中 comments 的开头；这样，就能 完美实现刷新评论列表的需求；-->
   <div class="content-radius">
     <div class="section-title">
-      <p>| 留言板</p>
+      <p>留言板</p>
       <p class="section-title-click">
         <span class="cursor-pointer" @click="clickNew">新建留言</span>
-        <span class="cursor-pointer">全部</span>
+        <span class="cursor-pointer">查看全部</span>
       </p>
     </div>
     <div class="message-items">

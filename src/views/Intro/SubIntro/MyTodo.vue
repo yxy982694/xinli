@@ -8,16 +8,12 @@
       </div>
     </div>
     <div class="todo-items">
-      <div v-for="item in dbList" :key="item.id" class="need-item font-smallnum">
-          <i class="el-icon-bell todo-itemicon"></i>
-          <span class="todo-itemname">{{item.name}}</span>
+      <div v-for="item in dbList" :key="item.id" class="need-item">
+          <p>
+            <i class="el-icon-bell todo-itemicon"></i>
+            <span class="todo-itemname">{{item.name}}</span>
+          </p>
           <span class="todo-itemvalue">{{item.value}}</span>
-        <!-- <p class="need-left">
-          <i class="el-icon-caret-right"></i>
-          <span>{{item.name}}</span>
-        </p>
-        <p class="serial-number">.............................................</p>
-        <p class="label-btn">{{ item.value }}</p> -->
       </div>
     </div>
   </div>
@@ -84,17 +80,19 @@
           font-weight: bold
    .todo-items
      flex: 1
-     padding: 30px 0 30px
+     padding: 0 30px
+     font-size: $font-size-medium
    .el-divider--horizontal
      margin: 6px 0 !important
    .need-item
      display: flex
      align-items: center
      justify-content: space-between
-     font-size: $font-size-small
-     padding: 0 30px
-     &+.need-item
-       margin-top: 12px
+     margin-top: 38px
+     .todo-itemvalue
+       font-weight: bold
+     .todo-itemicon
+       margin-right: 10px
      .serial-number
        flex: 1
        overflow: hidden
