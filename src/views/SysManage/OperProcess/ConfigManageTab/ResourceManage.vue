@@ -1,84 +1,87 @@
 <template>
-<div class="children-container">
-  <kt-buttons>
-    <template slot="toolSearch">
-      <el-input v-model="userName" placeholder="用户名"></el-input>
-      <kt-button icon="fa fa-search" :label="$t('action.search')" perms="sys:role:view" type="primary" @click="searchInfo(userName)"></kt-button>
-      <!-- <kt-button icon="fa fa-plus" :label="$t('action.add')" perms="sys:user:add" type="primary" @click="addInfo(false)"></kt-button> -->
-    </template>
-  </kt-buttons>
-  <kt-table ref="ktTable" :loading="loading" @findPage="findPage" @handleEdit="editInfo" @addInfo="addInfo" @handleDelete="deleteInfo" :columns="filterColumns" :data="tableData" :border="true" :showCheckBox="false" :showPage="false" rowKey="id" :treeProps="treeProps" :defaultExpandAll="false"></kt-table>
-  <!-- <div class="table-seat"></div> -->
-  <!--新增编辑界面-->
-  <el-dialog :title="operation?'新增':'编辑'" width="40%" :visible.sync="dialogVisible" :close-on-click-modal="false">
-  	<el-form :model="dataForm" label-width="100px" :rules="dataFormRules" ref="dataForm" :size="size"
-  		label-position="right">
-  		<el-form-item label="id" prop="id" v-if="false">
-  			<el-input v-model="dataForm.id" auto-complete="off"></el-input>
-  		</el-form-item>
-  		<el-form-item label="名称" prop="name">
-  			<el-input v-model="dataForm.name" auto-complete="off"></el-input>
-  		</el-form-item>
-  		<el-form-item label="中文名称" prop="nameCn">
-  			<el-input v-model="dataForm.nameCn" auto-complete="off"></el-input>
-  		</el-form-item>
-  		<el-form-item label="路径" prop="location">
-  			<el-input v-model="dataForm.location" auto-complete="off"></el-input>
-  		</el-form-item>
-  		<el-form-item label="菜单类型" prop="type">
-        <el-select v-model="dataForm.type" placeholder="请选择"
-        	 style="width: 100%;">
-        	<el-option v-for="item in typeArr" :key="item.id"
-        		:label="item.value" :value="item.id">
-        	</el-option>
-        </el-select>
-  		</el-form-item>
-      <el-form-item label="是否网页" prop="isWebpage">
-        <el-select v-model="dataForm.isWebpage" placeholder="请选择"
-        	 style="width: 100%;">
-        	<el-option v-for="item in isWebpageArr" :key="item.id"
-        		:label="item.value" :value="item.id">
-        	</el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="排序序号" prop="orderby">
-      	<el-input v-model="dataForm.orderby" auto-complete="off"></el-input>
-      </el-form-item>
-      <el-form-item label="状态" prop="status">
-        <el-select v-model="dataForm.status" placeholder="请选择"
-        	 style="width: 100%;">
-        	<el-option v-for="item in statsArr" :key="item.id"
-        		:label="item.value" :value="item.id">
-        	</el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="菜单描述" prop="remark">
-      	<el-input v-model="dataForm.remark" auto-complete="off"></el-input>
-      </el-form-item>
-      <el-form-item label="菜单图标路径" prop="image">
-      	<el-input v-model="dataForm.image" auto-complete="off"></el-input>
-      </el-form-item>
-      <el-form-item label="创建时间" prop="createTime">
-      	<el-input v-model="dataForm.createTime" auto-complete="off"></el-input>
-      </el-form-item>
-      <el-form-item label="创建人" prop="creator">
-      	<el-input v-model="dataForm.creator" auto-complete="off"></el-input>
-      </el-form-item>
-      <el-form-item label="父id" prop="parentId" v-if="false">
-      	<el-input v-model="dataForm.parentId" auto-complete="off"></el-input>
-      </el-form-item>
-  	</el-form>
-  	<div slot="footer" class="dialog-footer">
-  		<el-button :size="size" @click.native="dialogVisible = false">{{$t('action.cancel')}}</el-button>
-  		<el-button :size="size" type="primary" @click.native="submitForm" >{{$t('action.submit')}}</el-button>
-  	</div><!-- :loading="editLoading" -->
-  </el-dialog>
+<div class="resource-container">
+  <div class="children-container">
+    <kt-buttons>
+      <template slot="toolSearch">
+        <el-input v-model="userName" placeholder="用户名"></el-input>
+        <kt-button icon="fa fa-search" :label="$t('action.search')" perms="sys:role:view" type="primary" @click="searchInfo(userName)"></kt-button>
+        <!-- <kt-button icon="fa fa-plus" :label="$t('action.add')" perms="sys:user:add" type="primary" @click="addInfo(false)"></kt-button> -->
+      </template>
+    </kt-buttons>
+    <kt-table ref="ktTable" :loading="loading" @findPage="findPage" @handleEdit="editInfo" @addInfo="addInfo" @handleDelete="deleteInfo" :columns="filterColumns" :data="tableData" :border="true" :showCheckBox="false" :showPage="false" rowKey="id" :treeProps="treeProps" :defaultExpandAll="false"></kt-table>
+    <!-- <div class="table-seat"></div> -->
+    <!--新增编辑界面-->
+    <el-dialog :title="operation?'新增':'编辑'" width="40%" :visible.sync="dialogVisible" :close-on-click-modal="false">
+      <el-form :model="dataForm" label-width="100px" :rules="dataFormRules" ref="dataForm" :size="size"
+        label-position="right">
+        <el-form-item label="id" prop="id" v-if="false">
+          <el-input v-model="dataForm.id" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="名称" prop="name">
+          <el-input v-model="dataForm.name" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="中文名称" prop="nameCn">
+          <el-input v-model="dataForm.nameCn" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="路径" prop="location">
+          <el-input v-model="dataForm.location" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="菜单类型" prop="type">
+          <el-select v-model="dataForm.type" placeholder="请选择"
+             style="width: 100%;">
+            <el-option v-for="item in typeArr" :key="item.id"
+              :label="item.value" :value="item.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="是否网页" prop="isWebpage">
+          <el-select v-model="dataForm.isWebpage" placeholder="请选择"
+             style="width: 100%;">
+            <el-option v-for="item in isWebpageArr" :key="item.id"
+              :label="item.value" :value="item.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="排序序号" prop="orderby">
+          <el-input v-model="dataForm.orderby" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="状态" prop="status">
+          <el-select v-model="dataForm.status" placeholder="请选择"
+             style="width: 100%;">
+            <el-option v-for="item in statsArr" :key="item.id"
+              :label="item.value" :value="item.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="菜单描述" prop="remark">
+          <el-input v-model="dataForm.remark" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="菜单图标路径" prop="image">
+          <el-input v-model="dataForm.image" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="创建时间" prop="createTime">
+          <el-input v-model="dataForm.createTime" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="创建人" prop="creator">
+          <el-input v-model="dataForm.creator" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="父id" prop="parentId" v-if="false">
+          <el-input v-model="dataForm.parentId" auto-complete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button :size="size" @click.native="dialogVisible = false">{{$t('action.cancel')}}</el-button>
+        <el-button :size="size" type="primary" @click.native="submitForm" >{{$t('action.submit')}}</el-button>
+      </div><!-- :loading="editLoading" -->
+    </el-dialog>
+  </div>
   <div class="shortcut-container" v-show="showShortCut" :style="{position: 'absolute',top: resourceTop,left: resourceLeft}"><!--  v-if="ifShortCut" -->
     <kt-button icon="fa fa-plus" :label="$t('action.add')" @click="addInfo" />
     <kt-button icon="fa fa-edit" :label="$t('action.edit')" @click="editInfoShortCut()" />
     <kt-button icon="fa fa-trash" :label="$t('action.delete')" @click="deleteShortCutInfo(currentId)" />
   </div>
 </div>
+
 </template>
 <script>
   import { mapMutations } from 'vuex'
@@ -224,6 +227,7 @@
         this.filterColumns = JSON.parse(JSON.stringify(this.columnArr));
       },
       findPage: function () {
+        console.log('findPage')
         // this.loading = true
       	this.$api.menu.loadResource().then((res) => {
           this.$set(this.tableData,'content',res.data)
@@ -235,9 +239,11 @@
       	})
       },
       getCellRow: function () {
+        console.log('90')
         let _this = this
         this.$nextTick(function () {
           let doms = document.querySelectorAll('.el-table__row')
+          console.log(doms)
           let domsCell = document.querySelectorAll('.resource-container .cell')
           Array.prototype.forEach.call(domsCell,function (item) {
             if (item.innerHTML.trim() == '有效' || item.innerHTML.trim() == '是') {
@@ -259,15 +265,16 @@
                   break
                 }
               }
-              _this.gainSource(_this.currentId)
+              // _this.gainSource(_this.currentId)
               // console.log(_this.currentId)
               // console.log(document.documentElement.scrollTop)
               _this.showShortCut = true
+              console.log(_this.showShortCut)
               let scrollTop = document.documentElement.scrollTop
               // console.log(document.querySelector('.el-con'))
               // let offsetTopmain = document.querySelector('.main-content').scrollTop
               // let offsetTopresource = document.querySelector('.el-tabs-container').scrollTop
-              let offsetTopElMain = document.querySelector('.el-container .el-tabs__content').scrollTop  // 滚动条
+              let offsetTopElMain = document.querySelector('.table-container').scrollTop  // 滚动条
               // let offsetTopCon2 = document.querySelector('.el-con2').scrollTop
               // let offsetTopCon = document.querySelector('.el-con').scrollTop
               // console.log(offsetTopmain)
@@ -276,9 +283,9 @@
               // console.log(offsetTopCon2)
               // console.log(offsetTopCon)
               let x = e.clientX-180
-              let y = e.clientY+scrollTop+offsetTopElMain-150
+              let y = e.clientY+scrollTop+offsetTopElMain-170
               // console.log('x:'+x)
-              // console.log('y:'+y)
+              console.log('y:'+y)
               _this.setResourceLeft(x+'px')
               _this.setResourceTop(y+'px')
 
@@ -409,11 +416,15 @@
         console.log('点击了右键编辑')
         this.operation = false
         this.dialogVisible = true
+        this.gainSource(this.currentId)
       },
     }
   }
 </script>
 <style scoped lang="stylus" rel="stylesheet/stylus">
+  .resource-container
+     position: relative
+     height: 100%
   .shortcut-container
       position: absolute
       left: 0

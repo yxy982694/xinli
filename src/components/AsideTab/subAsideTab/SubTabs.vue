@@ -177,7 +177,7 @@
             closeOtherHandle: function () {
               // console.log(this.shortcutId)
               this.setEditableTabs([{
-                label: '主页',
+                label: '我的主页',
                 name: '/SubAsideTab/MainPage',
                 id: 0
               },{
@@ -200,13 +200,13 @@
             closeAllHandle: function () {
               this.setCurrentTabLabel('/SubAsideTab/MainPage')
               this.setEditableTabs([{
-                  label: '主页',
+                  label: '我的主页',
                   name: '/SubAsideTab/MainPage',
                   id: 0
               }])
               console.log(this.currentTabLabel)
               this.setExistTabs(['/SubAsideTab/MainPage'])
-              this.setCurrentTitle('主页')
+              this.setCurrentTitle('我的主页')
               this.setMainIdStoreTabObj({
                 id: sessionStorage.getItem('id'),
                 editableTabs: this.editableTabs,
@@ -231,12 +231,12 @@
               } else {
                 this.setCurrentTabLabel('/SubAsideTab/MainPage')
                 this.setEditableTabs([{
-                    label: '主页',
+                    label: '我的主页',
                     name: '/SubAsideTab/MainPage',
                     id: 0
                 }])
                 this.setExistTabs(['/SubAsideTab/MainPage'])
-                this.setCurrentTitle('主页')
+                this.setCurrentTitle('我的主页')
               }
               // this.setCurrentTabLabel(this.tabObj.currentTabLabel)
               // this.setEditableTabs(this.tabObj.editableTabs)
