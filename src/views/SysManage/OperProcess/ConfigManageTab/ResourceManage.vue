@@ -136,13 +136,13 @@
         	]
         },
         dataForm: {
-          id: 1,
-          nameCn: '中文名称',
-          name: '名称',
-          location: '路径',
+          id: '',
+          nameCn: '',
+          name: '',
+          location: '',
           type: '',
           isWebpage: '',
-          orderby: '11',
+          orderby: '',
           status: '',
           remark: '菜单描述',
           image: '菜单图标路径',

@@ -2,18 +2,17 @@
   <el-form :model="loginForm" :rules="fieldRules" ref="loginForm" label-position="left" label-width="0px" class="demo-ruleForm login-container">
     <span class="tool-bar">
     </span>
-    <h2 class="title" style="padding-left:22px;" >系统登录</h2>
+    <h2 class="title" style="padding-left:22px;">系统登录</h2>
     <el-form-item prop="account">
       <el-input type="text" v-model="loginForm.account" auto-complete="off" placeholder="账号"></el-input>
     </el-form-item>
     <el-form-item prop="password">
       <el-input type="password" v-model="loginForm.password" auto-complete="off" placeholder="密码"></el-input>
     </el-form-item>
-    <el-form-item >
+    <el-form-item>
       <el-col :span="12">
         <el-form-item prop="captcha">
-          <el-input type="test" v-model="loginForm.captcha" auto-complete="off" placeholder="验证码, 单击图片刷新"
-                    style="width: 100%;">
+          <el-input type="test" v-model="loginForm.captcha" auto-complete="off" placeholder="验证码, 单击图片刷新" style="width: 100%;">
           </el-input>
         </el-form-item>
       </el-col>
@@ -33,6 +32,8 @@
 
 <script>
   import Cookies from "js-cookie"
+  import qs from "qs"
+  import axios from "axios"
   export default {
     name: 'Login',
     data() {
@@ -41,45 +42,69 @@
         loginForm: {
           account: 'admin',
           password: 'admin',
-          captcha:'',
+          captcha: '',
           src: ''
         },
         fieldRules: {
-          account: [
-            { required: true, message: '请输入账号', trigger: 'blur' }
-          ],
-          password: [
-            { required: true, message: '请输入密码', trigger: 'blur' }
-          ]
+          account: [{
+            required: true,
+            message: '请输入账号',
+            trigger: 'blur'
+          }],
+          password: [{
+            required: true,
+            message: '请输入密码',
+            trigger: 'blur'
+          }]
         },
         checked: true
       }
     },
     methods: {
       login() {
+        let _this = this
         this.loading = true
-        let userInfo = { account:this.loginForm.account, password:this.loginForm.password,
-          captcha:this.loginForm.captcha }
-          console.log('login.vue外：')
-        this.$api.login.login(userInfo).then((res) => {  // 调用登录接口
-           console.log('执行成功函数内')
-           console.log(res)
-          if(res.msg != null) {
-            this.$message({ message: res.msg, type: 'error' })
+        let userInfo = {
+          account: this.loginForm.account,
+          password: this.loginForm.password,
+          captcha: this.loginForm.captcha
+        }
+        let userValue = qs.stringify(userInfo)
+        console.log(userInfo)
+        console.log(userValue)
+        // this.$api.login.login(userValue).then((res) => {  // 调用登录接口
+        //   if(res.msg != null) {
+        //     this.$message({ message: res.msg, type: 'error' })
+        //   } else {
+        //     Cookies.set('token', res.data.token) // 放置token到Cookie
+        //     sessionStorage.setItem('user', userInfo.account) // 保存用户到本地会话
+        //     this.$store.commit('menuRouteLoaded',false)//要求重新加载导航菜单
+        //     // this.$router.push('/')  // 登录成功，跳转到主页
+        //   }
+        //   this.loading = false
+        // }).catch((res) => {
+        //   this.$message({ message: res.message, type: 'error' })
+        // })
+        axios.post('http://10.89.138.145:9091/login',
+          userValue
+        ).then((res) => {
+          if (res.msg != null) {
+            this.$message({
+              message: res.msg,
+              type: 'error'
+            })
           } else {
-            console.log('msg没值')
-            Cookies.set('token', res.data.token) // 放置token到Cookie
+            Cookies.set('token', res.data.data.token) // 放置token到Cookie
             sessionStorage.setItem('user', userInfo.account) // 保存用户到本地会话
-            this.$store.commit('menuRouteLoaded',false)//要求重新加载导航菜单
-            this.$router.push('/')  // 登录成功，跳转到主页
+            this.$store.commit('menuRouteLoaded', false) //要求重新加载导航菜单
+            this.$router.push('/') // 登录成功，跳转到主页
           }
           this.loading = false
-        }).catch((res) => {
-          console.log('catch函数')
+        }).catch(function(error) {
           this.$message({ message: res.message, type: 'error' })
         })
       },
-      refreshCaptcha: function(){
+      refreshCaptcha: function() {
         this.loginForm.src = this.global.baseUrl + "/captcha.jpg?t=" + new Date().getTime();
       },
       reset() {
@@ -104,6 +129,7 @@
     background: #fff;
     border: 1px solid #eaeaea;
     box-shadow: 0 0 25px #cac6c6;
+
     .title {
       margin: 0px auto 30px auto;
       text-align: center;

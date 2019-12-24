@@ -3,14 +3,14 @@
     <div class="todo-header">
       <div class="todo-userimg"></div>
       <div class="todo-usertext">
-        <p class="toto-username">您好，cuipf</p>
+        <p class="toto-username">您好，{{userName}}</p>
         <p class="todo-userdep">所属部门：资管室</p>
       </div>
     </div>
     <div class="todo-items">
       <div v-for="item in dbList" :key="item.id" class="need-item">
-          <p>
-            <i class="el-icon-bell todo-itemicon"></i>
+          <p class="todo-item-p">
+            <i class="iconfont todo-itemicon" :class="item.url"></i>
             <span class="todo-itemname">{{item.name}}</span>
           </p>
           <span class="todo-itemvalue">{{item.value}}</span>
@@ -26,15 +26,16 @@
         data() {
             return {
                 dialogTableVisible: false,
+                userName: '',
                 dbList: [
-                    { id: 1, name: "运维待办", value: 12 },
-                    { id: 2, name: "值班作业", value: 8 },
-                    { id: 3, name: "需求待办", value: 60}
+                    { id: 1, name: "运维待办", value: 12, url: 'icon-daibanshixiang' },
+                    { id: 2, name: "值班作业", value: 8, url: 'icon-zhibanxinxi-copy' },
+                    { id: 3, name: "需求待办", value: 60, url: 'icon-fabuxuqiu'}
                 ]
             }
         },
         methods: {
-
+          
         },
         created() {
             this.$api.home.getDbList().then((res) => {
@@ -42,6 +43,7 @@
                 // const result = eval('(' + res + ')');
                 this.messageData = result.data
             })
+            this.userName = sessionStorage.getItem("user")
         }
     }
 </script>
@@ -80,7 +82,7 @@
           font-weight: bold
    .todo-items
      flex: 1
-     padding: 0 30px
+     padding: 0 40px 0 30px
      font-size: $font-size-medium
    .el-divider--horizontal
      margin: 6px 0 !important
@@ -88,11 +90,20 @@
      display: flex
      align-items: center
      justify-content: space-between
-     margin-top: 38px
+     align-items: center
+     margin-top: 25px
+     &:first-child .todo-itemicon
+      font-size: 30px
      .todo-itemvalue
        font-weight: bold
+       color: $color-textblue
      .todo-itemicon
        margin-right: 10px
+       color: $color-textblue
+       font-size: 25px
+     .todo-item-p
+       display: flex
+       align-items: center
      .serial-number
        flex: 1
        overflow: hidden

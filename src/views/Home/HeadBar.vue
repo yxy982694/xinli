@@ -5,28 +5,33 @@
       <div class="header-left">
         <h1><img src="../../common/image/ChinaMobile.png" ></h1>
         <h3>河南移动集中运维管理系统</h3>
+        <div class="header-center">
+          <p class="header-center-bg1"></p>
+          <p class="header-center-bg2"></p>
+          <p class="header-center-bg3"></p>
+        </div>
       </div>
       <div class="header-right">
         <div class="header-business">
-          <p class="header-business-item user-name">cuipf 欢迎您</p>
+          <p class="header-business-item user-name">{{userName}} 欢迎您</p>
           <p class="header-business-item">
-            <i class="el-icon-bell"></i>
+            <i class="iconfont icon-xiaoxi"></i>
             <span>消息</span>
           </p>
           <p class="header-business-item">
-            <i class="el-icon-switch-button"></i>
+            <i class="iconfont icon-tuichu"></i>
             <span>退出</span>
           </p>
           <p class="header-business-item">
-            <i class="el-icon-bell"></i>
+            <i class="iconfont icon-icon_rukou"></i>
             <span>旧版入口</span>
           </p>
           <p class="header-business-item">
-            <i class="el-icon-bell"></i>
+            <i class="iconfont icon-shouji"></i>
             <span>掌上运维客户端</span>
           </p>
           <p class="header-business-item">
-            <i class="el-icon-bell"></i>
+            <i class="iconfont icon-yewu"></i>
             <span>业务开通</span>
           </p>
         </div>
@@ -53,11 +58,11 @@
       </el-popover>
     </div> -->
     </div>
-    <div class="header-center">
+    <!-- <div class="header-center">
       <p class="header-center-bg1"></p>
       <p class="header-center-bg2"></p>
       <p class="header-center-bg3"></p>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -86,7 +91,8 @@
       return {
         user: {
         },
-        activeIndex: '1'
+        activeIndex: '1',
+        userName: ''
       }
     },
     methods: {
@@ -169,6 +175,7 @@
     mounted() {
       // console.log(this.navTree)
       let user = sessionStorage.getItem("user")
+      this.userName = sessionStorage.getItem("user")
       if (user) {
         let params = {name:user}
         this.$api.user.findByName(params).then((res) => {

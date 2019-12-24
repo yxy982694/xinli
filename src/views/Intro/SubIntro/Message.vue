@@ -10,22 +10,20 @@
   <!--  + 换一种思路： 当评论成功后，在客户端，手动拼接出一个 最新的评论对象，然后 调用 数组的 unshift 方法， 把最新的评论，追加到  data 中 comments 的开头；这样，就能 完美实现刷新评论列表的需求；-->
   <div class="content-radius">
     <div class="section-title">
-      <p>留言板</p>
+      <p class="section-title-name">留言板</p>
       <p class="section-title-click">
-        <span class="cursor-pointer" @click="clickNew">新建留言</span>
-        <span class="cursor-pointer">查看全部</span>
+        <i class="iconfont icon-liuyan message-color"></i>
+        <span class="message-color" @click="clickNew">新建留言</span>
+        <span>查看全部</span>
       </p>
     </div>
     <div class="message-items">
       <div class="message-item font-smallnum" v-for="item in messageData" :key="item.ID">
         <p class="text-left">
           <span class="text-name">{{item.NAME}}</span>
-          <span class="opacity-span">姓名</span>
-          <span>---</span>
-          <span class="opacity-span">时间</span>
-          <span>{{item.TITLE}}</span>
+          <span class="text-content"><i class="message-quot">“</i><i class="text-content-title">{{item.TITLE}}</i><i class="message-quot">”</i></span>
         </p>
-        <p class="text-right">时间:{{item.MESSAGETIME}}</p>
+        <p class="text-right">{{item.MESSAGETIME}}</p>
       </div>
     </div>
   </div>
@@ -74,12 +72,13 @@
   @import "../../../common/stylus/mixin"
     .content-radius
       height: 200px
+    .message-items
+      margin: 0 22px
     .message-item
       display: flex
       justify-content: space-between
       align-items: center
       padding-right: 5px
-      margin-top: 15px
       &+.message-item
         margin-top: 18px
       .text-left
@@ -87,12 +86,25 @@
         text-align: left
         padding-left: 15px
         no-wrap()
+        .text-name
+          display: inline-block
+          width: 60px
+          font-size: $font-size-medium
+          color: $color-textblue
+        .message-quot
+          color: #bed0f6
+          font-size: 20px
+          font-style: normal
+        .text-content-title
+          margin: 0 3px
+          font-style: normal
       .text-right
         width: 30%
         text-align: right
-    .opacity-span
-      opacity: 0
-    .text-name
-      display: inline-block
-      width: 40px
+        font-size: $font-size-small
+        color: $color-textgray
+    .message-color
+      color: $color-textblue
+      &+.message-color
+        margin-right: 10px
 </style>

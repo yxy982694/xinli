@@ -1,13 +1,16 @@
 <template>
    <div class="content-radius">
      <div class="section-title">
-       <p>最新公告</p>
+       <p class="section-title-name">最新公告</p>
        <p class="section-title-click cursor-pointer">查看全部</p>
      </div>
-     <el-carousel style="width: 100%" height="115px" direction="vertical"  :interval="10000" >
+     <el-carousel style="width: 100%" height="194px" direction="vertical"  :interval="20000" >
        <el-carousel-item v-for="(item,indexx) in announceData" :key="indexx">
-         <div v-for="(list,index) in item.data" class="lastest-item font-smallnum" :key="index">
-           <p class="text-left">{{list.CHESETYPE}}</p>
+         <div v-for="(list,index) in item.data" class="lastest-item" :key="index">
+           <p class="text-left">
+             <i class="iconfont icon-jiantoucu"></i>
+             <span>{{list.CHESETYPE}}</span>
+           </p>
            <p class="text-center" :title="list.TITLE">{{list.TITLE}}</p>
            <p class="text-right">{{list.RELEASEDATE}}</p>
          </div>
@@ -37,14 +40,14 @@
                   const result = res ;
                   // console.log(result.data)
                   let size = result.data.length;
-                  let page = size/4;  //展示页数
-                  if(size%4 != 0){ // 如果不为4的整数倍,则再多一页
-                      page++;
+                  let page = size/5;  //展示页数3
+                  if(size%5 != 0){ // 如果不为4的整数倍,则再多一页
+                      // page++;
                   }
                   for(let index = 0; index < page; index++){
                       let announceObj = {};
                       announceObj.id = index+1;
-                      announceObj.data = result.data.slice(index*4, (index+1)*4);
+                      announceObj.data = result.data.slice(index*5, (index+1)*5);
                       this.announceData.push(announceObj);
                   }
 
@@ -70,17 +73,26 @@
   .lastest-item
     display: flex
     justify-content: space-between
-    padding: 0 30px 0 15px
-    margin-top: 8px
+    padding: 0 25px 0 20px
+    font-size: $font-size-small
+    margin-top: 6px
     &+.lastest-item
-      margin-top: 18px
+      margin-top: 24px
   .text-left
-    width:50px
+    color: #F3BF44
+    display: flex
+    align-items: center
+    .icon-jiantoucu
+      margin-right: 5px
+      font-size: 13px
+      color: $color-border
   .text-center
     flex: 1
     text-align:left
     margin-left: 15px
+    color: $color-textblack
     no-wrap()
   .text-right
     width:90px
+    color: $color-textgray
 </style>

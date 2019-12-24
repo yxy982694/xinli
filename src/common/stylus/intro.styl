@@ -5,6 +5,7 @@
   display: flex
   flex-direction: column
   justify-content: space-between
+  overflow: hidden
   .el-row
     padding: 0 15px
     margin-left: 0
@@ -22,23 +23,16 @@
     display: flex
     align-items: center
     justify-content: space-between
-    color: $color-gray
-    font-size: $font-size-medium-x
-    // border-bottom: 1px solid #DCDFE6
-    padding: 10px 15px
-    margin-bottom: 8px
+    padding: 15px 18px
+    .section-title-name
+      font-size: $font-size-medium-x
+      color: $color-textblack
+      font-weight: bold
     .section-title-click // 可点击的编辑或全部按钮
       cursor: pointer
       font-size: $font-size-small
+      color: $color-textgray
 // 快速通道和短信定制样式
-.fast-item
-  width:50%
-  transition: all 0.38s ease-out
-  padding: 15px 0
-  cursor: pointer
-  &:hover
-    background-color: rgb(42,148,226)
-    color: #fff
 // 为6个模块设置内容字体大小和颜色
 .font-smallnum
    font-size: $font-size-small
