@@ -41,13 +41,13 @@
         console.log(menu.id)
         this.$api.menu.resourceManage(menu.id).then((res) => {
           console.log(res)
-          sessionStorage.setItem('arr', res.data)
+          // sessionStorage.setItem('arr', res.data)
           this.setRouterObj({
             id: menu.id,
             arr: res
           })
         })
-        // console.log(this.routerObj)
+        console.log(this.routerObj)
         // 如果是嵌套页面，转换成iframe的path
         let path = getIFramePath(menu.location)
         sessionStorage.setItem('id', menu.id)

@@ -59,14 +59,16 @@
 			<div class="right-center">
 				<!-- <div class="bread-crumb">部门>杭州东方通信软件技术有限公司</div> -->
 				<div class="btn-container">
+				  <el-button-group>
 					<kt-button type="primary" icon="fa fa-calendar" :label="$t('action.add')"></kt-button>
 					<kt-button type="primary" icon="fa fa-calendar" label="详情"></kt-button>
 					<kt-button type="primary" icon="fa fa-calendar" label="授权"></kt-button>
 					<kt-button type="primary" icon="fa fa-calendar" label="批量授权"></kt-button>
 					<kt-button type="primary" icon="fa fa-calendar" label="启用"></kt-button>
 					<kt-button type="primary" icon="fa fa-calendar" label="停用"></kt-button>
-          <kt-button type="primary" icon="fa fa-edit" :label="$t('action.edit')"></kt-button>
-          <kt-button type="primary" icon="fa fa-trash" :label="$t('action.delete')"></kt-button>
+          			<kt-button type="primary" icon="fa fa-edit" :label="$t('action.edit')"></kt-button>
+          			<kt-button type="primary" icon="fa fa-trash" :label="$t('action.delete')"></kt-button>
+          		  </el-button-group>
 				</div>
 			</div>
 			<div class="right-bottom">
@@ -84,9 +86,18 @@
 				</el-table>
 			</div>
       <div class="user-toolbar">
-        <el-pagination layout="total, prev, pager, next, jumper"
+		    <el-pagination
+		      @size-change="handleSizeChange"
+		      @current-change="handleCurrentChange"
+		      :current-page="1"
+		      :page-sizes="[100, 200, 300, 400]"
+		      :page-size="100"
+		      layout="total, sizes, prev, pager, next, jumper"
+		      :total="4000">
+		    </el-pagination>
+        <!-- <el-pagination layout="total, prev, pager, next, jumper"
           :current-page="1" :page-size="10" :total="87">
-        </el-pagination>
+        </el-pagination> -->
       </div>
 		</div>
 	</div>
@@ -379,14 +390,20 @@
 			handleNodeClick: function() {
 				console.log('点击')
 			},
-      changeBox: function () {
-      },
-      searchDate: function () {
-        console.log(this.dateValue)
-      },
-      resetDate: function () {
-        this.dateValue = ''
-      }
+	      changeBox: function () {
+	      },
+	      searchDate: function () {
+	        console.log(this.dateValue)
+	      },
+	      resetDate: function () {
+	        this.dateValue = ''
+	      },
+	      handleSizeChange: function () {
+
+	      },
+		  handleCurrentChange: function () {
+
+		  },
 		}
 	}
 </script>
@@ -507,9 +524,9 @@
 	.input-left
 	  margin-right: 10px
   .user-toolbar
-  	background-color: #409eff
+  	background-color: #409eff 
   	padding: 5px 0
-  	// color: #fff
+  	// color: #fff  
     // position: absolute
     // bottom: 7px
     // left: 0

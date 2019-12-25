@@ -89,25 +89,28 @@
 		 // }).catch((res) => {
 		 //   this.$message({ message: res.message, type: 'error' })
 		 // })
-        axios.post('http://10.89.138.147:8080/login',
+        axios.post('http://10.89.138.145:9091/login',
           userValue,
           // {
           //   headers: {'Content-Type':'application/json;charset=UTF-8'}
           // }
         ).then((res) => {
           console.log(res)
-          if (res.data.code != '00') {
-
+          // if (res.data.code != '00') {
+          if (res.data.msg != null) {
             this.$message({
               message: res.data.message,
               type: 'error'
             })
           } else {
-            console.log('00')
-            Cookies.set('token', res.data.responseBody.token) // 放置token到Cookie
+            // console.log('00')
+            Cookies.set('token', res.data.data.token)
+            sessionStorage.setItem('user', userInfo.username)
+            this.$store.commit('menuRouteLoaded', false)
+            // Cookies.set('token', res.data.responseBody.token) // 放置token到Cookie
             // Cookies.set('Ltpatoken2', res.data.responseBody.LtpaToken2) // 放置token到Cookie
-            sessionStorage.setItem('user', userInfo.username) // 保存用户到本地会话
-            this.$store.commit('menuRouteLoaded', false) //要求重新加载导航菜单
+            // sessionStorage.setItem('user', userInfo.username) // 保存用户到本地会话
+            // this.$store.commit('menuRouteLoaded', false) //要求重新加载导航菜单
             this.$router.push('/') // 登录成功，跳转到主页
           }
           this.loading = false
