@@ -2,11 +2,11 @@
 	<div class="user-container" ref="userContainer">
 		<div class="user-left" ref="userLeft">
 			<div class="expand-container">
-				<kt-button label="展开所有节点" @click="openAll" icon="fa fa-angle-double-down"></kt-button>
-				<kt-button label="关闭所有节点" @click="closeAll" icon="fa fa-angle-double-up"></kt-button>
+				<kt-button label="展开节点" @click="openAll" icon="fa fa-angle-double-down"></kt-button>
+				<kt-button label="关闭节点" @click="closeAll" icon="fa fa-angle-double-up"></kt-button>
 			</div>
 			<div class="tree-container">
-				<el-tree :data="treeData" node-key="id" ref="tree" @node-click="handleNodeClick"></el-tree>
+				<el-tree :props="defaultProps" :data="treeData" node-key="id" ref="tree" @node-click="handleNodeClick"></el-tree>
 			</div>
 		</div>
 		<div class="user-middle" ref="userMiddle"></div>
@@ -65,6 +65,8 @@
 					<kt-button type="primary" icon="fa fa-calendar" label="批量授权"></kt-button>
 					<kt-button type="primary" icon="fa fa-calendar" label="启用"></kt-button>
 					<kt-button type="primary" icon="fa fa-calendar" label="停用"></kt-button>
+          <kt-button type="primary" icon="fa fa-edit" :label="$t('action.edit')"></kt-button>
+          <kt-button type="primary" icon="fa fa-trash" :label="$t('action.delete')"></kt-button>
 				</div>
 			</div>
 			<div class="right-bottom">
@@ -73,12 +75,12 @@
 					<el-table-column v-for="column in columns" header-align="center" align="center" :prop="column.prop" :label="column.label"
 					 :min-width="column.minWidth" :key="column.prop" :sortable="true">
 					</el-table-column>
-					<el-table-column :label="$t('action.operation')" width="185" fixed="right" header-align="center" align="center">
+					<!-- <el-table-column :label="$t('action.operation')" width="185" fixed="right" header-align="center" align="center">
 						<template slot-scope="scope">
 							<kt-button icon="fa fa-edit" :label="$t('action.edit')"></kt-button>
 							<kt-button icon="fa fa-trash" :label="$t('action.delete')" type="danger"></kt-button>
 						</template>
-					</el-table-column>
+					</el-table-column> -->
 				</el-table>
 			</div>
       <div class="user-toolbar">
@@ -100,67 +102,76 @@
         		checkedBox: false,
             selectedVal: '',
             radioVal: '',
+            currentPage: 1,
 		        outData: [{
 		          name: '',
 		          age: ''
 		        }],
-				treeData: [{
-					label: '一级 1',
-					id: 1,
-					children: [{
-						label: '二级',
-						id: 11,
-						children: [{
-							label: '三级',
-							id: 111
-						}]
-					}]
-				}, {
-					label: '一级 2',
-					id: 2,
-					children: [{
-						label: '二级 2-1一级',
-						id: 21,
-						children: [{
-							label: '三级 2-1-1一级2-1-1',
-							id: 211
-						}]
-					}, {
-						label: '二级 2-2一级 1',
-						id: 22,
-						children: [{
-							label: '三级 2-2-1一级',
-							id: 221
-						}]
-					}]
-				}, {
-					label: '一级 3',
-					id: 3,
-					children: [{
-						label: '二级 3-1',
-						id: 31,
-						children: [{
-							label: '三级 3-1-1',
-							id: 311
-						}]
-					}, {
-						label: '二级 3-2',
-						id: 32,
-						children: [{
-							label: '三级 3-2-1',
-							id: 321
-						}]
-					}]
-				}],
+				treeData: [
+          {
+            name: '一级 1',
+            id: 1,
+            children: [{
+              name: '二级',
+              id: 11,
+              children: [{
+                label: '三级',
+                id: 111
+              }]
+            }]
+          }, {
+            name: '一级 2',
+            id: 2,
+            children: [{
+              name: '二级 2-1一级',
+              id: 21,
+              children: [{
+                name: '三级 2-1-1一级2-1-1',
+                id: 211
+              }]
+            }, {
+              name: '二级 2-2一级 1',
+              id: 22,
+              children: [{
+                name: '三级 2-2-1一级',
+                id: 221
+              }]
+            }]
+          }, {
+            name: '一级 3',
+            id: 3,
+            children: [{
+              name: '二级 3-1',
+              id: 31,
+              children: [{
+                name: '三级 3-1-1',
+                id: 311
+              }]
+            }, {
+              name: '二级 3-2',
+              id: 32,
+              children: [{
+                name: '三级 3-2-1',
+                id: 321
+              }]
+            }]
+				},
+        ],
+        defaultProps: {
+          children: 'children',
+          label: 'name',
+          // children: 'Children',
+          // label: 'Name'
+        },
 				tableData: {
 					content: [{
 						name: "yxy",
 						nameCn: '袁晓宇',
-						zhanghao: 'yxy90',
+						// zhanghao: 'yxy90',
 						bumen: '技术部',
 						keyong: '可用',
-						shemin: '是',
-						jibie: '一般',
+						// shemin: '是',
+						// jibie: '一般',
 						creator: '创建者',
 						createTime: '2015-12-29 15:17:51',
 						startTime: '2017-09-28 00:00:00',
@@ -168,11 +179,11 @@
 					}, {
 						name: "yxy",
 						nameCn: '袁晓宇',
-						zhanghao: 'yxy90',
+						// zhanghao: 'yxy90',
 						bumen: '技术部',
 						keyong: '可用',
-						shemin: '是',
-						jibie: '一般',
+						// shemin: '是',
+						// jibie: '一般',
 						creator: '创建者',
 						createTime: '2015-12-29 15:17:51',
 						startTime: '2017-09-28 00:00:00',
@@ -180,11 +191,11 @@
 					}, {
 						name: "yxy",
 						nameCn: '袁晓宇',
-						zhanghao: 'yxy90',
+						// zhanghao: 'yxy90',
 						bumen: '技术部',
 						keyong: '可用',
-						shemin: '是',
-						jibie: '一般',
+						// shemin: '是',
+						// jibie: '一般',
 						creator: '创建者',
 						createTime: '2015-12-29 15:17:51',
 						startTime: '2017-09-28 00:00:00',
@@ -192,11 +203,11 @@
 					}, {
 						name: "yxy",
 						nameCn: '袁晓宇',
-						zhanghao: 'yxy90',
+						// zhanghao: 'yxy90',
 						bumen: '技术部',
 						keyong: '可用',
-						shemin: '是',
-						jibie: '一般',
+						// shemin: '是',
+						// jibie: '一般',
 						creator: '创建者',
 						createTime: '2015-12-29 15:17:51',
 						startTime: '2017-09-28 00:00:00',
@@ -204,11 +215,11 @@
 					}, {
 						name: "yxy",
 						nameCn: '袁晓宇',
-						zhanghao: 'yxy90',
+						// zhanghao: 'yxy90',
 						bumen: '技术部',
 						keyong: '可用',
-						shemin: '是',
-						jibie: '一般',
+						// shemin: '是',
+						// jibie: '一般',
 						creator: '创建者',
 						createTime: '2015-12-29 15:17:51',
 						startTime: '2017-09-28 00:00:00',
@@ -216,11 +227,11 @@
 					}, {
 						name: "yxy",
 						nameCn: '袁晓宇',
-						zhanghao: 'yxy90',
+						// zhanghao: 'yxy90',
 						bumen: '技术部',
 						keyong: '可用',
-						shemin: '是',
-						jibie: '一般',
+						// shemin: '是',
+						// jibie: '一般',
 						creator: '创建者',
 						createTime: '2015-12-29 15:17:51',
 						startTime: '2017-09-28 00:00:00',
@@ -228,11 +239,11 @@
 					}, {
 						name: "yxy",
 						nameCn: '袁晓宇',
-						zhanghao: 'yxy90',
+						// zhanghao: 'yxy90',
 						bumen: '技术部',
 						keyong: '可用',
-						shemin: '是',
-						jibie: '一般',
+						// shemin: '是',
+						// jibie: '一般',
 						creator: '创建者',
 						createTime: '2015-12-29 15:17:51',
 						startTime: '2017-09-28 00:00:00',
@@ -240,11 +251,11 @@
 					}, {
 						name: "yxy",
 						nameCn: '袁晓宇',
-						zhanghao: 'yxy90',
+						// zhanghao: 'yxy90',
 						bumen: '技术部',
 						keyong: '可用',
-						shemin: '是',
-						jibie: '一般',
+						// shemin: '是',
+						// jibie: '一般',
 						creator: '创建者',
 						createTime: '2015-12-29 15:17:51',
 						startTime: '2017-09-28 00:00:00',
@@ -252,11 +263,11 @@
 					}, {
 						name: "yxy",
 						nameCn: '袁晓宇',
-						zhanghao: 'yxy90',
+						// zhanghao: 'yxy90',
 						bumen: '技术部',
 						keyong: '可用',
-						shemin: '是',
-						jibie: '一般',
+						// shemin: '是',
+						// jibie: '一般',
 						creator: '创建者',
 						createTime: '2015-12-29 15:17:51',
 						startTime: '2017-09-28 00:00:00',
@@ -264,11 +275,11 @@
 					}, {
 						name: "yxy",
 						nameCn: '袁晓宇',
-						zhanghao: 'yxy90',
+						// zhanghao: 'yxy90',
 						bumen: '技术部',
 						keyong: '可用',
-						shemin: '是',
-						jibie: '一般',
+						// shemin: '是',
+						// jibie: '一般',
 						creator: '创建者',
 						createTime: '2015-12-29 15:17:51',
 						startTime: '2017-09-28 00:00:00',
@@ -276,41 +287,43 @@
 					}]
 				},
 				columns: [{
-					prop: 'name',
-					label: '用户名'
-				}, {
-					prop: 'nameCn',
-					label: '中文名称'
-				}, {
-					prop: 'zhanghao',
-					label: '账号类型'
-				}, {
-					prop: 'bumen',
-					label: '部门'
-				}, {
-					prop: 'keyong',
-					label: '是否可用'
-				}, {
-					prop: 'shemin',
-					label: '是否涉敏'
-				}, {
-					prop: 'jibie',
-					label: '用户级别'
-				}, {
-					prop: 'creator',
-					label: '创建者'
-				}, {
-					prop: 'createTime',
-					label: '创建时间'
-				}, {
-					prop: 'startTime',
-					label: '账户有效期开始时间'
-				}, {
-					prop: 'endTime',
-					label: '账户有效期结束时间'
-				}]
+            prop: 'name',
+            label: '用户名'
+          }, {
+            prop: 'nameCn',
+            label: '中文名称'
+          }, {
+            prop: 'bumen',
+            label: '部门'
+          }, {
+            prop: 'keyong',
+            label: '是否可用'
+          }, {
+            prop: 'creator',
+            label: '创建者'
+          }, {
+            prop: 'createTime',
+            label: '创建时间'
+          }, {
+            prop: 'startTime',
+            label: '账户有效期开始时间'
+          }, {
+            prop: 'endTime',
+            label: '账户有效期结束时间'
+          }]
 			}
 		},
+    // {
+    //   prop: 'zhanghao',
+    //   label: '账号类型'
+    // },
+    // {
+    //   prop: 'shemin',
+    //   label: '是否涉敏'
+    // }, {
+    //   prop: 'jibie',
+    //   label: '用户级别'
+    // },
 		mounted: function () {
 			let _this = this
 			this.$refs.userMiddle.addEventListener('mousedown',function (e) {
@@ -322,7 +335,7 @@
 					let moveLen = middleLeft + (endX - startX)
 					// let maxT = _this.$refs.userContainer.clientWidth - _this.$refs.userMiddle.offsetWidth
 					// console.log(maxT)
-			      	if(moveLen<240) moveLen = 240
+			      	if(moveLen<160) moveLen = 160
 			      	// if(moveLen>maxT-180) moveLen = maxT-180
 			      	// _this.$refs.userMiddle.style.left = moveLen;
 			      	_this.$refs.userLeft.style.width = moveLen + "px";
@@ -336,15 +349,27 @@
 				_this.$refs.userMiddle.setCapture && _this.$refs.userMiddle.setCapture()
 				return false
 			})
+      this.$api.user.findAllOrgan().then((res) => {
+        console.log(res.data)
+        // this.treeData = res.data
+      })
+      // this.currentPage = 1
+      this.$api.user.getPageList(this.currentPage).then((res) => {
+        console.log(res.data)
+        // this.treeData = res.data
+      })
 		},
 		components: {
 			KtButton
 		},
 		methods: {
 			openAll: function() {
-				for(var i=0;i<this.$refs.tree.store._getAllNodes().length;i++){
-				  this.$refs.tree.store._getAllNodes()[i].expanded=true
-				}
+        // this.$nextTick(function () {
+          console.log(this.$refs.tree.store._getAllNodes())
+          for(var i=0;i<this.$refs.tree.store._getAllNodes().length;i++){
+            this.$refs.tree.store._getAllNodes()[i].expanded=true
+          }
+        // })
 			},
 			closeAll: function() {
 				for(var i=0;i<this.$refs.tree.store._getAllNodes().length;i++){
@@ -380,7 +405,7 @@
       height: 100%
       background-color: #fff
       overflow: hidden
-      width: 240px
+      width: 160px
       display: flex
       flex-direction: column
       .expand-container

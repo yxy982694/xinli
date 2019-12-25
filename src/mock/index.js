@@ -14,8 +14,8 @@ import * as home from './modules/home'
 // 1. 开启/关闭[所有模块]拦截, 通过调[openMock参数]设置.
 // 2. 开启/关闭[业务模块]拦截, 通过调用fnCreate方法[isOpen参数]设置.
 // 3. 开启/关闭[业务模块中某个请求]拦截, 通过函数返回对象中的[isOpen属性]设置.
-let openMock = true
-// let openMock = false
+// let openMock = true
+let openMock = false
 fnCreate(login, openMock)
 fnCreate(user, openMock)
 fnCreate(role, openMock)
@@ -54,10 +54,11 @@ function fnCreate (mod, isOpen = true) {
           // 回调函数返回的数据,就是axios请求后响应的数据
           // opts参数是axios中传入的配置参数
           Mock.mock(new RegExp(url), res.type, (opts) => {
-            // console.log(res.data)
-            opts['data'] = opts.body ? JSON.parse(opts.body) : null
-            delete opts.body
-            // console.log(res.data)
+            if (url.indexOf('login') == -1) {
+              opts['data'] = opts.body ? JSON.parse(opts.body) : null
+              delete opts.body
+            }
+            console.log(res)
             // console.log('\n')
             // console.log('%cmock拦截, 请求: ', 'color:blue', opts)
             // console.log('%cmock拦截, 响应: ', 'color:blue', res.data)

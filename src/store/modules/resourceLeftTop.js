@@ -2,6 +2,7 @@ export default {
     state: {
         resourceLeft: '',
         resourceTop: '',
+        resourceDisplay: 'none'
     },
     mutations: {
         setResourceLeft(state, val){
@@ -9,6 +10,9 @@ export default {
         },
         setResourceTop(state, val){
             state.resourceTop = val
+        },
+        setResourceDisplay(state, val){
+            state.resourceDisplay = val
         },
     }
 }

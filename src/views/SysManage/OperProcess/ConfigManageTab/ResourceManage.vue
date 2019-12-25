@@ -8,7 +8,7 @@
         <!-- <kt-button icon="fa fa-plus" :label="$t('action.add')" perms="sys:user:add" type="primary" @click="addInfo(false)"></kt-button> -->
       </template>
     </kt-buttons>
-    <kt-table ref="ktTable" :loading="loading" @findPage="findPage" @handleEdit="editInfo" @addInfo="addInfo" @handleDelete="deleteInfo" :columns="filterColumns" :data="tableData" :border="true" :showCheckBox="false" :showPage="false" rowKey="id" :treeProps="treeProps" :defaultExpandAll="false"></kt-table>
+    <kt-table ref="ktTable" @changeShortCutInfo="changeShortCutInfo" :loading="loading" @findPage="findPage" @handleEdit="editInfo" @addInfo="addInfo" @handleDelete="deleteInfo" :columns="filterColumns" :data="tableData" :border="true" :showCheckBox="false" :showPage="false" rowKey="id" :treeProps="treeProps" :defaultExpandAll="false"></kt-table>
     <!-- <div class="table-seat"></div> -->
     <!--新增编辑界面-->
     <el-dialog :title="operation?'新增':'编辑'" width="40%" :visible.sync="dialogVisible" :close-on-click-modal="false">
@@ -74,8 +74,8 @@
         <el-button :size="size" type="primary" @click.native="submitForm" >{{$t('action.submit')}}</el-button>
       </div><!-- :loading="editLoading" -->
     </el-dialog>
-  </div>
-  <div class="shortcut-container" v-show="showShortCut" :style="{position: 'absolute',top: resourceTop,left: resourceLeft}"><!--  v-if="ifShortCut" -->
+  </div><!-- v-show="showShortCut" -->
+  <div class="shortcut-container" :style="{position: 'absolute',top: resourceTop,left: resourceLeft,display: resourceDisplay}"><!--  v-if="ifShortCut" -->
     <kt-button icon="fa fa-plus" :label="$t('action.add')" @click="addInfo" />
     <kt-button icon="fa fa-edit" :label="$t('action.edit')" @click="editInfoShortCut()" />
     <kt-button icon="fa fa-trash" :label="$t('action.delete')" @click="deleteShortCutInfo(currentId)" />
@@ -100,8 +100,9 @@
         dialogVisible: false,
         size: 'small',
         editLoading: false,
+        showShortCutPlay: 'none',
         // isShortCut: false,
-        currentId: null,
+        // currentId: null,
         parentIdd: null,
         showShortCut: false,
         currentObj: null,
@@ -136,7 +137,11 @@
         dataFormRules: {
         	name: [
         		{ required: true, message: '请输入用户名', trigger: 'blur' }
-        	]
+        	],
+          orderby: [
+          	{ required: true, message: '请输入排序序号', trigger: 'blur' }
+          ],
+          
         },
         dataForm: {
           id: '',
@@ -169,7 +174,8 @@
       this.initColumns()
       this.findPage()
       window.onclick = function () {
-        _this.showShortCut = false
+        // _this.showShortCut = false
+        _this.setResourceDisplay('none')
       }
     },
     computed: {
@@ -185,12 +191,34 @@
         },
         set: function () {}
       },
+      currentId: {
+        get: function () {
+          return this.$store.state.tableCurrentId.currentId
+        },
+        set: function () {}
+      },
+      resourceDisplay: {
+        get: function () {
+          return this.$store.state.resourceLeftTop.resourceDisplay
+        },
+        set: function () {}
+      }
     },
     methods: {
       ...mapMutations({
         'setResourceLeft': 'setResourceLeft',
-        'setResourceTop': 'setResourceTop'
+        'setResourceTop': 'setResourceTop',
+        'setCurrentId': 'setCurrentId',
+        'setResourceDisplay': 'setResourceDisplay'
       }),
+      changeShortCutInfo: function (obj) {
+        console.log(obj)
+        // this.showShortCut = obj.showShortCut
+        this.setResourceDisplay(obj.showShortCut)
+        this.setCurrentId(obj.id)
+        this.setResourceLeft(obj.x)
+        this.setResourceTop(obj.y)
+      },
       searchInfo: function (userName) {
         this.$api.menu.queryResource(userName).then(res => {
           this.$set(this.tableData,'content',res.data)
@@ -232,74 +260,75 @@
       	this.$api.menu.loadResource().then((res) => {
           this.$set(this.tableData,'content',res.data)
       		// this.tableData.content = res.data
-          // console.log(this.tableData.content)
+          console.log(res)
           // console.log(90)
           this.loading = false
-          this.getCellRow()
+          // this.getCellRow()
+          this.$refs.ktTable.getCellRow()
       	})
       },
-      getCellRow: function () {
-        console.log('90')
-        let _this = this
-        this.$nextTick(function () {
-          let doms = document.querySelectorAll('.el-table__row')
-          console.log(doms)
-          let domsCell = document.querySelectorAll('.resource-container .cell')
-          Array.prototype.forEach.call(domsCell,function (item) {
-            if (item.innerHTML.trim() == '有效' || item.innerHTML.trim() == '是') {
-              item.style.color = 'green'
-            } else if (item.innerHTML.trim() == '失效' || item.innerHTML.trim() == '否') {
-              item.style.color = 'red'
-            }
-          })
-          Array.prototype.forEach.call(doms,function (item,index) {
-            item.oncontextmenu = null
-            item.oncontextmenu = function (e) {
-              e.stopPropagation()
-              e.preventDefault()
-              let classArr = item.className.split(" ")
-              // console.log(classArr)
-              for (let i=0;i<classArr.length;i++) {
-                if (classArr[i].indexOf('clrow') > -1) {
-                  _this.currentId = classArr[i].substr(5)
-                  break
-                }
-              }
-              // _this.gainSource(_this.currentId)
-              // console.log(_this.currentId)
-              // console.log(document.documentElement.scrollTop)
-              _this.showShortCut = true
-              console.log(_this.showShortCut)
-              let scrollTop = document.documentElement.scrollTop
-              // console.log(document.querySelector('.el-con'))
-              // let offsetTopmain = document.querySelector('.main-content').scrollTop
-              // let offsetTopresource = document.querySelector('.el-tabs-container').scrollTop
-              let offsetTopElMain = document.querySelector('.table-container').scrollTop  // 滚动条
-              // let offsetTopCon2 = document.querySelector('.el-con2').scrollTop
-              // let offsetTopCon = document.querySelector('.el-con').scrollTop
-              // console.log(offsetTopmain)
-              // console.log(offsetTopresource)
-              // console.log(offsetTopElMain)
-              // console.log(offsetTopCon2)
-              // console.log(offsetTopCon)
-              let x = e.clientX-180
-              let y = e.clientY+scrollTop+offsetTopElMain-170
-              // console.log('x:'+x)
-              console.log('y:'+y)
-              _this.setResourceLeft(x+'px')
-              _this.setResourceTop(y+'px')
+      // getCellRow: function () {
+      //   console.log('90')
+      //   let _this = this
+      //   this.$nextTick(function () {
+      //     let doms = document.querySelectorAll('.el-table__row')
+      //     console.log(doms)
+      //     let domsCell = document.querySelectorAll('.resource-container .cell')
+      //     Array.prototype.forEach.call(domsCell,function (item) {
+      //       if (item.innerHTML.trim() == '有效' || item.innerHTML.trim() == '是') {
+      //         item.style.color = 'green'
+      //       } else if (item.innerHTML.trim() == '失效' || item.innerHTML.trim() == '否') {
+      //         item.style.color = 'red'
+      //       }
+      //     })
+      //     Array.prototype.forEach.call(doms,function (item,index) {
+      //       item.oncontextmenu = null
+      //       item.oncontextmenu = function (e) {
+      //         e.stopPropagation()
+      //         e.preventDefault()
+      //         let classArr = item.className.split(" ")
+      //         // console.log(classArr)
+      //         for (let i=0;i<classArr.length;i++) {
+      //           if (classArr[i].indexOf('clrow') > -1) {
+      //             _this.currentId = classArr[i].substr(5)
+      //             break
+      //           }
+      //         }
+      //         // _this.gainSource(_this.currentId)
+      //         // console.log(_this.currentId)
+      //         // console.log(document.documentElement.scrollTop)
+      //         _this.showShortCut = true
+      //         console.log(_this.showShortCut)
+      //         let scrollTop = document.documentElement.scrollTop
+      //         // console.log(document.querySelector('.el-con'))
+      //         // let offsetTopmain = document.querySelector('.main-content').scrollTop
+      //         // let offsetTopresource = document.querySelector('.el-tabs-container').scrollTop
+      //         let offsetTopElMain = document.querySelector('.table-container').scrollTop  // 滚动条
+      //         // let offsetTopCon2 = document.querySelector('.el-con2').scrollTop
+      //         // let offsetTopCon = document.querySelector('.el-con').scrollTop
+      //         // console.log(offsetTopmain)
+      //         // console.log(offsetTopresource)
+      //         // console.log(offsetTopElMain)
+      //         // console.log(offsetTopCon2)
+      //         // console.log(offsetTopCon)
+      //         let x = e.clientX-180
+      //         let y = e.clientY+scrollTop+offsetTopElMain-170
+      //         // console.log('x:'+x)
+      //         console.log('y:'+y)
+      //         _this.setResourceLeft(x+'px')
+      //         _this.setResourceTop(y+'px')
 
-              // document.querySelector('.shortcut-container').style.display = 'block'
-              // console.log(document.querySelector('.shortcut-container'))
-              // console.log(offsetTop)
-              // console.log('index:'+index)
-              // document.querySelector('.shortcut-container').style.position = 'absolute'
-              // document.querySelector('.shortcut-container').style.left = x + 'px'
-              // document.querySelector('.shortcut-container').style.top = y + 'px'
-            }
-          })
-        })
-      },
+      //         // document.querySelector('.shortcut-container').style.display = 'block'
+      //         // console.log(document.querySelector('.shortcut-container'))
+      //         // console.log(offsetTop)
+      //         // console.log('index:'+index)
+      //         // document.querySelector('.shortcut-container').style.position = 'absolute'
+      //         // document.querySelector('.shortcut-container').style.left = x + 'px'
+      //         // document.querySelector('.shortcut-container').style.top = y + 'px'
+      //       }
+      //     })
+      //   })
+      // },
       submitForm: function () {
         let _this = this
       	this.$refs.dataForm.validate((valid) => {
@@ -409,7 +438,8 @@
         console.log('点击了操作中的编辑')
         this.operation = false
         this.dialogVisible = true
-        this.currentId = id
+        // this.currentId = id
+        this.setCurrentId(id)
         this.gainSource(id)
       },
       editInfoShortCut: function () {

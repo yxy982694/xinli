@@ -35,7 +35,7 @@
             }
         },
         methods: {
-          
+
         },
         created() {
             this.$api.home.getDbList().then((res) => {
@@ -80,6 +80,8 @@
         .toto-username
           font-size: $font-size-medium-x
           font-weight: bold
+          max-width: 100px
+          no-wrap()
    .todo-items
      flex: 1
      padding: 0 40px 0 30px

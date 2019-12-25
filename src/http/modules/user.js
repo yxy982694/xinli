@@ -60,3 +60,18 @@ export const updatePassword = (params) => {
     params
   })
 }
+// 获取用户管理所有部门信息
+export const findAllOrgan = () => {
+  return axios({
+    url: '/bsf/organ/findAll',
+    method: 'get'
+  })
+}
+// 获取用户前10条信息
+export const getPageList = (currentPage) => {
+  return axios({
+    url: '/bsf/user/getPageList/'+currentPage,
+    method: 'get',
+    // data: currentPage
+  })
+}

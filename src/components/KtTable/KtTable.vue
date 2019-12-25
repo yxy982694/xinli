@@ -51,6 +51,7 @@
 
 <script>
 import KtButton from "@/components/KtButton/index"
+import { mapMutations } from 'vuex'
 export default {
   name: 'KtTable',
   components:{
@@ -132,10 +133,85 @@ export default {
       tempArr: [],
       // showShortCut: false,
       // loading: false,  // 加载标识
-      selections: []  // 列表选中列
+      selections: [],  // 列表选中列
+      shortCutInfo: {}
     }
   },
   methods: {
+    ...mapMutations({
+      // 'setCurrentId': 'setCurrentId',
+      // 'setResourceLeft': 'setResourceLeft',
+      // 'setResourceTop': 'setResourceTop',
+    }),
+    getCellRow: function () {
+      console.log('getCellRow')
+      let _this = this
+      this.$nextTick(function () {
+        let doms = document.querySelectorAll('.el-table__row')
+        console.log(doms)
+        let domsCell = document.querySelectorAll('.resource-container .cell')
+        Array.prototype.forEach.call(domsCell,function (item) {
+          if (item.innerHTML.trim() == '有效' || item.innerHTML.trim() == '是') {
+            item.style.color = 'green'
+          } else if (item.innerHTML.trim() == '失效' || item.innerHTML.trim() == '否') {
+            item.style.color = 'red'
+          }
+        })
+        Array.prototype.forEach.call(doms,function (item,index) {
+          item.oncontextmenu = null
+          item.oncontextmenu = function (e) {
+            e.stopPropagation()
+            e.preventDefault()
+            let classArr = item.className.split(" ")
+            // console.log(classArr)
+            for (let i=0;i<classArr.length;i++) {
+              if (classArr[i].indexOf('clrow') > -1) {
+                // _this.currentId = classArr[i].substr(5)
+                _this.shortCutInfo.id = classArr[i].substr(5)
+                // _this.$emit('change')
+                break
+              }
+            }
+            // _this.gainSource(_this.currentId)
+            // console.log(_this.currentId)
+            // console.log(document.documentElement.scrollTop)
+            // _this.showShortCut = true
+            // _this.shortCutInfo.showShortCut = true
+            _this.shortCutInfo.showShortCut = 'block'
+            // console.log(_this.showShortCut)
+            let scrollTop = document.documentElement.scrollTop
+            // console.log(document.querySelector('.el-con'))
+            // let offsetTopmain = document.querySelector('.main-content').scrollTop
+            // let offsetTopresource = document.querySelector('.el-tabs-container').scrollTop
+            let offsetTopElMain = document.querySelector('.table-container').scrollTop  // 滚动条
+            // let offsetTopCon2 = document.querySelector('.el-con2').scrollTop
+            // let offsetTopCon = document.querySelector('.el-con').scrollTop
+            // console.log(offsetTopmain)
+            // console.log(offsetTopresource)
+            // console.log(offsetTopElMain)
+            // console.log(offsetTopCon2)
+            // console.log(offsetTopCon)
+            let x = e.clientX-180
+            let y = e.clientY+scrollTop+offsetTopElMain-170
+            // console.log('x:'+x)
+            // console.log('y:'+y)
+            // _this.setResourceLeft(x+'px')
+            // _this.setResourceTop(y+'px')
+             _this.shortCutInfo.x = x+'px'
+             _this.shortCutInfo.y = y+'px'
+             console.log(_this.shortCutInfo)
+             _this.$emit('changeShortCutInfo',_this.shortCutInfo)
+            // document.querySelector('.shortcut-container').style.display = 'block'
+            // console.log(document.querySelector('.shortcut-container'))
+            // console.log(offsetTop)
+            // console.log('index:'+index)
+            // document.querySelector('.shortcut-container').style.position = 'absolute'
+            // document.querySelector('.shortcut-container').style.left = x + 'px'
+            // document.querySelector('.shortcut-container').style.top = y + 'px'
+          }
+        })
+      })
+    },
     clickCell: function (row,column,cell,event) {
       console.log(this.data.content)
       if (column.label=='路径' && row.location) {
@@ -221,6 +297,8 @@ export default {
 		}
   },
   mounted() {
+    console.log('table-mounted')
+    // this.getCellRow()
     // document.querySelector('.el-con .table-container').style.height = document.querySelector('.el-con .el-tabs__content').style.height-40 + 'px'
       // var _this = this
       // document.querySelector('.table-container').style.height = document.body.clientHeight-210 + 'px'

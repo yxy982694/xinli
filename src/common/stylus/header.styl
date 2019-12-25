@@ -1,4 +1,5 @@
 @import "./variable";
+@import "./mixin";
 // 顶部header部分样式
 .header-container
    height: 70px
@@ -113,6 +114,8 @@
   padding-bottom: 5px
   .header-business-item
    padding: 0 20px
+   max-width: 100px
+   no-wrap()
    .icon-xiaoxi
      position: relative
      &:after{
