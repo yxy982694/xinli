@@ -1,7 +1,7 @@
 <template>
   <div class="left-right-container">  <!-- :style="{height: conHeight}" -->
     <el-container class="el-con">
-      <el-aside width="180px">
+      <el-aside width="160px">
         <div v-for="v in leftList" :key="v.location" class="text-item" @click="addSubTab(v.label,v.location,v.id)">
           <p class="aside-title">
             <span class="fa fa-file-text"></span>

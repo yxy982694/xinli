@@ -66,10 +66,9 @@
     .duty-item:first-child
        margin-top: 15px
     .duty-userimg
-      width: 40px
-      height: 40px
-      border-radius: 50%
-      background: url("../../../common/image/contentImg.png") no-repeat
+      width: 36px
+      height: 36px
+      background: url("../../../common/image/dutySpecialist_bg.png") no-repeat
       background-size: 100% 100%
       margin-right: 10px
     .duty-username

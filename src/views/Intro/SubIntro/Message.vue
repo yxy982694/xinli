@@ -12,7 +12,8 @@
     <div class="section-title">
       <p class="section-title-name">留言板</p>
       <p class="section-title-click">
-        <i class="iconfont icon-liuyan message-color"></i>
+        <!-- <i class="iconfont icon-liuyan message-color"></i> -->
+        <span class="message-bg"></span>
         <span class="message-color" @click="clickNew">新建留言</span>
         <span>查看全部</span>
       </p>
@@ -105,6 +106,11 @@
         color: $color-textgray
     .message-color
       color: $color-textblue
-      &+.message-color
-        margin-right: 10px
+      margin-right: 10px
+    .message-bg
+      display: inline-block
+      background: url('../../../common/image/newMessage_bg.png') no-repeat
+      background-size: 100% 100%
+      width: 14px
+      height: 14px
 </style>

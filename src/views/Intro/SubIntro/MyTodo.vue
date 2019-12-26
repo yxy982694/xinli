@@ -8,9 +8,10 @@
       </div>
     </div>
     <div class="todo-items">
-      <div v-for="item in dbList" :key="item.id" class="need-item">
+      <div v-for="(item,index) in dbList" :key="item.id" class="need-item">
           <p class="todo-item-p">
-            <i class="iconfont todo-itemicon" :class="item.url"></i>
+            <!-- <i class="iconfont todo-itemicon" :class="item.url"></i> -->
+            <span :class="'todo-bg'+index"></span>
             <span class="todo-itemname">{{item.name}}</span>
           </p>
           <span class="todo-itemvalue">{{item.value}}</span>
@@ -118,4 +119,25 @@
    .need-left
      display: flex
      align-items: center
+   .todo-bg0
+     display: inline-block
+     background: url('../../../common/image/operationAgency_bg.png') no-repeat
+     background-size: 100% 100%
+     width: 26px
+     height: 26px
+     margin-right: 10px
+   .todo-bg1
+     display: inline-block
+     background: url('../../../common/image/demandAgency_bg.png') no-repeat
+     background-size: 100% 100%
+     width: 26px
+     height: 26px
+     margin-right: 10px
+   .todo-bg2
+     display: inline-block
+     background: url('../../../common/image/dayWork_bg.png') no-repeat
+     background-size: 100% 100%
+     width: 27px
+     height: 26px
+     margin-right: 10px
 </style>

@@ -106,6 +106,12 @@
         .fast-item-icon
           padding-left: 15px
           padding-top: 15px
+          // margin-left: 15px
+          // margin-top: 15px
+          // width: 32px
+          // height: 30px
+          // background: url('../../../common/image/newWork_bg.png') no-repeat
+          // background-size: 100% 100%
           .iconfont
             font-size: 30px
         .fast-item-text

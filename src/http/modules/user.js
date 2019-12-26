@@ -68,10 +68,25 @@ export const findAllOrgan = () => {
   })
 }
 // 获取用户前10条信息
-export const getPageList = (currentPage) => {
+export const getPageList = (jsonStr) => {
   return axios({
-    url: '/bsf/user/getPageList/'+currentPage,
-    method: 'get',
-    // data: currentPage
+    url: '/bsf/user/getPageList',
+    method: 'post',
+    data: jsonStr
+  })
+}
+// export const getPageList = (currentPage) => {
+//   return axios({
+//     url: '/bsf/user/getPageList/'+currentPage,
+//     method: 'get',
+//     // data: currentPage
+//   })
+// }
+// 添加用户信息
+export const addUser = (User) => {
+  return axios({
+    url: '/bsf/user/addUser',
+    method: 'post',
+    data: User
   })
 }

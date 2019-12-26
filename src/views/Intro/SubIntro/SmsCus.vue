@@ -5,8 +5,9 @@
         <p class="section-title-name">短信定制</p>
       </div>
       <div class="sms-container">
-          <div class="sms-item" v-for="item in faultSheet" :key="item.key" :title="item.name">
-            <i class="iconfont" :class="item.url"></i>
+          <div class="sms-item" v-for="(item,index) in faultSheet" :key="item.key" :title="item.name">
+            <!-- <i class="iconfont" :class="item.url"></i> -->
+            <p :class="'sms-bg'+index"></p>
             <p class="sms-text">{{ item.name }}</p>
           </div>
       </div>
@@ -96,4 +97,34 @@
       font-size: 35px
       display: inline-block
       color: $color-textblue
+    .sms-bg0
+      background: url('../../../common/image/sms/faultList_bg.png') no-repeat
+      background-size: 100% 100%
+      width: 36px
+      height: 29px
+    .sms-bg1
+      background: url('../../../common/image/sms/nonFaultList_bg.png') no-repeat
+      background-size: 100% 100%
+      width: 31px
+      height: 36px
+    .sms-bg2
+      background: url('../../../common/image/sms/demandSheet_bg.png') no-repeat
+      background-size: 100% 100%
+      width: 33px
+      height: 36px
+    .sms-bg3
+      background: url('../../../common/image/sms/publicService_bg.png') no-repeat
+      background-size: 100% 100%
+      width: 36px
+      height: 36px
+    .sms-bg4
+      background: url('../../../common/image/sms/computerLab_bg.png') no-repeat
+      background-size: 100% 100%
+      width: 36px
+      height: 33px
+    .sms-bg5
+      background: url('../../../common/image/sms/dutyManage_bg.png') no-repeat
+      background-size: 100% 100%
+      width: 36px
+      height: 36px
 </style>
