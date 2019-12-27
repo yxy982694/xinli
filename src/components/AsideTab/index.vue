@@ -1,7 +1,7 @@
 <template>
   <div class="left-right-container">  <!-- :style="{height: conHeight}" -->
     <el-container class="el-con">
-      <el-aside width="160px">
+      <el-aside width="180px">
         <div v-for="v in leftList" :key="v.location" class="text-item" @click="addSubTab(v.label,v.location,v.id)">
           <p class="aside-title">
             <span class="fa fa-file-text"></span>
@@ -57,7 +57,7 @@
             // }
         },
         mounted() {
-          document.querySelector('.left-right-container').style.height = document.body.clientHeight-130 + 'px'
+          document.querySelector('.left-right-container').style.height = document.body.clientHeight-131 + 'px'
           // document.querySelector('.el-con').style.height = document.body.clientHeight-150 + 'px'
             // var _this = this
             // this.conHeight = this.getClientHeight() -100 + 'px'
@@ -119,15 +119,16 @@
     cursor: pointer
     color: #333
     // color: rgb(191, 203, 217)
-    border-bottom: 1px solid $color-lightgray
+    border-bottom: 1px solid $color-border
     height: 56px
     line-height: 56px
     text-align: left
     padding-left: 15px
   .el-con .el-main
     // background-color: #fff
-    background: url('../../common/image/contentImg.png') no-repeat
-    background-size: 100% 100%
+    // background: url('../../common/image/contentImg.png') no-repeat
+    // background-size: 100% 100%
+    background-color: #f9f9f9
     color: #333
     text-align: center
     overflow: hidden

@@ -76,13 +76,10 @@ export const deleteResource = (id) => {
   })
 }
 // 根据用户名进行查询,返回查询结果
-export const findByName = (userName) => {
+export const findByName = (name) => {
   return axios({
-    url: '/menu/findByName',
-    method: 'post',
-    data: {
-      userName: userName
-    }
+    url: '/menu/findByName/'+name,
+    method: 'get'
   })
 }
 // 查询全部资源信息

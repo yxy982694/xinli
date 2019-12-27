@@ -7,7 +7,7 @@
 			</div> -->
       <div class="user-depit">部门</div>
 			<div class="tree-container">
-				<el-tree :default-expanded-keys="[0,1]" v-loading="loadingTree" :expand-on-click-node="false" :props="defaultProps" :data="treeData" node-key="Id" ref="tree" @node-click="handleNodeClick"></el-tree>
+				<el-tree v-loading="loadingTree" :expand-on-click-node="false" :props="defaultProps" :data="treeData" node-key="Id" ref="tree" @node-click="handleNodeClick"></el-tree>
 			</div>
 		</div>
 		<div class="user-middle" ref="userMiddle"></div>
@@ -60,28 +60,30 @@
 			<div class="right-center">
 				<!-- <div class="bread-crumb">部门>杭州东方通信软件技术有限公司</div> -->
 				<div class="btn-container">
-				  <!-- <el-button-group> -->
+				  <el-button-group>
             <kt-button type="primary" icon="fa fa-calendar" :label="$t('action.add')" @click="addInfo"></kt-button>
-            <kt-button icon="fa fa-edit" :disabled="editAble" :label="$t('action.edit')" @click="editInfo"></kt-button>
-            <kt-button type="danger" icon="fa fa-trash" :disabled="editAble" :label="$t('action.delete')" @click="deleteInfo"></kt-button>
-            <kt-button type="primary" icon="fa fa-calendar" :disabled="editAble" label="启用"></kt-button>
-            <kt-button type="primary" icon="fa fa-calendar" :disabled="editAble" label="停用"></kt-button>
+            <kt-button type="primary" icon="fa fa-calendar" :disabled="editAble" label="详情"></kt-button>
             <kt-button type="primary" icon="fa fa-calendar" :disabled="editAble" label="授权"></kt-button>
             <kt-button type="primary" icon="fa fa-calendar" :disabled="editAble" label="批量授权"></kt-button>
-            <kt-button type="primary" icon="fa fa-calendar" :disabled="editAble" label="详情"></kt-button>
-
-          <!-- </el-button-group> -->
+            <kt-button type="primary" icon="fa fa-calendar" :disabled="editAble" label="启用"></kt-button>
+            <kt-button type="primary" icon="fa fa-calendar" :disabled="editAble" label="停用"></kt-button>
+            <kt-button type="primary" icon="fa fa-edit" :disabled="editAble" :label="$t('action.edit')" @click="editInfo"></kt-button>
+            <kt-button type="primary" icon="fa fa-trash" :disabled="editAble" :label="$t('action.delete')" @click="deleteInfo"></kt-button>
+          </el-button-group>
 				</div>
 			</div>
 			<div class="right-bottom">
-				<el-table ref="elTable"
-        v-loading="loadingTable"
-        :data="tableData.content"
-        :border="true" height="100%"
-        @cell-click="clickCell"
-        @selection-change="changeSelect"
-        @select-all="selectAll">
-					<el-table-column type="selection" width="40"></el-table-column>
+        <input type="checkbox" ref="boxAll" @change="changeBoxAll" class="box-all" v-model="boxAllVal">
+				<el-table ref="elTable" v-loading="loadingTable" :data="tableData.content" :border="true" height="100%" @cell-click="clickCell">
+					<!-- <el-table-column type="selection" width="40"></el-table-column> -->
+          <el-table-column label="" width="40" header-align="center" align="center">
+          	<template slot-scope="scope">
+              <div class="userbox-div">
+
+                <input ref="inputBox" @change="selectChange" v-model="checkedBoxArr" :value="'ck'+scope.row.ROW_ID" name="userTable" type="checkbox" class="user-ck" :id="'ck'+scope.row.ROW_ID">
+              </div>
+          	</template>
+          </el-table-column>
 					<el-table-column v-for="column in columns" header-align="center" align="center" :prop="column.prop" :label="column.label"
 					 :min-width="column.minWidth" :key="column.prop" :sortable="true">
 					</el-table-column>
@@ -98,7 +100,7 @@
 		      @size-change="handleSizeChange"
 		      @current-change="handleCurrentChange"
 		      :current-page="currentPage"
-		      :page-sizes="[15, 50, 100, 200]"
+		      :page-sizes="[30, 100, 150, 200]"
 		      :page-size="pageSize"
 		      layout="total, sizes, prev, pager, next, jumper"
 		      :total="totalNum">
@@ -157,18 +159,20 @@
 		data: function() {
 			return {
             dateValue: '',
+            checkedBoxArr: [],
+            boxAllVal: false,
             editAble: true,
         		checkedBox: false,
             selectedVal: '',
             radioVal: '',
             currentDepId: '0',
-            loadingTable: true,
-            loadingTree: true,
-            // loadingTable: false,
-            // loadingTree: false,
+            // loadingTable: true,
+            // loadingTree: true,
+            loadingTable: false,
+            loadingTree: false,
             usernameVal: '',
             totalNum: 0,
-            pageSize: 15,
+            pageSize: 10,
             currentPage: 1,
             size: 'small',
             dialogVisible: false,
@@ -426,7 +430,7 @@
 					let moveLen = middleLeft + (endX - startX)
 					// let maxT = _this.$refs.userContainer.clientWidth - _this.$refs.userMiddle.offsetWidth
 					// console.log(maxT)
-			      	if(moveLen<190) moveLen = 190
+			      	if(moveLen<160) moveLen = 160
 			      	// if(moveLen>maxT-180) moveLen = maxT-180
 			      	// _this.$refs.userMiddle.style.left = moveLen;
 			      	_this.$refs.userLeft.style.width = moveLen + "px";
@@ -464,29 +468,40 @@
 			KtButton
 		},
 		methods: {
-      changeSelect: function (selection) {
-        if (selection.length == 1) {
-          this.editAble = false
-          this.userId = selection[0].ID
+      changeBoxAll: function () { // 点击选中全部复选框时
+        this.editAble = true
+        if (this.boxAllVal) {
+          let inputBoxDoms = document.querySelectorAll('.user-ck')
+          for (var i=0;i<inputBoxDoms.length;i++) {
+            this.checkedBoxArr.push(inputBoxDoms[i].value)
+          }
         } else {
-          this.editAble = true
+          this.checkedBoxArr = []
         }
       },
-      selectAll: function (selection) {
-        if (selection.length == 1) {
-          this.editAble = false
-          this.userId = selection[0].ID
+      selectChange: function () { // 点击input复选框时
+        this.editAble = true
+        this.boxAllVal = false
+        this.$refs.boxAll.indeterminate = true
+        if (this.checkedBoxArr.length>0) {
+          if (this.checkedBoxArr.length == 1) {
+            this.editAble = false
+          } else if (this.checkedBoxArr.length == this.pageSize) {
+            this.$refs.boxAll.indeterminate = false
+            this.boxAllVal = true
+          }
         } else {
-          this.editAble = true
+          this.$refs.boxAll.indeterminate = false
         }
       },
       clickCell: function (row,column) { // 点击table中的单元格
-         if (column.type != 'selection') {
-           this.editAble = false
-           let index = parseInt(row.ROW_ID)%parseInt(this.pageSize)==0? parseInt(this.pageSize): parseInt(row.ROW_ID)%parseInt(this.pageSize)
-           this.$refs.elTable.clearSelection()
-           this.$refs.elTable.toggleRowSelection(this.tableData.content[index-1])
-         }
+        if (column.label) {
+          this.checkedBoxArr = []
+          this.checkedBoxArr.push('ck'+row.ROW_ID)
+          this.editAble = false
+          this.$refs.boxAll.indeterminate = true
+          this.userId = row.ROW_ID
+        }
       },
       addInfo: function () {
         let date1 = new Date()
@@ -509,13 +524,12 @@
         this.operation = false
       },
       deleteInfo: function () {
-        let _this = this
          let jsonObj = {
            organId: _this.currentDepId,
            userId: _this.userId
          }
          let jsonStr = JSON.stringify(jsonObj)
-         _this.$api.user.deleteUser(jsonStr).then((res) => {
+         _this.$api.user.deleteUser(User).then((res) => {
            console.log(res)
            if(res.code == 200) {
              _this.$message({ message: '删除成功', type: 'success' })
@@ -545,7 +559,6 @@
                     if(res.code == 200) {
                       _this.$message({ message: '添加成功', type: 'success' })
                       _this.dialogVisible = false
-                      _this.editLoading = false
                       this.$refs['dataForm'].resetFields()
                       let jsonObj = {
                         organId: _this.currentDepId,
@@ -558,14 +571,13 @@
                     }
                   })
                 } else { // 处理编辑
-                  User.id = _this.userId // 通过ROW_ID获取的userId
+                  User.userId = _this.userId // 通过ROW_ID获取的userId
                   User = JSON.stringify(User)
                   _this.$api.user.editUser(User).then((res) => {
                     console.log(res)
                     if(res.code == 200) {
                       _this.$message({ message: '编辑成功', type: 'success' })
                       _this.dialogVisible = false
-                      _this.editLoading = false
                       this.$refs['dataForm'].resetFields()
                       let jsonObj = {
                         organId: _this.currentDepId,
@@ -583,13 +595,32 @@
           })
       },
       getUserInfo: function (jsonStr) {
-        this.loadingTable = true
+        // this.loadingTable = true
+        this.$refs.boxAll.indeterminate = false
+        this.checkedBoxArr = []
+        this.boxAllVal = false
+        this.editAble = true
         this.$api.user.getPageList(jsonStr).then((res) => {
           console.log(res.data)
           this.tableData.content = res.data
           this.loadingTable = false
           this.totalNum = parseInt(res.total)
         })
+        // if (jsonStr) {
+        //   this.$api.user.getPageList(jsonStr).then((res) => {
+        //     console.log(res.data)
+        //     this.tableData.content = res.data
+        //     this.loadingTable = false
+        //     this.totalNum = parseInt(res.total)
+        //   })
+        // } else {
+        //   this.$api.user.getPageList().then((res) => {
+        //     console.log(res.data)
+        //     this.tableData.content = res.data
+        //     this.loadingTable = false
+        //     this.totalNum = parseInt(res.total)
+        //   })
+        // }
       },
 			openAll: function() {
         // this.$nextTick(function () {
@@ -676,22 +707,19 @@
 <style scoped lang="stylus" rel="stylesheet/stylus">
     .user-container
       display: flex
-      border: 1px solid #dad9e6
+      border: 1px solid #dfdfdf
       overflow: hidden
       box-sizing: border-box
       height: 100%
       position: relative
-      margin: 3px
     .user-left
       box-sizing: border-box
       height: 100%
       background-color: #fff
       overflow: hidden
-      width: 190px
+      width: 160px
       display: flex
       flex-direction: column
-      border: 1px solid #f0f2f5
-      // margin: 2px 4px
       .user-depit
         text-align: left
         font-size: 14px
@@ -709,9 +737,9 @@
       // float: left
       width: 5px
       height: 100%
-      cursor: col-resize
+      cursor: move
       box-sizing: border-box
-      background-color: #f0f2f5
+      background-color: #f9f9f9
       overflow: hidden
     .user-right
       width: 70%
@@ -794,22 +822,15 @@
 	    text-align: left
 	    padding: 0 10px
 	.btn-container
-    padding: 3px 0 4px 0
 	   display: flex
 	   // border: 1px solid green
 	   border-top: none
-	.btn-container .el-button
-    border-radius: 0
-	  // margin-left: 0
-  .btn-container .el-button+.el-button
-    margin-left: 0px !important
-    // margin-left: 5px !important
+	.btn-container .el-button+.el-button
+	  margin-left: 0
 	.input-left
 	  margin-right: 10px
   .user-toolbar
-    padding-right: 20px
-    background-color: #DFDFDF
-  	// background-color: #f0f2f5
+  	background-color: #2761de
   	// padding: 5px 0
   	// color: #fff
     // position: absolute
@@ -819,3 +840,4 @@
   .userbox-div
     position: relative
 </style>
+

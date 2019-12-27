@@ -141,7 +141,7 @@
           orderby: [
           	{ required: true, message: '请输入排序序号', trigger: 'blur' }
           ],
-          
+
         },
         dataForm: {
           id: '',
@@ -219,8 +219,9 @@
         this.setResourceLeft(obj.x)
         this.setResourceTop(obj.y)
       },
-      searchInfo: function (userName) {
-        this.$api.menu.queryResource(userName).then(res => {
+      searchInfo: function (name) {
+        this.$api.menu.findByName(name).then(res => {
+          console.log(res)
           this.$set(this.tableData,'content',res.data)
         })
       },
@@ -255,16 +256,17 @@
         this.filterColumns = JSON.parse(JSON.stringify(this.columnArr));
       },
       findPage: function () {
+        let _this = this
         console.log('findPage')
         // this.loading = true
       	this.$api.menu.loadResource().then((res) => {
-          this.$set(this.tableData,'content',res.data)
+          _this.$set(_this.tableData,'content',res.data)
       		// this.tableData.content = res.data
           console.log(res)
           // console.log(90)
-          this.loading = false
+          _this.loading = false
           // this.getCellRow()
-          this.$refs.ktTable.getCellRow()
+          // _this.$refs.ktTable.getCellRow()
       	})
       },
       // getCellRow: function () {

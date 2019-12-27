@@ -148,7 +148,7 @@ export default {
       let _this = this
       this.$nextTick(function () {
         let doms = document.querySelectorAll('.el-table__row')
-        console.log(doms)
+        // console.log(doms)
         let domsCell = document.querySelectorAll('.resource-container .cell')
         Array.prototype.forEach.call(domsCell,function (item) {
           if (item.innerHTML.trim() == '有效' || item.innerHTML.trim() == '是') {

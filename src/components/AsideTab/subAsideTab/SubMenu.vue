@@ -85,7 +85,7 @@
     flex-wrap: wrap
     align-content: flex-start
     box-shadow: 0 2px 12px 0 rgba(0,0,0,.1)
-    border: 1px solid #EBEEF5
+    // border: 1px solid $color-border
     background-color: #FFF
     color: #303133
     height: 100%

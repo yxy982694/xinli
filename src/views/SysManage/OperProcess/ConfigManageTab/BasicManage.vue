@@ -64,7 +64,7 @@
               this.centerList.push(obj)
             }
           }
-          
+
           // console.log(this.centerMenu[this.centerMenuId])
         }
     }

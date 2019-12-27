@@ -90,3 +90,19 @@ export const addUser = (User) => {
     data: User
   })
 }
+// 编辑用户信息
+export const editUser = (User) => {
+  return axios({
+    url: '/bsf/user/editUser',
+    method: 'post',
+    data: User
+  })
+}
+// 删除用户信息
+export const deleteUser = (User) => {
+  return axios({
+    url: '/bsf/user/removeUser',
+    method: 'post',
+    data: User
+  })
+}

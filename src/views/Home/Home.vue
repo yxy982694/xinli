@@ -44,7 +44,7 @@
           //   document.querySelector('.el-con').style.height = document.body.clientHeight-150 + 'px'
           // }
           if (document.querySelector('.left-right-container')) {
-            document.querySelector('.left-right-container').style.height = document.body.clientHeight-130 + 'px'
+            document.querySelector('.left-right-container').style.height = document.body.clientHeight-131 + 'px'
           }
           // if (document.querySelector('.el-con .el-tabs__content')) {
           //   document.querySelector('.el-con .el-tabs__content').style.height = document.body.clientHeight-190 + 'px'
