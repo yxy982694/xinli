@@ -17,16 +17,38 @@
 <template>
   <div class="table-container">
     <!--表格栏-->
-    <el-table height="100%" :data="data.content" :highlight-current-row="highlightCurrentRow" @selection-change="selectionChange"
-          @current-change="handleCurrentChange" v-loading="loading" :row-class-name="handleClass" :element-loading-text="$t('action.loading')" :border="border" :stripe="stripe"
-          :show-overflow-tooltip="showOverflowTooltip" @cell-click="clickCell" :cell-class-name="cellClass"  :size="size" :align="align" style="width:100%;" :tree-props="treeProps"  :default-expand-all="defaultExpandAll" :row-key="rowKey" > <!-- :tree-props="treeProps"  :default-expand-all="defaultExpandAll" :row-key="rowKey" -->
+    <el-table
+          :data="dataArr"
+          :highlight-current-row="highlightCurrentRow"
+          :element-loading-text="$t('action.loading')"
+          :border="border"
+          :stripe="stripe"
+          :show-overflow-tooltip="showOverflowTooltip"
+          :size="size" :align="align" style="width:100%;"
+          height="100%"
+          :tree-props="treeProps"
+          :default-expand-all="defaultExpandAll"
+          :row-key="rowKey"
+          v-loading="loading"
+          @row-contextmenu="shortCutMenu"
+          @cell-click="clickCell"
+          @selection-change="selectionChange"
+          @select-all="selectAll"
+          ref="elTable"
+          > <!-- :tree-props="treeProps"  :default-expand-all="defaultExpandAll" :row-key="rowKey" -->
       <el-table-column type="selection" width="40" v-if="showCheckBox"></el-table-column><!-- :max-height="maxHeight" -->
-      <el-table-column v-for="column in columns" header-align="center" align="center"
+      <el-table-column v-for="column in columns" header-align="center" :align="column.align?column.align:'center'"
         :prop="column.prop" :label="column.label" :width="column.width" :min-width="column.minWidth"
         :fixed="column.fixed" :key="column.prop" :type="column.type" :formatter="column.formatter"
         :sortable="column.sortable==null?true:column.sortable">
       </el-table-column>
-      <el-table-column :label="$t('action.operation')" width="185" fixed="right" if="showOperate" header-align="center" align="center">
+      <el-table-column
+        :label="$t('action.operation')"
+        width="185"
+        fixed="right"
+        v-if="showOperate"
+        header-align="center"
+        align="center">
         <template slot-scope="scope">
           <kt-button icon="fa fa-edit" :label="$t('action.edit')" :perms="permsEdit" :size="size" @click="handleEdit(scope.$index, scope.row)" />
           <kt-button icon="fa fa-trash" :label="$t('action.delete')" :perms="permsDelete" :size="size" type="danger" @click="handleDelete(scope.$index, scope.row)" />
@@ -34,12 +56,25 @@
       </el-table-column>
     </el-table>
     <!--分页栏-->
-    <div class="toolbar" style="padding:10px;" v-if="showPage">
+    <div class="toolbar" v-if="showPage">
       <kt-button :label="$t('action.batchDelete')" :perms="permsDelete" :size="size" type="danger" @click="handleBatchDelete()"
-        :disabled="this.selections.length===0" style="float:left;" v-if="showCheckBox"/>
-      <el-pagination layout="total, prev, pager, next, jumper" @current-change="refreshPageRequest"
-        :current-page="pageRequest.pageNum" :page-size="pageRequest.pageSize" :total="data.totalSize" style="float:right;">
-      </el-pagination>
+        :disabled="this.selections.length===0" style="float:left;" v-if="showCheckBoxDele"/>
+        <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="currentPage"
+          :page-sizes="pageSizes"
+          :page-size="pageSize"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="total">
+        </el-pagination>
+      <!-- <el-pagination layout="total, prev, pager, next, jumper"
+      @current-change="refreshPageRequest"
+        :current-page="pageRequest.pageNum"
+        :page-size="pageRequest.pageSize"
+        :total="data.totalSize"
+        style="float:right;">
+      </el-pagination> -->
     </div>
     <!-- <div class="shortcut-container" v-if="ifShortCut" v-show="showShortCut">
       <kt-button icon="fa fa-plus" :label="$t('action.add')" @click="addInfo" />
@@ -59,7 +94,7 @@ export default {
 	},
   props: {
     columns: Array, // 表格列配置
-    data: Object, // 表格分页数据
+    dataArr: Array, // 表格分页数据
     permsEdit: String,  // 编辑权限标识
     permsDelete: String,  // 删除权限标识
     size: { // 尺寸样式
@@ -100,7 +135,7 @@ export default {
     },
     showOperate: {
       type: Boolean,
-      default: true
+      default: false
     },
     rowKey: {
       type: String,
@@ -117,11 +152,15 @@ export default {
     loading: {
       type: Boolean,
       default: false
-    }
-    // ifShortCut: {
-    //   type: Boolean,
-    //   default: false
-    // }
+    },
+    showCheckBoxDele: {
+      type: Boolean,
+      default: false
+    },
+    currentPage: Number,
+    pageSizes: Array,
+    pageSize: Number,
+    total:  Number
   },
   data() {
     return {
@@ -143,96 +182,43 @@ export default {
       // 'setResourceLeft': 'setResourceLeft',
       // 'setResourceTop': 'setResourceTop',
     }),
+    shortCutMenu: function (row,column,e) {
+      e.stopPropagation()
+      e.preventDefault()
+      this.shortCutInfo.id = row.id
+      this.shortCutInfo.showShortCut = 'block'
+      let scrollTop = document.documentElement.scrollTop
+      let offsetTopElMain = document.querySelector('.table-container').scrollTop
+      let x = e.clientX-180
+      let y = e.clientY+scrollTop+offsetTopElMain-170
+      this.shortCutInfo.x = x+'px'
+      this.shortCutInfo.y = y+'px'
+      this.$emit('changeShortCutInfo',this.shortCutInfo)
+    },
     getCellRow: function () {
-      console.log('getCellRow')
-      let _this = this
-      this.$nextTick(function () {
-        let doms = document.querySelectorAll('.el-table__row')
-        // console.log(doms)
-        let domsCell = document.querySelectorAll('.resource-container .cell')
-        Array.prototype.forEach.call(domsCell,function (item) {
-          if (item.innerHTML.trim() == '有效' || item.innerHTML.trim() == '是') {
-            item.style.color = 'green'
-          } else if (item.innerHTML.trim() == '失效' || item.innerHTML.trim() == '否') {
-            item.style.color = 'red'
-          }
-        })
-        Array.prototype.forEach.call(doms,function (item,index) {
-          item.oncontextmenu = null
-          item.oncontextmenu = function (e) {
-            e.stopPropagation()
-            e.preventDefault()
-            let classArr = item.className.split(" ")
-            // console.log(classArr)
-            for (let i=0;i<classArr.length;i++) {
-              if (classArr[i].indexOf('clrow') > -1) {
-                // _this.currentId = classArr[i].substr(5)
-                _this.shortCutInfo.id = classArr[i].substr(5)
-                // _this.$emit('change')
-                break
-              }
-            }
-            // _this.gainSource(_this.currentId)
-            // console.log(_this.currentId)
-            // console.log(document.documentElement.scrollTop)
-            // _this.showShortCut = true
-            // _this.shortCutInfo.showShortCut = true
-            _this.shortCutInfo.showShortCut = 'block'
-            // console.log(_this.showShortCut)
-            let scrollTop = document.documentElement.scrollTop
-            // console.log(document.querySelector('.el-con'))
-            // let offsetTopmain = document.querySelector('.main-content').scrollTop
-            // let offsetTopresource = document.querySelector('.el-tabs-container').scrollTop
-            let offsetTopElMain = document.querySelector('.table-container').scrollTop  // 滚动条
-            // let offsetTopCon2 = document.querySelector('.el-con2').scrollTop
-            // let offsetTopCon = document.querySelector('.el-con').scrollTop
-            // console.log(offsetTopmain)
-            // console.log(offsetTopresource)
-            // console.log(offsetTopElMain)
-            // console.log(offsetTopCon2)
-            // console.log(offsetTopCon)
-            let x = e.clientX-180
-            let y = e.clientY+scrollTop+offsetTopElMain-170
-            // console.log('x:'+x)
-            // console.log('y:'+y)
-            // _this.setResourceLeft(x+'px')
-            // _this.setResourceTop(y+'px')
-             _this.shortCutInfo.x = x+'px'
-             _this.shortCutInfo.y = y+'px'
-             console.log(_this.shortCutInfo)
-             _this.$emit('changeShortCutInfo',_this.shortCutInfo)
-            // document.querySelector('.shortcut-container').style.display = 'block'
-            // console.log(document.querySelector('.shortcut-container'))
-            // console.log(offsetTop)
-            // console.log('index:'+index)
-            // document.querySelector('.shortcut-container').style.position = 'absolute'
-            // document.querySelector('.shortcut-container').style.left = x + 'px'
-            // document.querySelector('.shortcut-container').style.top = y + 'px'
-          }
-        })
+      let domsCell = document.querySelectorAll('.resource-container .cell')
+      Array.prototype.forEach.call(domsCell,function (item) {
+        if (item.innerHTML.trim() == '有效' || item.innerHTML.trim() == '是') {
+          item.style.color = 'green'
+        } else if (item.innerHTML.trim() == '失效' || item.innerHTML.trim() == '否') {
+          item.style.color = 'red'
+        }
       })
     },
-    clickCell: function (row,column,cell,event) {
-      console.log(this.data.content)
-      if (column.label=='路径' && row.location) {
-        console.log(row.location)
-        this.$router.push('/complaint/personal')
-      }
-    },
-    cellClass: function ({row, column, rowIndex, columnIndex}) {
 
-      if (columnIndex == 0) {
-        return 'align-left'
-      }
-      if (columnIndex == 2) {
-        return 'cursor-pointer'
-      }
-    },
-    handleClass: function (row,id) {
-      // this.tempArr.push(row)
-      // console.log(this.tempArr)
-        return 'clrow'+row.row.id
-    },
+    // cellClass: function ({row, column, rowIndex, columnIndex}) {
+    //   if (columnIndex == 0) {
+    //     return 'align-left'
+    //   }
+    //   if (columnIndex == 2) {
+    //     return 'cursor-pointer'
+    //   }
+    // },
+    // handleClass: function (row,id) {
+    //   // this.tempArr.push(row)
+    //   // console.log(this.tempArr)
+    //     // return 'clrow'+row.row.id
+    // },
     // 分页查询
     findPage: function () {
         // this.loading = true
@@ -241,14 +227,27 @@ export default {
         }
       this.$emit('findPage', {pageRequest:this.pageRequest, callback:callback})
     },
-    // 选择切换
-    selectionChange: function (selections) {
-      this.selections = selections
-      this.$emit('selectionChange', {selections:selections})
+    // 点击某个单元格时
+    clickCell: function (row,column,cell,event) {
+      this.$emit('clickCell', row,column,event)
     },
-    // 选择切换
-    handleCurrentChange: function (val) {
-      this.$emit('handleCurrentChange', {val:val})
+    // 点击某一行前面的复选框
+    selectionChange: function (selection) {
+      this.$emit('selectionChange', selection)
+    },
+    // 点击全选复选框
+    selectAll: function (selection) {
+      this.$emit('selectAll', selection)
+    },
+    clickRow: function (obj) {
+      this.$refs.elTable.clearSelection()
+      this.$refs.elTable.toggleRowSelection(obj)
+    },
+    handleSizeChange: function (pageSize) {
+      this.$emit('handleSizeChange', pageSize)
+    },
+    handleCurrentChange: function (currentPage) {
+      this.$emit('handleCurrentChange', currentPage)
     },
     // 换页刷新
 		refreshPageRequest: function (pageNum) {
@@ -264,11 +263,11 @@ export default {
 		},
     // 删除
 		handleDelete: function (index, row) {
-        if (row.parentId) {
-          this.delete(row.id)
-        } else {
-          this.$alert('根节点不可删除')
-        }
+			if (row.parentId) {
+			  this.delete(row.id)
+			} else {
+			  this.$alert('根节点不可删除')
+			}
 
 		},
 		// 批量删除
@@ -286,14 +285,14 @@ export default {
 				let idArray = (ids+'').split(',')
 				for(var i=0; i<idArray.length; i++) {
 					params.push({'id':idArray[i]})
-        }
-        if (idArray.length == 1) {
-          this.$emit('handleDelete', ids)
-        } else if (idArray.length > 1){
-          this.$emit('handleDelete', {params:params})
-        }
-			}).catch(() => {
-			})
+			}
+			if (idArray.length == 1) {
+			  this.$emit('handleDelete', ids)
+			} else if (idArray.length > 1){
+			  this.$emit('handleDelete', {params:params})
+			}
+				}).catch(() => {
+				})
 		}
   },
   mounted() {
@@ -325,9 +324,22 @@ export default {
   .el-table
     // margin-top: 5px
   .table-container
+    display: flex
+    flex-direction: column
     position: relative
     padding: 0 5px 0px 5px
-    overflow: auto
+    overflow: hidden
     // height: 40px
     margin-top: 5px
+    height: 100%
+  .toolbar
+    padding-right: 20px
+    background-color: #DFDFDF
+    height: 25px
+    padding: 1px 15px 1px 0
+    display: flex
+    justify-content: flex-end
+  .el-pagination
+    box-sizing: border-box
+    padding: 0
 </style>

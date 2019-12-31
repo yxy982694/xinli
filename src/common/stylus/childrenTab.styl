@@ -31,6 +31,7 @@
   border: 1px solid $color-lightgray
   // border-bottom: 1px solid $color-lightgray !important
   box-shadow: 0 0 5px 1px $color-lightgray
+  padding-left: 3px
 .el-container .el-tabs--card>.el-tabs__header .el-tabs__item.is-active
   // background-color: #42B983 !important
   background-color: #9896a0 !important
@@ -41,6 +42,19 @@
 .el-container .el-tabs--card>.el-tabs__header .el-tabs__item
    border-bottom:none !important
   // border-bottom: 1px solid $color-lightgray
+.el-container .el-tabs--card>.el-tabs__header .el-tabs__item:first-child
+  // padding-left: 23px !important
+  display: flex
+  align-items: center
+  justify-content: space-around
+.el-container .el-tabs--card>.el-tabs__header .el-tabs__item:first-child:before
+  content: ''
+  display: inline-block
+  width: 16px
+  height: 16px
+  background: url('../image/mainIcon.png') no-repeat
+  background-size: 100% 100%
+  margin-right: 3px
 .el-container .el-tabs__nav
   display: flex
   align-items: center
@@ -79,5 +93,9 @@
   overflow: hidden
 .el-con2 .el-table
   overflow: auto
+  flex: 1
 .el-tabs__nav-next, .el-tabs__nav-prev
   line-height: 30px
+.tab-down-menu p:hover
+  background: #dfdfdf
+  // color: #fff

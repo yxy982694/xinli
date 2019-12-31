@@ -1,7 +1,6 @@
 <template>
   <el-form :model="loginForm" :rules="fieldRules" ref="loginForm" label-position="left" label-width="0px" class="demo-ruleForm login-container">
-    <span class="tool-bar">
-    </span>
+    <span class="tool-bar"></span>
     <h2 class="title" style="padding-left:22px;">系统登录</h2>
     <el-form-item prop="username">
       <el-input type="text" v-model="loginForm.username" auto-complete="off" placeholder="账号"></el-input>
@@ -90,7 +89,7 @@
 		 //   this.$message({ message: res.message, type: 'error' })
 		 // })
      // axios.post('http://10.89.138.147:8080/login',
-        axios.post('http://10.89.138.133:9091/login',
+        axios.post('http://10.89.138.145:9091/login',
           userValue,
           // {
           //   headers: {'Content-Type':'application/json;charset=UTF-8'}

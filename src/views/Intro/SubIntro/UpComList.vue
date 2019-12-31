@@ -18,9 +18,10 @@
                   <td>{{item.sheetId}}</td>
                   <td>{{item.sheetType}}</td>
                   <td>{{item.sheetTheme}}</td>
-                  <td class="upcom-td">
+                  <td>{{item.sheetStatus}}</td>
+                  <!-- <td class="upcom-td">
                     <p class="upcom-tab" :style="cellColor(item.sheetStatus)">{{cellStyle(item.sheetStatus)}}</p>
-                  </td>
+                  </td> -->
               </tr>
           </tbody>
       </table>

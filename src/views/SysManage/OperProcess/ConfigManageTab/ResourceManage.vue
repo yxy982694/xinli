@@ -8,7 +8,22 @@
         <!-- <kt-button icon="fa fa-plus" :label="$t('action.add')" perms="sys:user:add" type="primary" @click="addInfo(false)"></kt-button> -->
       </template>
     </kt-buttons>
-    <kt-table ref="ktTable" @changeShortCutInfo="changeShortCutInfo" :loading="loading" @findPage="findPage" @handleEdit="editInfo" @addInfo="addInfo" @handleDelete="deleteInfo" :columns="filterColumns" :data="tableData" :border="true" :showCheckBox="false" :showPage="false" rowKey="id" :treeProps="treeProps" :defaultExpandAll="false"></kt-table>
+    <kt-table ref="ktTable"
+      @changeShortCutInfo="changeShortCutInfo"
+      :loading="loading"
+      @findPage="findPage"
+      @handleEdit="editInfo"
+      @addInfo="addInfo"
+      @handleDelete="deleteInfo"
+      :columns="filterColumns"
+      :dataArr="tableData"
+      :border="true"
+      :showCheckBox="false"
+      :showPage="false"
+      rowKey="id"
+      :treeProps="treeProps"
+      :showOperate="true"
+      :defaultExpandAll="false"></kt-table>
     <!-- <div class="table-seat"></div> -->
     <!--新增编辑界面-->
     <el-dialog :title="operation?'新增':'编辑'" width="40%" :visible.sync="dialogVisible" :close-on-click-modal="false">
@@ -141,7 +156,6 @@
           orderby: [
           	{ required: true, message: '请输入排序序号', trigger: 'blur' }
           ],
-
         },
         dataForm: {
           id: '',
@@ -159,9 +173,7 @@
           parentId: ''
         },
         treeProps: {children: 'children', hasChildren: 'hasChildren'},
-        tableData: {
-          content: null
-        },
+        tableData: [],
       }
     },
     components:{
@@ -202,17 +214,31 @@
           return this.$store.state.resourceLeftTop.resourceDisplay
         },
         set: function () {}
-      }
+      },
+      resourceFlag: {
+        get: function () {
+          return this.$store.state.loadData.resourceFlag
+        },
+        set: function () {}
+      },
+      resourceArr: {
+        get: function () {
+          return this.$store.state.loadData.resourceArr
+        },
+        set: function () {}
+      },
     },
     methods: {
       ...mapMutations({
         'setResourceLeft': 'setResourceLeft',
         'setResourceTop': 'setResourceTop',
         'setCurrentId': 'setCurrentId',
-        'setResourceDisplay': 'setResourceDisplay'
+        'setResourceDisplay': 'setResourceDisplay',
+        'setResourceFlag': 'setResourceFlag',
+        'setResourceArr': 'setResourceArr'
       }),
       changeShortCutInfo: function (obj) {
-        console.log(obj)
+        // console.log(obj)
         // this.showShortCut = obj.showShortCut
         this.setResourceDisplay(obj.showShortCut)
         this.setCurrentId(obj.id)
@@ -222,7 +248,8 @@
       searchInfo: function (name) {
         this.$api.menu.findByName(name).then(res => {
           console.log(res)
-          this.$set(this.tableData,'content',res.data)
+          this.tableData = res.data
+          // this.$set(this.tableData,'content',res.data)
         })
       },
       deleteShortCutInfo: function (id) {
@@ -240,17 +267,17 @@
       initColumns: function () {
         this.columnArr = [
           // {prop:"id", label:"id",sortable: false},
-          {prop:"nameCn", label:"中文名称",sortable: false,minWidth: "170px"},
-          {prop:"name", label:"名称",sortable: false},
-          {prop:"location", label:"路径",sortable: false},
+          {prop:"nameCn", label:"中文名称",sortable: true,minWidth: "80px",align: "left"},
+          {prop:"name", label:"名称",sortable: true},
+          {prop:"location", label:"路径",sortable: true},
           // {prop:"type", label:"菜单类型",sortable: false},
-          {prop:"isWebpage", label:"是否网页",sortable: false},
-          {prop:"order", label:"排序序号",sortable: false},
-          {prop:"status", label:"状态",sortable: false},
-          {prop:"remark", label:"菜单描述",sortable: false},
+          {prop:"isWebpage", label:"是否网页",sortable: true},
+          {prop:"orderby", label:"排序序号",sortable: true},
+          {prop:"status", label:"状态",sortable: true},
+          {prop:"remark", label:"菜单描述",sortable: true},
           // {prop:"image", label:"菜单图标路径",sortable: false},
-          {prop:"createTime", label:"创建时间",sortable: false},
-          {prop:"creator", label:"创建人",sortable: false},
+          {prop:"createTime", label:"创建时间",sortable: true},
+          {prop:"creator", label:"创建人",sortable: true},
           // {prop:"parentId", label:"父id",sortable: false},
         ]
         this.filterColumns = JSON.parse(JSON.stringify(this.columnArr));
@@ -258,79 +285,26 @@
       findPage: function () {
         let _this = this
         console.log('findPage')
-        // this.loading = true
-      	this.$api.menu.loadResource().then((res) => {
-          _this.$set(_this.tableData,'content',res.data)
-      		// this.tableData.content = res.data
-          console.log(res)
-          // console.log(90)
-          _this.loading = false
-          // this.getCellRow()
-          // _this.$refs.ktTable.getCellRow()
-      	})
+        if (this.resourceFlag) {
+          console.log('true')
+          this.loading = false
+          this.tableData = this.resourceArr
+          console.log(this.tableData)
+          this.$refs.ktTable.getCellRow()
+        } else {
+          console.log('false')
+          this.loading = true
+          this.$api.menu.loadResource().then((res) => {
+            _this.tableData = res.data
+            // _this.$set(_this.tableData,'content',res.data)
+            console.log(res)
+            _this.loading = false
+            _this.setResourceFlag(true)
+            _this.setResourceArr(res.data)
+            _this.$refs.ktTable.getCellRow()
+          })
+        }
       },
-      // getCellRow: function () {
-      //   console.log('90')
-      //   let _this = this
-      //   this.$nextTick(function () {
-      //     let doms = document.querySelectorAll('.el-table__row')
-      //     console.log(doms)
-      //     let domsCell = document.querySelectorAll('.resource-container .cell')
-      //     Array.prototype.forEach.call(domsCell,function (item) {
-      //       if (item.innerHTML.trim() == '有效' || item.innerHTML.trim() == '是') {
-      //         item.style.color = 'green'
-      //       } else if (item.innerHTML.trim() == '失效' || item.innerHTML.trim() == '否') {
-      //         item.style.color = 'red'
-      //       }
-      //     })
-      //     Array.prototype.forEach.call(doms,function (item,index) {
-      //       item.oncontextmenu = null
-      //       item.oncontextmenu = function (e) {
-      //         e.stopPropagation()
-      //         e.preventDefault()
-      //         let classArr = item.className.split(" ")
-      //         // console.log(classArr)
-      //         for (let i=0;i<classArr.length;i++) {
-      //           if (classArr[i].indexOf('clrow') > -1) {
-      //             _this.currentId = classArr[i].substr(5)
-      //             break
-      //           }
-      //         }
-      //         // _this.gainSource(_this.currentId)
-      //         // console.log(_this.currentId)
-      //         // console.log(document.documentElement.scrollTop)
-      //         _this.showShortCut = true
-      //         console.log(_this.showShortCut)
-      //         let scrollTop = document.documentElement.scrollTop
-      //         // console.log(document.querySelector('.el-con'))
-      //         // let offsetTopmain = document.querySelector('.main-content').scrollTop
-      //         // let offsetTopresource = document.querySelector('.el-tabs-container').scrollTop
-      //         let offsetTopElMain = document.querySelector('.table-container').scrollTop  // 滚动条
-      //         // let offsetTopCon2 = document.querySelector('.el-con2').scrollTop
-      //         // let offsetTopCon = document.querySelector('.el-con').scrollTop
-      //         // console.log(offsetTopmain)
-      //         // console.log(offsetTopresource)
-      //         // console.log(offsetTopElMain)
-      //         // console.log(offsetTopCon2)
-      //         // console.log(offsetTopCon)
-      //         let x = e.clientX-180
-      //         let y = e.clientY+scrollTop+offsetTopElMain-170
-      //         // console.log('x:'+x)
-      //         console.log('y:'+y)
-      //         _this.setResourceLeft(x+'px')
-      //         _this.setResourceTop(y+'px')
-
-      //         // document.querySelector('.shortcut-container').style.display = 'block'
-      //         // console.log(document.querySelector('.shortcut-container'))
-      //         // console.log(offsetTop)
-      //         // console.log('index:'+index)
-      //         // document.querySelector('.shortcut-container').style.position = 'absolute'
-      //         // document.querySelector('.shortcut-container').style.left = x + 'px'
-      //         // document.querySelector('.shortcut-container').style.top = y + 'px'
-      //       }
-      //     })
-      //   })
-      // },
       submitForm: function () {
         let _this = this
       	this.$refs.dataForm.validate((valid) => {
@@ -341,22 +315,7 @@
               let Resources = Object.assign({}, _this.dataForm)
               let intOrder = parseInt(Resources.orderby)
               Resources.orderby = intOrder
-              // console.log(_this.dataForm)
-              // console.log(_this.currentId)
-              // Resources = _this.dataForm
-              // console.log(params)
-              // params.prop = _this.dataForm
               if (_this.operation) { // 处理添加
-                // alert('添加')
-                 // if (_this.isShortCut) { // 处理右键的添加按钮
-                 //    // 带parentId字段
-                 //    alert('右键')
-                 //    alert(_this.currentId)
-                 //    Resources.parentId = _this.currentId
-                 //    console.log(Resources)
-                 // } else { // 处理上方添加
-                 //    // 不带parentId字段
-                 // }
                 Resources.parentId = _this.currentId
                 Resources = JSON.stringify(Resources)
                 console.log(Resources)
@@ -372,6 +331,7 @@
                       } else {
                         _this.$message({message: '操作失败, ' + res.msg, type: 'error'})
                       }
+                      _this.setResourceFlag(false)
                       _this.findPage()
                     }).catch(function () {
                       _this.dialogVisible = false
@@ -396,6 +356,7 @@
                      } else {
                        _this.$message({message: '操作失败, ' + res.msg, type: 'error'})
                      }
+                     _this.setResourceFlag(false)
                      _this.findPage()
                    }).catch(function () {
                      _this.dialogVisible = false

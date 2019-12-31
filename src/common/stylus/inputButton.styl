@@ -3,10 +3,16 @@
 .el-button-group
   margin: 2px 0
 .el-table .cell
-  text-align: center
+  // text-align: center
   line-height: 20px
   font-size: 12px
   no-wrap()
+th .cell
+  line-height: 25px !important
+.resource-container .el-table .cell
+  line-height: 30px
+.resource-container th .cell
+    line-height: 35px !important
 .el-table th
   padding: 0
 .el-table td
@@ -19,6 +25,7 @@
 .is-in-pagination .el-input__inner
   width: 35px
   height: 25px !important
+  border-radius: 0
 .el-form-item
   display: flex
   padding-right: 20px
@@ -145,3 +152,15 @@
   background-color: #fff
 .el-pagination__editor
   height: 25px !important
+.el-table__row .el-button--mini
+.el-table__row .el-button--mini.is-round
+  padding: 3px 15px
+.resource-container .el-table__row .el-button--mini
+.resource-container .el-button--mini.is-round
+  padding: 6px 15px
+.right-bottom .table-container
+    margin-top: 0 !important
+.el-tree>.el-tree-node
+    min-width:100%
+    display: inline-block
+

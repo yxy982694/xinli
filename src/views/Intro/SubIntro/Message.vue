@@ -15,7 +15,7 @@
         <!-- <i class="iconfont icon-liuyan message-color"></i> -->
         <span class="message-bg"></span>
         <span class="message-color" @click="clickNew">新建留言</span>
-        <span>查看全部</span>
+        <span>全部 >></span>
       </p>
     </div>
     <div class="message-items">

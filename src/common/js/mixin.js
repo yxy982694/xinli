@@ -7,20 +7,25 @@ export const leftListMixin = {
                   //     location: '/SysManage/OperProcess/ConfigManageTab/BasicManage',
                   //     label: '基础管理'
                   // },
-                  {   id: 2,
-                      location: 'http://www.baidu.com/',
-                      label: '百度'
-                  },
-                  {   id: 3,
-                      location: 'http://10.217.1.31:9082/eoms/frame/frame.jsp#demo_page1',
-                      label: 'emos'
-                  },
+                  // {   id: 2,
+                  //     location: 'http://www.baidu.com/',
+                  //     label: '百度'
+                  // },
+                  // {   id: 3,
+                  //     location: 'http://10.217.1.31:9082/eoms/frame/frame.jsp#demo_page1',
+                  //     label: 'emos'
+                  // },
               ]
           }
       },
       mounted: function () {
         this.initData()
       },
+      // watch: {
+      //   routerId: function () {
+      //     this.initData()
+      //   }
+      // },
       computed: {
         centerMenu: {
           get: function () {
@@ -61,6 +66,9 @@ export const leftListMixin = {
           // 在刷新页面时，重新调用接口
           let obj = null
           let id = this.routerId
+          console.log(id)
+          console.log(this.routerObj)
+          this.leftList = []
           if (id) { // 如果store中有id，则直接使用保存的值
             let res = this.routerObj[id]
             console.log(res)
@@ -73,12 +81,15 @@ export const leftListMixin = {
                 id: res.data[i].id,
                 arr: res.data[i].children
               })
+              console.log(this.centerMenu)
               obj = {
                 id: res.data[i].id,
-                location: res.data[i].location?res.data[i].location: '/SysManage/OperProcess/ConfigManageTab/BasicManage',
+                // location: res.data[i].location?res.data[i].location: '/SysManage/OperProcess/ConfigManageTab/BasicManage',
+                location: res.data[i].location?res.data[i].location: '/AsideTab/SubAsideTab/LeftMenu',
                 label: res.data[i].name
               }
-              this.leftList.unshift(obj)
+              this.leftList.push(obj)
+              // this.leftList.unshift(obj)
             }
           } else { // 如果store中不存在id的值，则重新调用一次接口，刷新页面时
             this.$api.menu.resourceManage(sessionStorage.getItem('id')).then((res) => {
@@ -94,10 +105,12 @@ export const leftListMixin = {
                 })
                 obj = {
                   id: res.data[i].id,
-                  location: res.data[i].location?res.data[i].location: '/SysManage/OperProcess/ConfigManageTab/BasicManage',
+                  location: res.data[i].location?res.data[i].location: '/AsideTab/SubAsideTab/LeftMenu',
+                  // location: res.data[i].location?res.data[i].location: '/SysManage/OperProcess/ConfigManageTab/BasicManage',//?res.data[i].location: '/SysManage/OperProcess/ConfigManageTab/BasicManage'
                   label: res.data[i].name
                 }
-                this.leftList.unshift(obj)
+                this.leftList.push(obj)
+                // this.leftList.unshift(obj)
               }
             })
           }

@@ -17,6 +17,7 @@ import centerMenu from "./modules/centerMenu"
 import routerIdData from "./modules/routerIdData"
 import resourceLeftTop from "./modules/resourceLeftTop"
 import mainIdStoreTab from "./modules/mainIdStoreTab"
+import loadData from "./modules/loadData"
 
 const store = new vuex.Store({
   modules: {
@@ -32,7 +33,8 @@ const store = new vuex.Store({
     centerMenu: centerMenu,
     routerIdData: routerIdData,
     resourceLeftTop: resourceLeftTop,
-    mainIdStoreTab: mainIdStoreTab
+    mainIdStoreTab: mainIdStoreTab,
+    loadData: loadData
   }
 })
 

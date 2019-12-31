@@ -46,14 +46,23 @@
             id: menu.id,
             arr: res
           })
+          this.setRouterId(menu.id)
+          let path = getIFramePath(menu.location)
+          sessionStorage.setItem('id', menu.id)
+          if(!path) {
+            path = menu.location
+          }
+          this.$router.push({
+            path: "/" + path
+          })
         })
-        console.log(this.routerObj)
-        // 如果是嵌套页面，转换成iframe的path
-        let path = getIFramePath(menu.location)
-        sessionStorage.setItem('id', menu.id)
-        if(!path) {
-          path = menu.location
-        }
+        // console.log(this.routerObj)
+        // // 如果是嵌套页面，转换成iframe的path
+        // let path = getIFramePath(menu.location)
+        // sessionStorage.setItem('id', menu.id)
+        // if(!path) {
+        //   path = menu.location
+        // }
         // 通过菜单URL跳转至指定路由
 
         // this.$router.push({
@@ -62,9 +71,9 @@
         //     id: menu.id
         //   }
         // })
-        this.$router.push({
-          path: "/" + path
-        })
+        // this.$router.push({
+        //   path: "/" + path
+        // })
       }
     }
   }

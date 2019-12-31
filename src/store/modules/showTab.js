@@ -4,9 +4,10 @@ export default {
         existTabs: [],
         currentTabLabel: '',
         currentTitle: '',
+        currentTabId: '',
     },
     getters: {
-        
+      
     },
     mutations: {
         setEditableTabs: function (state,arr) {
@@ -26,6 +27,9 @@ export default {
         },
         setCurrentTitle: function (state,val) {
             state.currentTitle = val
+        },
+        setCurrentTabId: function (state,val) {
+            state.currentTabId = val
         }
     },
     actions: {

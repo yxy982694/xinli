@@ -1,89 +1,92 @@
 <template>
   <!--字标签-->
-  <el-tabs :closable="true" class="el-tabs-container" v-model="currentTabLabel" type="card" @tab-remove="removeTab" @tab-click="tabClick">
+  <el-tabs :closable="true" class="el-tabs-container" v-model="currentTabId" type="card" @tab-remove="removeTab" @tab-click="tabClick">
     <div v-show="contextMenuFlag" class="tab-down-menu" :style="{position: 'absolute',top: '0px',left: childContextLeft}">
       <p @click="closeCurrentHandle">关闭</p>
       <p @click="closeOtherHandle">关闭其它</p>
       <p @click="closeAllHandle">关闭全部</p>
       <p @click="refreshCurrentHandle">刷新</p>
     </div>
-    <el-tab-pane v-for="item in editableTabs" :key="item.name" :label="item.label" :name="item.name">
+    <el-tab-pane v-for="(item,index) in editableTabs" :key="item.id+index" :label="item.label" :name="item.id">
       <sub-main :who="who" :iframeUrl="iframeUrl" :locationUrl="locationUrl"></sub-main>
     </el-tab-pane>
   </el-tabs>
 </template>
 
 <script>
+    // 根据左边菜单和中间平铺菜单中id,决定是否显示  :name="item.id"
+    // v-model="currentTabId" 为哪个tab的id则显示哪个tab
+    // tab显示的内容则根据tab中对应的url来渲染
     import SubMain from "./SubMain"
     import { mapMutations } from 'vuex'
     export default {
         data: function () {
           return {
-            who: '',
-            iframeUrl: '',
-            locationUrl: '',
-            shortcutId: null,
-            tabObj: null
+            who: '',// 显示哪个tab的内容 根据url路径
+            iframeUrl: '', // 显示含有http的iframe
+            locationUrl: '', //
+            shortcutId: null, // 点击右键时，当时tab的id
+            tabObj: null, // 临时保存根据主菜单id存的数据
           }
         },
         components: { SubMain },
         props: ['leftList'],
         computed: {
-          contextMenuFlag: {
+          contextMenuFlag: { // 点击右键，显示右键菜单
             get: function () {
               return this.$store.state.contextMenu.contextMenuFlag
             },
             set: function () {}
           },
-          clickedSwitch: {
+          clickedSwitch: { // 点击右键，保存当时tab的路径
             get: function () {
               return this.$store.state.contextMenu.clickedSwitch
             },
             set: function () {}
           },
-          clickedLabel: {
+          clickedLabel: { // 点击右键，保存当时tab的标题
             get: function () {
               return this.$store.state.contextMenu.clickedLabel
             },
             set: function () {}
           },
-          childContextLeft: {
+          childContextLeft: { // 点击右键，保存点击时，鼠标left值
             get: function () {
               return this.$store.state.contextMenu.childContextLeft
             },
             set: function () {}
           },
-          editableTabs: { // 保存的是tab中出现标签的整个对象（id,）
+          editableTabs: { // 保存的是tab中出现的标签,整个对象（id,location,label）
             get: function () {
               return this.$store.state.showTab.editableTabs
             },
             set: function () {}
           },
-          existTabs: { // 保存的tab中出现标签的路径location
+          existTabs: { // 保存的tab中出现标签的id
             get: function () {
               return this.$store.state.showTab.existTabs
             },
             set: function () {}
           },
-          currentTabLabel: {
+          currentTabLabel: { // 当前显示tab的location
             get: function () {
               return this.$store.state.showTab.currentTabLabel
             },
             set: function () {}
           },
-          currentTitle: {
+          currentTabId: { // 当前显示tab的id
+            get: function () {
+              return this.$store.state.showTab.currentTabId
+            },
+            set: function () {}
+          },
+          currentTitle: { // 当前显示tab的标题
             get: function () {
               return this.$store.state.showTab.currentTitle
             },
             set: function () {}
           },
-          routerId: {
-            get: function () {
-              return this.$store.state.routerIdData.routerId
-            },
-            set: function () {}
-          },
-          mainIdStoreTabObj: {
+          mainIdStoreTabObj: { // 根据主菜单id存的数据
             get: function () {
               return this.$store.state.mainIdStoreTab.mainIdStoreTabObj
             },
@@ -92,6 +95,7 @@
         },
         mounted: function () {
           this.tabObj = this.mainIdStoreTabObj[sessionStorage.getItem('id')]
+          // console.log('this.tabObj')
           this.initData()
           var _this = this
           window.addEventListener('click',function () {
@@ -99,16 +103,32 @@
           })
         },
         watch: {
-          currentTabLabel: {
+          // currentTabId: function () {
+          //   this.locationUrl = this.currentTabLabel
+          //   console.log(this.locationUrl)
+          //   if (this.currentTabLabel && this.currentTabLabel.indexOf('http') > -1) {
+          //     this.who = ''
+          //     this.iframeUrl = this.currentTabLabel
+          //   } else if (this.currentTabLabel && this.currentTabLabel.indexOf('http') == -1) {
+          //     this.iframeUrl = ''
+          //     let array = this.currentTabLabel.split('/')
+          //     this.who = array[array.length-2]+array[array.length-1]
+          //     console.log(this.who)
+          //   }
+          //   this.bindShortcut()
+          // }
+          currentTabId: { // 当tab中的id变化时，进行路由跳转，显示不同的内容
             handler: function () {
               this.locationUrl = this.currentTabLabel
-              if (this.currentTabLabel.indexOf('http') > -1) {
+              console.log(this.locationUrl)
+              if (this.currentTabLabel && this.currentTabLabel.indexOf('http') > -1) {
                 this.who = ''
                 this.iframeUrl = this.currentTabLabel
-              } else {
+              } else if (this.currentTabLabel && this.currentTabLabel.indexOf('http') == -1) {
                 this.iframeUrl = ''
                 let array = this.currentTabLabel.split('/')
                 this.who = array[array.length-2]+array[array.length-1]
+                console.log(this.who)
               }
               this.bindShortcut()
             },
@@ -116,6 +136,7 @@
           }
         },
         methods: {
+            // 右键
             bindShortcut: function () {
               let _this = this
               this.$nextTick(function () {
@@ -123,13 +144,13 @@
                   let domTabs = document.querySelectorAll('.el-container .el-tabs__item')
                   document.querySelector('.el-container .el-tabs__item .el-icon-close').style.display = 'none'
                   let domCloses = document.querySelectorAll('.el-icon-close')
-                  Array.prototype.forEach.call(domCloses,function (item) {
+                  Array.prototype.forEach.call(domCloses,function (item) { // 点击小叉号时，隐藏右键菜单
                     item.onclick = null
                     item.onclick = function () {
                       _this.setContextMenuFlag(false)
                     }
                   })
-                  Array.prototype.forEach.call(domTabs,function(item,index){
+                  Array.prototype.forEach.call(domTabs,function(item,index){ // 右键功能
                     item.oncontextmenu = null
                     item.oncontextmenu = function (e) {
                       e.stopPropagation()
@@ -138,16 +159,16 @@
                       _this.setContextMenuFlag(true)
                       // let array = item.id.split('/')
                       let x = e.clientX - 180
-                      _this.setSwitch(item.id.slice(4))
+                      _this.shortcutId = item.id.slice(4) // 点击右键时，该tab的id
                       for (let i=0;i<_this.editableTabs.length;i++) {
-                        if (_this.editableTabs[i].name == _this.clickedSwitch) {
-                          _this.shortcutId = _this.editableTabs[i].id
+                        if (_this.editableTabs[i].id == _this.shortcutId) {
+                          _this.setSwitch(_this.editableTabs[i].name) // 设置此时右键时的location
                         }
                       }
                       // console.log(_this.shortcutId)
                       // console.log(_this.clickedSwitch)
-                      _this.setSwitchLabel(item.childNodes[0].data)
-                      _this.setChildContextLeft(x+'px')
+                      _this.setSwitchLabel(item.childNodes[0].data) // 设置此时右键时的标题
+                      _this.setChildContextLeft(x+'px') // 右键时，鼠标位置
                       if (document.querySelector('.main-tabs .el-tabs__content')) {
                         document.querySelector('.main-tabs .el-tabs__content').style.display = 'none'
                       }
@@ -163,6 +184,7 @@
               'addEditableTabs': 'addEditableTabs',
               'addExistTabs': 'addExistTabs',
               'setCurrentTabLabel': 'setCurrentTabLabel',
+              'setCurrentTabId': 'setCurrentTabId',
               'setCurrentTitle': 'setCurrentTitle',
               'setSwitch': 'setSwitch',
               'setSwitchLabel': 'setSwitchLabel',
@@ -170,152 +192,146 @@
               'setCenterMenuId': 'setCenterMenuId',
               'setMainIdStoreTabObj': 'setMainIdStoreTabObj'
             }),
+            //右键时，关闭当前tab
             closeCurrentHandle: function () {
-              console.log(this.clickedSwitch)
-              this.removeTab(this.clickedSwitch)
+              // console.log(this.shortcutId)
+              // console.log(this.clickedSwitch)
+              this.removeTab(this.shortcutId)
             },
+            // 右键时，关闭其他tab
             closeOtherHandle: function () {
               // console.log(this.shortcutId)
-              this.setEditableTabs([{
-                label: '我的主页',
-                name: '/SubAsideTab/MainPage',
-                id: 0
-              },{
-                  label: this.clickedLabel,
-                  name: this.clickedSwitch,
-                  id: this.shortcutId
-              }])
-              this.setExistTabs(['/SubAsideTab/MainPage',this.clickedSwitch])
+              if (this.shortcutId != '0') { // 当右键不在“我的主页”时。只显示“我的主页”和右键的tab
+                this.setEditableTabs([{
+                  label: '我的主页',
+                  name: '/SubAsideTab/MainPage',
+                  id: '0'
+                },{
+                    label: this.clickedLabel,
+                    name: this.clickedSwitch,
+                    id: this.shortcutId
+                }])
+                this.setExistTabs(['0',this.shortcutId])
+                this.setCurrentTabLabel(this.clickedSwitch)
+                this.setCurrentTitle(this.clickedLabel)
+                this.setCurrentTabId(this.shortcutId)
+                this.setMainIdStoreTabObj({
+                  id: sessionStorage.getItem('id'), // 主菜单id，用于保存整个对象（在store中）
+                  editableTabs: this.editableTabs, // 当前出现的tab的对象列表
+                  existTabs: this.existTabs, // 当前出现的tab的id列表
+                  currentTabLabel: this.currentTabLabel,// 当前显示tab的location
+                  currentTitle: this.currentTitle, // 当前显示tab的标题
+                  currentTabId: this.shortcutId, // 当前显示tab的id
+                })
+              } else { // 当右键在“我的主页”时，只显示“我的主页”
+                this.showHome()
+              }
               // this.existTabs = ['/SubAsideTab/MainPage',this.clickedSwitch]
-              this.setCurrentTabLabel(this.clickedSwitch)
-              this.setCurrentTitle(this.clickedLabel)
-              this.setMainIdStoreTabObj({
-                id: sessionStorage.getItem('id'),
-                editableTabs: this.editableTabs,
-                existTabs: this.existTabs,
-                currentTabLabel: this.currentTabLabel,
-                currentTitle: this.currentTitle
-              })
+
             },
-            closeAllHandle: function () {
+            closeAllHandle: function () { // 关闭全部时，只显示“我的主页”
+              this.showHome()
+            },
+            showHome: function () {
               this.setCurrentTabLabel('/SubAsideTab/MainPage')
               this.setEditableTabs([{
                   label: '我的主页',
                   name: '/SubAsideTab/MainPage',
-                  id: 0
+                  id: '0'
               }])
               console.log(this.currentTabLabel)
-              this.setExistTabs(['/SubAsideTab/MainPage'])
+              this.setExistTabs(['0'])
               this.setCurrentTitle('我的主页')
+              this.setCurrentTabId('0')
               this.setMainIdStoreTabObj({
                 id: sessionStorage.getItem('id'),
                 editableTabs: this.editableTabs,
                 existTabs: this.existTabs,
                 currentTabLabel: this.currentTabLabel,
-                currentTitle: this.currentTitle
+                currentTitle: this.currentTitle,
+                currentTabId: this.currentTabId
               })
-               // this.setEditableTabs([])
-               // this.setExistTabs([])
-               // this.setCurrentTabLabel(null)
-               // this.setCurrentTitle(null)
             },
+            // 刷新时
             refreshCurrentHandle: function () {
               window.location.reload()
             },
+            // 初始化，进入页面时
             initData: function () {
-              if (this.tabObj) {
-                this.setCurrentTabLabel(this.tabObj.currentTabLabel)
-                this.setEditableTabs(this.tabObj.editableTabs)
-                this.setExistTabs(this.tabObj.editableTabs)
-                this.setCurrentTitle(this.tabObj.currentTitle)
-              } else {
-                this.setCurrentTabLabel('/SubAsideTab/MainPage')
-                this.setEditableTabs([{
-                    label: '我的主页',
-                    name: '/SubAsideTab/MainPage',
-                    id: 0
-                }])
-                this.setExistTabs(['/SubAsideTab/MainPage'])
-                this.setCurrentTitle('我的主页')
+                if (this.tabObj) { // 先使用store中的数据
+                  this.setCurrentTabLabel(this.tabObj.currentTabLabel)
+                  this.setEditableTabs(this.tabObj.editableTabs)
+                  this.setExistTabs(this.tabObj.existTabs)
+                  this.setCurrentTitle(this.tabObj.currentTitle)
+                  this.setCurrentTabId(this.tabObj.currentTabId)
+                } else { // 如果store中没有数据，也就是首次进入时，只显示“我的主页”
+                this.showHome()
               }
-              // this.setCurrentTabLabel(this.tabObj.currentTabLabel)
-              // this.setEditableTabs(this.tabObj.editableTabs)
-              // console.log(this.currentTabLabel)
-              // this.setExistTabs(this.tabObj.editableTabs)
-              // this.setCurrentTitle('主页')
-              // console.log(this.routerId)
-              // this.mainIdStoreTabObj[this.routerId]
-              // console.log(this.mainIdStoreTabObj[this.routerId])
-              // this.setCurrentTabLabel('/SubAsideTab/MainPage')
-              // this.setEditableTabs([{
-              //     label: '主页',
-              //     name: '/SubAsideTab/MainPage',
-              //     id: 0
-              // }])
-              // console.log(this.currentTabLabel)
-              // this.setExistTabs(['/SubAsideTab/MainPage'])
-              // this.setCurrentTitle('主页')
-              // this.setCurrentTabLabel(this.leftList[0].location)
-              // this.setEditableTabs([{
-              //     label: this.leftList[0].label,
-              //     name: this.leftList[0].location
-              // }])
-              // this.setExistTabs([this.leftList[0].location])
-              // this.hasDownMenu = this.contextMenuFlag
             },
+            // 点击左侧菜单或者中间菜单时，添加
             addTab(targetLabel,name,id) {
+              console.log(targetLabel+'+'+name+'+'+id)
               this.setCurrentTabLabel(name)
               this.setCurrentTitle(targetLabel)
-              if(!this.existTabs.includes(name)){
+              this.setCurrentTabId(id)
+              if(!this.existTabs.includes(id)){
                   this.addEditableTabs({
                       label: targetLabel,
                       name: name,
                       id: id
                   })
-                  this.addExistTabs(name)
+                  this.addExistTabs(id)
                   this.setMainIdStoreTabObj({
                     id: sessionStorage.getItem('id'),
                     editableTabs: this.editableTabs,
                     existTabs: this.existTabs,
                     currentTabLabel: this.currentTabLabel,
-                    currentTitle: this.currentTitle
+                    currentTitle: this.currentTitle,
+                    currentTabId: this.currentTabId
                   })
                   console.log(sessionStorage.getItem('id'))
                   console.log(this.mainIdStoreTabObj)
               }
+              console.log(this.existTabs)
+              console.log(this.editableTabs)
             },
-            removeTab(targetName) {
-                if (targetName == '/SubAsideTab/MainPage') {
+            // 点击右键的关闭或tab的小叉号时，移除功能
+            removeTab(targetId) {
+                if (targetId == '0') {
                   this.$alert('主页不可关闭')
                   return
                 }
                 let tabs = this.editableTabs
                 let existabs = this.existTabs
                 let activeName = this.currentTabLabel
-                if (activeName === targetName) {
+                let activeId = this.currentTabId
+                if (activeId === targetId) {
                     tabs.forEach((tab, index) => {
-                        if (tab.name === targetName) {
+                        if (tab.id === targetId) {
                             let nextTab = tabs[index + 1] || tabs[index - 1];
                             if (nextTab) {
                                 activeName = nextTab.name
                                 this.setCurrentTitle(nextTab.label)
+                                this.setCurrentTabId(nextTab.id)
                             }
                         }
                     })
                 }
-                existabs.splice(existabs.indexOf(targetName),1)
+                existabs.splice(existabs.indexOf(targetId),1)
                 this.setExistTabs(existabs)
                 this.setCurrentTabLabel(activeName)
-                let remainTabs = tabs.filter(tab => tab.name !== targetName)
+                let remainTabs = tabs.filter(tab => tab.id !== targetId)
                 this.setEditableTabs(remainTabs)
                 this.setMainIdStoreTabObj({
                   id: sessionStorage.getItem('id'),
                   editableTabs: this.editableTabs,
                   existTabs: this.existTabs,
                   currentTabLabel: this.currentTabLabel,
-                  currentTitle: this.currentTitle
+                  currentTitle: this.currentTitle,
+                  currentTabId: this.currentTabId
                 })
             },
+            // 点击tab本身时
             tabClick(objectTab) {
               // this.currentTabLabel = objectTab.name
               // console.log(objectTab)
@@ -326,18 +342,24 @@
                 if (this.editableTabs[i].label == objectTab.label) {
                   let id = this.editableTabs[i].id
                   this.setCenterMenuId(id)
+                  this.setCurrentTabId(id)
+                  console.log(this.currentTabId)
+                  this.setCurrentTabLabel(this.editableTabs[i].name)
+                  console.log(this.editableTabs[i].name)
                   break
                 }
               }
               this.setCurrentTitle(objectTab.label)
-              this.setCurrentTabLabel(objectTab.name)
               this.setMainIdStoreTabObj({
                 id: sessionStorage.getItem('id'),
                 editableTabs: this.editableTabs,
                 existTabs: this.existTabs,
                 currentTabLabel: this.currentTabLabel,
-                currentTitle: this.currentTitle
+                currentTitle: this.currentTitle,
+                currentTabId: this.currentTabId
               })
+              console.log(this.existTabs)
+              console.log(this.editableTabs)
             }
         }
     }
@@ -352,7 +374,7 @@
     justity-content: space-between
     overflow: hidden
   .el-con .el-tabs__content
-     flex: 1   
+     flex: 1
   .drop-down-container
     border: 1px solid $color-lightgra
     top: 175px !important

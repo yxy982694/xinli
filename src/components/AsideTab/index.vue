@@ -2,7 +2,7 @@
   <div class="left-right-container">  <!-- :style="{height: conHeight}" -->
     <el-container class="el-con">
       <el-aside width="180px">
-        <div v-for="v in leftList" :key="v.location" class="text-item" @click="addSubTab(v.label,v.location,v.id)">
+        <div v-for="v in leftList" :key="v.id" class="text-item" @click="addSubTab(v.label,v.location,v.id)">
           <p class="aside-title">
             <span class="fa fa-file-text"></span>
             <span>{{ v.label }}</span>
@@ -10,6 +10,7 @@
         </div>
       </el-aside>
       <el-container class="el-con2">
+        <!-- <i class="iconfont icon-tubiao115"></i> -->
         <el-main>
           <sub-tabs ref="subTabs" :leftList="leftList"></sub-tabs>
         </el-main>
@@ -138,4 +139,9 @@
   .el-con2
     height: 100%
     overflow: hidden
+    position: relative
+    // .icon-tubiao115
+    //   position: absolute
+    //   left: 11px
+    //   top: 12px
 </style>

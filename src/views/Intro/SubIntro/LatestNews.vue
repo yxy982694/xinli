@@ -2,7 +2,7 @@
    <div class="content-radius">
      <div class="section-title">
        <p class="section-title-name">最新公告</p>
-       <p class="section-title-click cursor-pointer">查看全部</p>
+       <p class="section-title-click cursor-pointer">全部 >></p>
      </div>
      <el-carousel style="width: 100%" height="194px" direction="vertical"  :interval="20000" >
        <el-carousel-item v-for="(item,indexx) in announceData" :key="indexx">

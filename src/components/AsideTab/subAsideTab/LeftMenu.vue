@@ -1,9 +1,9 @@
 <template>
-  <sub-menu :centerList="centerList"></sub-menu>
+  <center-menu :centerList="centerList"></center-menu>
 </template>
 
 <script>
-    import SubMenu from '@/components/AsideTab/SubAsideTab/SubMenu'
+    import CenterMenu from '@/components/AsideTab/SubAsideTab/CenterMenu'
     export default {
         data() {
             return {
@@ -32,7 +32,7 @@
             }
         },
         components:{
-          SubMenu
+          CenterMenu
         },
         computed: {
           centerMenu: {
@@ -47,25 +47,45 @@
             },
             set: function () {}
           },
+          currentTabId: {
+            get: function () {
+              return this.$store.state.showTab.currentTabId
+            },
+            set: function () {}
+          },
+        },
+        // 当tab切换时,重新加载中间平铺的内容
+        // this.centerMenu是在进入此流程时,已经获取了，以后也不再改变
+        // this.centerMenu是根据主菜单id,来对应的
+        // this.centerMenu是根据左边菜单id存的对象,每个id对应一个数组
+        watch: { // 当切换tab时，id会变化，此时根据id的变化，获取最新中间平铺按钮的数据
+          currentTabId: function (val) {
+            console.log('watch'+val)
+            this.loadCenterMenu()
+          }
         },
         mounted: function () {
-          console.log(this.centerMenuId)
-          console.log(this.centerMenu)
-          let arr = this.centerMenu[this.centerMenuId]
-          let obj
-          console.log(arr)
-          if (arr && arr.length>0) {
-            for (var i=0;i<arr.length;i++) {
-              obj = {
-                id: arr[i].id,
-                location: arr[i].location?arr[i].location: '/SysManage/OperProcess/ConfigManageTab/BasicManage',
-                label: arr[i].name
+          console.log('mounted')
+          this.loadCenterMenu()
+        },
+        methods: {
+          loadCenterMenu: function () {
+            // console.log(this.currentTabId)
+            // console.log(this.centerMenu)
+            let arr = this.centerMenu[this.currentTabId]
+            let obj
+            this.centerList = []
+            if (arr && arr.length>0) {
+              for (var i=0;i<arr.length;i++) {
+                obj = {
+                  id: arr[i].id,
+                  location: arr[i].location?arr[i].location: 'http://www.baidu.com/',
+                  label: arr[i].name
+                }
+                this.centerList.push(obj)
               }
-              this.centerList.push(obj)
             }
           }
-
-          // console.log(this.centerMenu[this.centerMenuId])
         }
     }
 </script>

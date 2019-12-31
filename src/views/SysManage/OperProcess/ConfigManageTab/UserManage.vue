@@ -1,10 +1,6 @@
 <template>
 	<div class="user-container" ref="userContainer">
 		<div class="user-left" ref="userLeft">
-			<!-- <div class="expand-container">
-				<kt-button label="展开节点" @click="openAll" icon="fa fa-angle-double-down"></kt-button>
-				<kt-button label="关闭节点" @click="closeAll" icon="fa fa-angle-double-up"></kt-button>
-			</div> -->
       <div class="user-depit">部门</div>
 			<div class="tree-container">
 				<el-tree :default-expanded-keys="[0,1]" v-loading="loadingTree" :expand-on-click-node="false" :props="defaultProps" :data="treeData" node-key="Id" ref="tree" @node-click="handleNodeClick"></el-tree>
@@ -13,54 +9,13 @@
 		<div class="user-middle" ref="userMiddle"></div>
 		<div class="user-right" ref="userRight">
 			<div class="right-top">
-				<!-- <div class="date-container">
-					<p>创建时间:</p>
-					<el-date-picker
-			            v-model="dateValue"
-			            type="datetimerange"
-			            start-placeholder="开始日期"
-			            end-placeholder="结束日期"
-			            :default-time="['12:00:00','12:00:00']">
-			        </el-date-picker>
-				    <kt-button icon="fa fa-calendar" class="user-search-btn" :label="$t('action.search')" @click="searchDate"></kt-button>
-				    <kt-button icon="fa fa-calendar" :label="$t('action.reset')" @click="resetDate"></kt-button>
-				</div> -->
 				<div class="search-container">
-					<!-- <p class="input-left input-name">用户名:</p> -->
-	                <el-input type="text" v-model="usernameVal"  placeholder="用户名"></el-input>
-	                <kt-button icon="fa fa-search" type="primary" class="user-search-btn" :label="$t('action.search')" @click="searchUserName"></kt-button>
-		          <!-- <div class="checkbox-more">
-		            <el-checkbox v-model="checkedBox" @change="changeBox">查询更多条件</el-checkbox>
-		          </div> -->
-                <!-- <div class="more-line"></div> -->
-		          <!-- <div class="search-container-border">  --><!-- v-show="checkedBox" -->
-	               <!--  <div class="search-container-input">
-	                  <p class="input-left input-name">用户名:</p>
-	                  <el-input type="text" placeholder="请输入..."></el-input>
-	                  <kt-button icon="fa fa-calendar" class="user-search-btn" :label="$t('action.search')" @click="searchDate"></kt-button>
-	                </div> -->
-	                <!-- <div class="search-container-input search-container-middle">
-	                  <p class="input-left">账号类型:</p>
-	                  <el-select placeholder="请选择" v-model="selectedVal">
-	                    <el-option value="全选" label="全选"></el-option>
-	                    <el-option value="PC" label="PC"></el-option>
-	                    <el-option value="APP" label="APP"></el-option>
-	                    <el-option value="PC+APP" label="PC+APP"></el-option>
-	                  </el-select>
-	                </div>
-	                <div class="search-container-input">
-	                  <p class="input-left">是否授权:</p>
-	                  <el-radio v-model="radioVal" label="all">全部</el-radio>
-	                  <el-radio v-model="radioVal" label="yes">是</el-radio>
-	                  <el-radio v-model="radioVal" label="no">否</el-radio>
-	                </div> -->
-		          <!-- </div> -->
+          <el-input type="text" v-model="usernameVal"  placeholder="用户名"></el-input>
+          <kt-button icon="fa fa-search" type="primary" class="user-search-btn" :label="$t('action.search')" @click="searchUserName"></kt-button>
 				</div>
 			</div>
 			<div class="right-center">
-				<!-- <div class="bread-crumb">部门>杭州东方通信软件技术有限公司</div> -->
 				<div class="btn-container">
-				  <!-- <el-button-group> -->
             <kt-button type="primary" icon="fa fa-calendar" :label="$t('action.add')" @click="addInfo"></kt-button>
             <kt-button icon="fa fa-edit" :disabled="editAble" :label="$t('action.edit')" @click="editInfo"></kt-button>
             <kt-button type="danger" icon="fa fa-trash" :disabled="editAble" :label="$t('action.delete')" @click="deleteInfo"></kt-button>
@@ -69,44 +24,26 @@
             <kt-button type="primary" icon="fa fa-calendar" :disabled="editAble" label="授权"></kt-button>
             <kt-button type="primary" icon="fa fa-calendar" :disabled="editAble" label="批量授权"></kt-button>
             <kt-button type="primary" icon="fa fa-calendar" :disabled="editAble" label="详情"></kt-button>
-
-          <!-- </el-button-group> -->
 				</div>
 			</div>
 			<div class="right-bottom">
-				<el-table ref="elTable"
-        v-loading="loadingTable"
-        :data="tableData.content"
-        :border="true" height="100%"
-        @cell-click="clickCell"
-        @selection-change="changeSelect"
-        @select-all="selectAll">
-					<el-table-column type="selection" width="40"></el-table-column>
-					<el-table-column v-for="column in columns" header-align="center" align="center" :prop="column.prop" :label="column.label"
-					 :min-width="column.minWidth" :key="column.prop" :sortable="true">
-					</el-table-column>
-					<!-- <el-table-column :label="$t('action.operation')" width="185" fixed="right" header-align="center" align="center">
-						<template slot-scope="scope">
-							<kt-button icon="fa fa-edit" :label="$t('action.edit')"></kt-button>
-							<kt-button icon="fa fa-trash" :label="$t('action.delete')" type="danger"></kt-button>
-						</template>
-					</el-table-column> -->
-				</el-table>
+        <kt-table
+        :loading="loadingTable"
+        :dataArr="tableData"
+        :border="border"
+        @selectAll="selectAll"
+        @selectionChange="selectionChange"
+        @clickCell="clickCell"
+        :columns="columns"
+        @handleSizeChange="handleSizeChange"
+        @handleCurrentChange="handleCurrentChange"
+        :currentPage="currentPage"
+        :pageSizes="pageSizes"
+        :pageSize="pageSize"
+        :total="total"
+        ref="ktTable"
+        ></kt-table>
 			</div>
-      <div class="user-toolbar">
-		    <el-pagination
-		      @size-change="handleSizeChange"
-		      @current-change="handleCurrentChange"
-		      :current-page="currentPage"
-		      :page-sizes="[15, 50, 100, 200]"
-		      :page-size="pageSize"
-		      layout="total, sizes, prev, pager, next, jumper"
-		      :total="totalNum">
-		    </el-pagination>
-        <!-- <el-pagination layout="total, prev, pager, next, jumper"
-          :current-page="1" :page-size="10" :total="87">
-        </el-pagination> -->
-      </div>
 		</div>
 	  <!--新增编辑界面-->
 	  <el-dialog :title="operation?'新增':'编辑'" width="40%" :visible.sync="dialogVisible" :close-on-click-modal="false">
@@ -153,6 +90,8 @@
 <script>
 	import '../../../../common/stylus/userManage.styl'
 	import KtButton from "@/components/KtButton/index"
+  import KtTable from "@/components/KtTable/KtTable"
+  import { mapMutations } from 'vuex'
 	export default {
 		data: function() {
 			return {
@@ -162,14 +101,16 @@
             selectedVal: '',
             radioVal: '',
             currentDepId: '0',
-            loadingTable: true,
-            loadingTree: true,
+            loadingTable: false,
+            loadingTree: false,
+            border: true,
             // loadingTable: false,
             // loadingTree: false,
             usernameVal: '',
-            totalNum: 0,
+            total: 0,
             pageSize: 15,
             currentPage: 1,
+            pageSizes: [15,50,100,200],
             size: 'small',
             dialogVisible: false,
             operation: false,
@@ -236,11 +177,11 @@
           label: 'Name'
         },
         validArr: [{
-          id: 1,
-          value: '可用'
-        },{
-          id: 2,
-          value: '不可用'
+            id: 1,
+            value: '可用'
+          },{
+            id: 2,
+            value: '不可用'
         }],
         dataForm: {
           organid: '',
@@ -273,8 +214,7 @@
           	{ required: true, message: '请选择有效性', trigger: 'blur' }
           ],
         },
-				tableData: {
-					content: [{
+				tableData: [{
             USERNAME: 'yxy1',
             NAME: '袁晓宇',
             VALID: '可用',
@@ -364,8 +304,7 @@
 						ACCOUNTEFFECTTIME: '2019/12/27',
 						ACCOUNTEXPIRETIME: '2019/12/31',
 						ROW_ID: 10
-					}]
-				},
+					}],
         columns: [{
             prop: 'USERNAME',
             label: '用户名'
@@ -415,7 +354,33 @@
     //       }]
 			}
 		},
-		mounted: function () {
+		computed: {
+      userFlag: {
+        get: function () {
+          return this.$store.state.loadData.userFlag
+        },
+        set: function () {}
+      },
+      userObj: {
+        get: function () {
+          return this.$store.state.loadData.userObj
+        },
+        set: function () {}
+      },
+      userOriganFlag: {
+        get: function () {
+          return this.$store.state.loadData.userOriganFlag
+        },
+        set: function () {}
+      },
+      userOriganArr: {
+        get: function () {
+          return this.$store.state.loadData.userOriganArr
+        },
+        set: function () {}
+      },
+    },
+    mounted: function () {
 			let _this = this
 			this.$refs.userMiddle.addEventListener('mousedown',function (e) {
 				let startX = e.clientX
@@ -426,7 +391,7 @@
 					let moveLen = middleLeft + (endX - startX)
 					// let maxT = _this.$refs.userContainer.clientWidth - _this.$refs.userMiddle.offsetWidth
 					// console.log(maxT)
-			      	if(moveLen<190) moveLen = 190
+			      	if(moveLen<180) moveLen = 180
 			      	// if(moveLen>maxT-180) moveLen = maxT-180
 			      	// _this.$refs.userMiddle.style.left = moveLen;
 			      	_this.$refs.userLeft.style.width = moveLen + "px";
@@ -440,11 +405,17 @@
 				_this.$refs.userMiddle.setCapture && _this.$refs.userMiddle.setCapture()
 				return false
 			})
-      this.$api.user.findAllOrgan().then((res) => {
-        console.log(res.data)
-        this.treeData = res.data
-        this.loadingTree = false
-      })
+      if (this.userOriganFlag) {
+        this.treeData = this.userOriganArr
+      } else {
+        this.loadingTree = true
+        this.$api.user.findAllOrgan().then((res) => {
+          this.treeData = res.data
+          this.setUserOriganArr(res.data)
+          this.setUserOriganFlag(true)
+          this.loadingTree = false
+        })
+      }
       // this.currentPage = 1
       let jsonObj = {
         currentPage: this.currentPage,
@@ -461,10 +432,17 @@
       this.getUserInfo(jsonStr)
 		},
 		components: {
-			KtButton
+			KtButton,
+      KtTable
 		},
 		methods: {
-      changeSelect: function (selection) {
+      ...mapMutations({
+        'setUserFlag': 'setUserFlag',
+        'setUserObj': 'setUserObj',
+        'setUserOriganFlag': 'setUserOriganFlag',
+        'setUserOriganArr': 'setUserOriganArr'
+      }),
+      selectionChange: function (selection) {
         if (selection.length == 1) {
           this.editAble = false
           this.userId = selection[0].ID
@@ -484,8 +462,9 @@
          if (column.type != 'selection') {
            this.editAble = false
            let index = parseInt(row.ROW_ID)%parseInt(this.pageSize)==0? parseInt(this.pageSize): parseInt(row.ROW_ID)%parseInt(this.pageSize)
-           this.$refs.elTable.clearSelection()
-           this.$refs.elTable.toggleRowSelection(this.tableData.content[index-1])
+           this.$refs.ktTable.clickRow(this.tableData[index-1])
+           // this.$refs.elTable.clearSelection()
+           // this.$refs.elTable.toggleRowSelection(this.tableData.content[index-1])
          }
       },
       addInfo: function () {
@@ -552,6 +531,7 @@
                         pageSize: _this.pageSize
                       }
                       let jsonStr = JSON.stringify(jsonObj)
+                      _this.setUserFlag(false)
                       _this.getUserInfo()
                     } else {
                       _this.$message({message: '添加失败, ' + res.msg, type: 'error'})
@@ -572,6 +552,7 @@
                         pageSize: _this.pageSize
                       }
                       let jsonStr = JSON.stringify(jsonObj)
+                      _this.setUserFlag(false)
                       _this.getUserInfo()
                     } else {
                       _this.$message({message: '编辑失败, ' + res.msg, type: 'error'})
@@ -583,13 +564,22 @@
           })
       },
       getUserInfo: function (jsonStr) {
-        this.loadingTable = true
-        this.$api.user.getPageList(jsonStr).then((res) => {
-          console.log(res.data)
-          this.tableData.content = res.data
+        if (this.userFlag) {
           this.loadingTable = false
-          this.totalNum = parseInt(res.total)
-        })
+          this.tableData = this.userObj.data
+          this.total = parseInt(this.userObj.total)
+        } else {
+          this.loadingTable = true
+          this.$api.user.getPageList(jsonStr).then((res) => {
+            console.log(res.data)
+            this.tableData= res.data
+            this.loadingTable = false
+            this.total = parseInt(res.total)
+            this.setUserObj(res)
+            this.setUserFlag(true)
+          })
+        }
+
       },
 			openAll: function() {
         // this.$nextTick(function () {
@@ -618,6 +608,7 @@
           pageSize: this.pageSize
         }
         let jsonStr = JSON.stringify(jsonObj)
+        this.setUserFlag(false)
         this.getUserInfo(jsonStr)
 			},
 	      changeBox: function () {
@@ -633,6 +624,7 @@
             pageSize: this.pageSize
           }
           let jsonStr = JSON.stringify(jsonObj)
+          this.setUserFlag(false)
           this.getUserInfo(jsonStr)
           this.currentPage = 1
           // this.usernameVal = ''
@@ -649,6 +641,7 @@
             pageSize: this.pageSize
           }
           let jsonStr = JSON.stringify(jsonObj)
+          this.setUserFlag(false)
           this.getUserInfo(jsonStr)
           this.currentPage = 1
 	      },
@@ -666,6 +659,7 @@
             currentPage: this.currentPage
           }
           let jsonStr = JSON.stringify(jsonObj)
+          this.setUserFlag(false)
           this.getUserInfo(jsonStr)
         },
 		}
@@ -687,7 +681,7 @@
       height: 100%
       background-color: #fff
       overflow: hidden
-      width: 190px
+      width: 180px
       display: flex
       flex-direction: column
       border: 1px solid #f0f2f5
@@ -773,9 +767,10 @@
     .input-name
        width: 54px
     .right-center
-      border-top: 1px solid #999
+      border-top: 1px solid $color-border
     .right-bottom
-      overflow: auto
+      // overflow: auto
+      overflow: hidden
       flex: 1
       position: relative
       // border: 1px solid green
@@ -794,7 +789,7 @@
 	    text-align: left
 	    padding: 0 10px
 	.btn-container
-    padding: 3px 0 4px 0
+    padding: 3px 0
 	   display: flex
 	   // border: 1px solid green
 	   border-top: none
@@ -803,6 +798,7 @@
 	  // margin-left: 0
   .btn-container .el-button+.el-button
     margin-left: 0px !important
+    border-left: 1px solid #fff
     // margin-left: 5px !important
 	.input-left
 	  margin-right: 10px
