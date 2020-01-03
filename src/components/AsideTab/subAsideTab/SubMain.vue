@@ -1,12 +1,15 @@
 <template>
   <!--页面导航-->
   <div class="submain-container">
-    <iframe v-if="!who" :src="iframeUrl" frameborder="0" style="width:100%;height:100%;"></iframe>
+    <iframe v-if="!who" :src="iframeUrl" frameborder="0" style="width:100%;height:400px;" id="iframe"></iframe>
     <component v-else :is="who"></component>
+    <!-- <div id="dd" style="position:absolute;left: 0;top: 10px;" @click="clickdd">dd</div> -->
   </div>
 </template>
 <script>
+
     // import { mapMutations } from 'vuex'
+    import axios from "axios"
     export default {
         components: {
           PersonalTabProcessSheet: resolve => require(['@/views/Complaint/PersonalTab/ProcessSheet'], resolve),
@@ -31,13 +34,100 @@
         //   }
         // },
         mounted: function () {
+
+          // $.ajax({
+          // 	async:false,
+          // 	cache:false,
+          // 	type: 'get',
+          // 	contentType:"application/json",
+          // 	// url: "http://10.217.1.31:9082/workbench/menu/getMenuTree?type="+type,//请求的action路径
+          //   url: 'http://10.217.1.31:9082/eoms/form/inst/page?actionName=fault_draft&sheetType=HA-051&_rel=sheet-new',//请求的action路径
+          // 	error: function (data) {//请求失败处理函数
+          // 		console.log('data')
+          //     // alert('请求失败');
+          // 	},
+          // 	success:function(data){ //请求成功后处理函数
+          //     console.log('data11')
+          // 		// $('#menutree').html(data.menuTree);
+          // 		// $('#mytitle').html(data.mytitle);
+          // 		$("a").click(function(){
+          // 			// saveEomslog($(this).html());
+          // 		});
+          // 	}
+          // });
           // if (document.querySelector('.el-con .el-tabs__content')) {
           //   document.querySelector('.el-con .el-tabs__content').style.height = document.body.clientHeight-190 + 'px'
           // }
           console.log('subMainmounted')
+          // document.querySelector('#dd').onclick = function () {
+          //   axios({
+          //     url: 'http://10.217.1.31:9082/eoms/form/inst/page?actionName=fault_draft&sheetType=HA-051&_rel=sheet-new',
+          //     method: 'get',
+          //     success: function (res) {
+          //       console.log('res0909')
+          //     },
+          //     error: function () {
+          //       console.log('error')
+          //     }
+          //   })
+          // }
+
+          let iframe = document.getElementById('iframe')
+          // console.log(iframe)
+          if (iframe) {
+            iframe.onload = function () {
+              console.log('iframeLoad')
+              axios({
+                url: '../../../../static/xinjiangongdan.html',
+                method: 'get',
+                responseType: 'text'
+              }).then(function (data) {
+                // console.log(data.data)
+                // let iframe = document.getElementById('iframe')
+                let _iframe = iframe.contentWindow
+                let _iframeContent = _iframe.document.getElementById('qiantao')
+                _iframeContent.innerHTML = data.data
+              }).catch(function (data) {
+                console.log('data')
+              })
+              // console.log('9090909')
+              // let url = iframe.src.slice(iframe.src.indexOf('?')+1)
+              // axios({
+              //   url: 'http://10.217.1.31:9082/eoms/form/inst/page?actionName=fault_draft&sheetType=HA-051&_rel=sheet-new',
+              //   method: 'get',
+              //   success: function (res) {
+              //     console.log('res0909')
+              //   },
+              //   error: function () {
+              //     console.log('error')
+              //   }
+              // })
+              // let _iframe = iframe.contentWindow
+              // let _iframeContent = _iframe.document.getElementById('iframeContent')
+              // iframe.src = _iframe .document.getElementById('urldiv').getAttribute('name')
+              // let str = '<h3>我是h3</h3>'
+			        // _iframeContent.innerHTML = str
+              // console.log(_iframe)
+              // _header.style.display = 'none'
+            }
+          }
           // this.bindShortcut()
         },
         methods: {
+          clickdd: function () {
+            // 'http://10.217.1.31:9082/' + 'eoms/form/inst/page?actionName=fault_draft&sheetType=HA-051&_rel=sheet-new'
+            // let url = 'http://www.baidu.com'
+            // axios({
+            //   url: url,
+            //   method: 'get',
+            //   success: function (res) {
+            //     console.log('res0909')
+            //   },
+            //   error: function () {
+            //     console.log('error')
+            //   }
+            // })
+          },
           // ...mapMutations({
           //   'setContextMenuFlag': 'setContextMenuFlag',
           //   'setSwitch': 'setSwitch',

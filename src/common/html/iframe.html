@@ -1,0 +1,1304 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0054)http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp# -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<meta http-equiv="X-UA-Compatible" content="IE=9;IE=8;">
+	<meta http-equiv="Pragma" content="no-cache">
+	<meta http-equiv="Cache-Control" content="no-cache">
+	<meta http-equiv="Expires" content="0">
+	<title>欢迎使用集中运维管理系统</title>
+	
+	<link href="./files/main.css" rel="stylesheet" type="text/css">
+	<link href="./files/jquery.dialog.css" rel="stylesheet" type="text/css">
+	<link href="./files/jquery-ui.min.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src="./files/excanvas.js"></script>
+	<script type="text/javascript" src="./files/loongchart.core.js"></script>
+	<script type="text/javascript" src="./files/loongchart.line.js"></script>
+	<script type="text/javascript" src="./files/loongchart.histogram.js"></script>
+	
+	<script src="./files/jquery-1.7.2.js" type="text/javascript"></script>
+	<script src="./files/jquery.cookie.js" type="text/javascript"></script>
+	<script src="./files/jquery.validate.js" type="text/javascript"></script>
+	<script src="./files/jquery.easing.1.3.js"></script>
+	<script src="./files/jquery.scrollTo-min.js"></script>
+	<script type="text/javascript" src="./files/jquery.dialog.js"></script>
+	<script type="text/javascript" src="./files/jquery-ui.min.js"></script>
+	 
+	<script src="./files/main.js" type="text/javascript"></script>
+	<script src="./files/Chart.js"></script>
+	<script src="./files/zDialog.js" type="text/javascript"></script>
+	<script src="./files/zDrag.js" type="text/javascript"></script>
+	<script src="./files/ajaxupload.3.5.js" type="text/javascript"></script>
+
+	<style>
+		#myimg{position:absolute;}
+	    p > label:first-child {width: 150px;font-weight:bolder;color:#124F80;}
+	    .tr0 {background-color:#ffffff;}
+	    .tr1 {background-color:#E8EFF1;}
+	    ul.shortcuts-group >li > a {float: left;margin-right: 0px;}
+	    ul.shortcuts-group >li > span {float: left;margin-top:29px;}
+	    ul.shortcuts-group-group >li > a {float: left;margin-right: 0px;}
+	    ul.shortcuts-group-group >li > span {float: left;margin-top:29px;}
+	    .alert{z-index: 101121 !important;}
+	</style>
+
+</head>
+
+<body class="bodystyle">
+<form method="post" action="http://10.217.1.31:9082/workbench/ibm_security_logout" name="logout" id="logout">
+	<input type="hidden" name="logoutExitPage" value="/jsp/login/login.jsp">
+</form>
+<div id="dialog-confirm" title="系统退出！" style="display:none;padding: 30px 0 0 50px;">
+  <p><span class="ui-icon ui-icon-alert" style="float:left; margin:5px 7px 20px 0;"></span>您确定要退出系统吗？</p>
+  <div style="width:320px;height:35px;background:#2F8C94;position:absolute; bottom:0; left:0;padding-top:3px;">
+  	<button style="margin-left:90px;" onclick="logok()" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button"><span class="ui-button-text">确定</span></button>
+  	<button onclick="logcal()" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button"><span class="ui-button-text">取消</span></button>
+  </div>
+</div>
+<div id="dialog-oldtips" title="温馨提示！" style="display:none;padding: 10px 10px 0 10px;">
+  <p style="font-size:14px;"><span style="float:left; margin:5px 7px 20px 0;"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;该功能分类下的部分功能页面风格尚未改造完成  ,  为不影响您正常使用  ,  页面风格仍采用原   系统风格。</p>
+  <div style="width:320px;height:35px;background:#2F8C94;position:absolute; bottom:0; left:0;padding-top:3px;">
+  	<button style="margin-left:125px;" onclick="tipswincal()" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button"><span class="ui-button-text">确定</span></button>
+  </div>
+</div>
+<div id="dialog-sysnotice" title="系统公告" style="display:none;padding: 10px 10px 0 10px;">
+  <div style="padding:20px;">
+		<span id="mytitles" style="font-size:22px;font-weight:bold;height:40px;display:block;"></span><br>
+		<span id="myputdate" style="font-size:18px;height:15px;font-weight:bold;display:block;">发布日期：</span><br>
+		<span style="font-size:18px;height:15px;font-weight:bold;display:block;">公告内容：</span><br>
+		<textarea id="mybodys" class="textInput" style="font-size:15px;overflow:hidden;border:none;width:90%;height:80px;" onpropertychange="this.style.height=this.scrollHeight+&#39;px&#39;;" oninput="this.style.height=this.scrollHeight+&#39;px&#39;;"></textarea>
+  </div>
+  <div id="syswinnotice" style="width:320px;height:35px;background:#2F8C94;position:absolute; bottom:0; left:0;padding-top:3px;">
+  	<button id="sysclosebut" style="margin-left:125px;" onclick="syswincal()" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button"><span class="ui-button-text">关闭</span></button>
+  </div>
+</div>
+<div id="myimg" style="display:none;position: absolute;z-index: 88888;cursor:pointer">
+<div style="background-image:url(/workbench/img/body/qw.png);width:243px;height:145px;" onclick="openMyimg()"></div>
+<div style="width: 50px;height: 50px;cursor:pointer;z-index: 99999;margin-left: 195px;margin-top: -145px;" onclick="myimgout()"></div>
+</div>
+
+<div class="body_div">
+
+
+<div style="height: 82px;width: 100%;position: relative;">
+<div class="logo_div">
+<img src="./files/LOGO.png" alt="">
+</div>
+<div class="jiuban_div" style="background-image:url(/workbench/img/body/jiubanrukou2.png);">
+<a href="javascript:void(0);" onclick="switchOldSystem()"><span style="margin-left: 30px;font-size: 14px;color: #0e3e62;cursor:pointer">旧版入口</span></a>
+<a href="javascript:void(0);" onclick="downloadapk();">
+<span style="margin-left: 34px;font-size: 14px;color: #0e3e62;cursor:pointer" onmouseover="onmouseoverShow()" onmouseout="onmouseoverHide()">和运维客户端</span></a>
+<a href="javascript:void(0);" onclick="openBspsSystem()"><span style="margin-left: 30px;font-size: 14px;color: #0e3e62;cursor:pointer">业务开通</span></a>
+</div>
+
+<div id="dododo" style="position: absolute; height: 220px; z-index: 90000; margin-left: 950px; margin-top: 20px; padding-top: 25px; padding-left: 15px; width: 210px; background-image: url(&quot;/workbench/img/body/sjyw.png&quot;); display: none;">
+   <img src="./files/yun.png" alt="">
+</div>
+
+	<div class="nav-box">
+        <ul class="nav-ul" id="nav-ul"><li id="1"><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#" onclick="goFristPage()"><span class="span_menu">首页</span></a></li><li><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#"><span class="span_menu2">运维管理</span></a><ul><li id="seliid_1000101" onmouseover="lionmouseover(&#39;seliid_1000101&#39;,&#39;0&#39;)" onmouseout="lionmouseout(&#39;seliid_1000101&#39;)"><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#">&nbsp;&nbsp;&nbsp;&nbsp;运维流程类</a><span class="spancc"><img src="./files/whitethird.png"></span><ul><li id="seliid_100010101" style="width:141px" onmouseover="lionmouseover(&#39;seliid_100010101&#39;,&#39;0&#39;)" onmouseout="lionmouseout(&#39;seliid_100010101&#39;)"><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#" onclick="oopen(&#39;010101&#39;)">&nbsp;&nbsp;&nbsp;&nbsp;生产管理类</a></li><li id="seliid_100010102" style="width:141px" onmouseover="lionmouseover(&#39;seliid_100010102&#39;,&#39;0&#39;)" onmouseout="lionmouseout(&#39;seliid_100010102&#39;)"><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#" onclick="oopen(&#39;010102&#39;)">&nbsp;&nbsp;&nbsp;&nbsp;网络变更与配置类</a></li><li id="seliid_100010103" style="width:141px" onmouseover="lionmouseover(&#39;seliid_100010103&#39;,&#39;0&#39;)" onmouseout="lionmouseout(&#39;seliid_100010103&#39;)"><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#" onclick="oopen(&#39;010103&#39;)">&nbsp;&nbsp;&nbsp;&nbsp;安全管理类</a></li><li id="seliid_100010104" style="width:141px" onmouseover="lionmouseover(&#39;seliid_100010104&#39;,&#39;0&#39;)" onmouseout="lionmouseout(&#39;seliid_100010104&#39;)"><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#" onclick="oopen(&#39;010104&#39;)">&nbsp;&nbsp;&nbsp;&nbsp;应急与事件管理类</a></li><li id="seliid_100010105" style="width:141px" onmouseover="lionmouseover(&#39;seliid_100010105&#39;,&#39;0&#39;)" onmouseout="lionmouseout(&#39;seliid_100010105&#39;)"><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#" onclick="oopen(&#39;010106&#39;)">&nbsp;&nbsp;&nbsp;&nbsp;无线设备管理类</a></li></ul></li><li id="seliid_1000102" onmouseover="lionmouseover(&#39;seliid_1000102&#39;,&#39;0&#39;)" onmouseout="lionmouseout(&#39;seliid_1000102&#39;)"><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#">&nbsp;&nbsp;&nbsp;&nbsp;公共服务类</a><span class="spancc"><img src="./files/whitethird.png"></span><ul><li id="seliid_100010201" style="width:141px" onmouseover="lionmouseover(&#39;seliid_100010201&#39;,&#39;0&#39;)" onmouseout="lionmouseout(&#39;seliid_100010201&#39;)"><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#" onclick="oopen(&#39;010201&#39;)">&nbsp;&nbsp;&nbsp;&nbsp;信息与公告类</a></li><li id="seliid_100010202" style="width:141px" onmouseover="lionmouseover(&#39;seliid_100010202&#39;,&#39;0&#39;)" onmouseout="lionmouseout(&#39;seliid_100010202&#39;)"><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#" onclick="oopen(&#39;0809&#39;)">&nbsp;&nbsp;&nbsp;&nbsp;网管云盘</a></li><li id="seliid_100010203" style="width:141px" onmouseover="lionmouseover(&#39;seliid_100010203&#39;,&#39;0&#39;)" onmouseout="lionmouseout(&#39;seliid_100010203&#39;)"><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#" onclick="oopen(&#39;010202&#39;)">&nbsp;&nbsp;&nbsp;&nbsp;培训与管理类</a></li></ul></li><li id="seliid_1000103" onmouseover="lionmouseover(&#39;seliid_1000103&#39;,&#39;0&#39;)" onmouseout="lionmouseout(&#39;seliid_1000103&#39;)"><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#" onclick="oopen(&#39;70001&#39;)">&nbsp;&nbsp;&nbsp;&nbsp;仪器仪表管理</a></li><li id="seliid_1000104" onmouseover="lionmouseover(&#39;seliid_1000104&#39;,&#39;0&#39;)" onmouseout="lionmouseout(&#39;seliid_1000104&#39;)"><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#" onclick="oopen(&#39;70002&#39;)">&nbsp;&nbsp;&nbsp;&nbsp;机房管理</a></li></ul></li><li class=""><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#"><span class="span_menu2">故障管理</span></a><ul><li id="seliid_1000201" onmouseover="lionmouseover(&#39;seliid_1000201&#39;,&#39;0&#39;)" onmouseout="lionmouseout(&#39;seliid_1000201&#39;)" style="background: rgb(81, 180, 110);"><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#">&nbsp;&nbsp;&nbsp;&nbsp;故障管理类</a><span class="spancc"><img src="./files/whitethird.png"></span><ul style="display: none; left: 141px;"><li id="seliid_100020101" style="width: 141px; background: rgb(81, 180, 110);" onmouseover="lionmouseover(&#39;seliid_100020101&#39;,&#39;0&#39;)" onmouseout="lionmouseout(&#39;seliid_100020101&#39;)"><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#" onclick="oopen(&#39;020101&#39;)">&nbsp;&nbsp;&nbsp;&nbsp;故障处理</a></li><li id="seliid_100020102" style="width:141px" onmouseover="lionmouseover(&#39;seliid_100020102&#39;,&#39;0&#39;)" onmouseout="lionmouseout(&#39;seliid_100020102&#39;)"><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#" onclick="oopen(&#39;020102&#39;)">&nbsp;&nbsp;&nbsp;&nbsp;集客故障</a></li><li id="seliid_100020103" style="width:141px" onmouseover="lionmouseover(&#39;seliid_100020103&#39;,&#39;0&#39;)" onmouseout="lionmouseout(&#39;seliid_100020103&#39;)"><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#" onclick="oopen(&#39;020103&#39;)">&nbsp;&nbsp;&nbsp;&nbsp;家客故障</a></li></ul></li><li id="seliid_1000202" onmouseover="lionmouseover(&#39;seliid_1000202&#39;,&#39;0&#39;)" onmouseout="lionmouseout(&#39;seliid_1000202&#39;)" style="background: rgb(81, 180, 110);"><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#">&nbsp;&nbsp;&nbsp;&nbsp;性能管理类</a><span class="spancc"><img src="./files/whitethird.png"></span><ul style="display: none; left: 141px;"><li id="seliid_100020201" style="width:141px" onmouseover="lionmouseover(&#39;seliid_100020201&#39;,&#39;0&#39;)" onmouseout="lionmouseout(&#39;seliid_100020201&#39;)"><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#" onclick="oopen(&#39;020201&#39;)">&nbsp;&nbsp;&nbsp;&nbsp;4G性能管理</a></li><li id="seliid_100020202" style="width:141px" onmouseover="lionmouseover(&#39;seliid_100020202&#39;,&#39;0&#39;)" onmouseout="lionmouseout(&#39;seliid_100020202&#39;)"><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#" onclick="oopen(&#39;020202&#39;)">&nbsp;&nbsp;&nbsp;&nbsp;分场景类管理</a></li></ul></li><li id="seliid_1000203" onmouseover="lionmouseover(&#39;seliid_1000203&#39;,&#39;0&#39;)" onmouseout="lionmouseout(&#39;seliid_1000203&#39;)" style="background: rgb(81, 180, 110);"><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#">&nbsp;&nbsp;&nbsp;&nbsp;故障支撑与管理</a><span class="spancc"><img src="./files/whitethird.png"></span><ul style="display: none; left: 141px;"><li id="seliid_100020301" style="width:141px" onmouseover="lionmouseover(&#39;seliid_100020301&#39;,&#39;0&#39;)" onmouseout="lionmouseout(&#39;seliid_100020301&#39;)"><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#" onclick="oopen(&#39;020301&#39;)">&nbsp;&nbsp;&nbsp;&nbsp;故障支撑类</a></li><li id="seliid_100020302" style="width:141px" onmouseover="lionmouseover(&#39;seliid_100020302&#39;,&#39;0&#39;)" onmouseout="lionmouseout(&#39;seliid_100020302&#39;)"><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#" onclick="oopen(&#39;020302&#39;)">&nbsp;&nbsp;&nbsp;&nbsp;故障管理类</a></li></ul></li></ul></li><li class=""><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#"><span class="span_menu2">需求管理</span></a><ul><li id="seliid_1000301" onmouseover="lionmouseover(&#39;seliid_1000301&#39;,&#39;0&#39;)" onmouseout="lionmouseout(&#39;seliid_1000301&#39;)"><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#" onclick="oopen(&#39;03010101&#39;)">&nbsp;&nbsp;&nbsp;&nbsp;需求管理工单</a></li><li id="seliid_1000302" onmouseover="lionmouseover(&#39;seliid_1000302&#39;,&#39;0&#39;)" onmouseout="lionmouseout(&#39;seliid_1000302&#39;)"><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#" onclick="oopen(&#39;03010103&#39;)">&nbsp;&nbsp;&nbsp;&nbsp;版本管理</a></li><li id="seliid_1000303" onmouseover="lionmouseover(&#39;seliid_1000303&#39;,&#39;0&#39;)" onmouseout="lionmouseout(&#39;seliid_1000303&#39;)"><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#" onclick="oopen(&#39;03010102&#39;)">&nbsp;&nbsp;&nbsp;&nbsp;割接管理工单</a></li><li id="seliid_1000304" onmouseover="lionmouseover(&#39;seliid_1000304&#39;,&#39;0&#39;)" onmouseout="lionmouseout(&#39;seliid_1000304&#39;)"><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#" onclick="oopen(&#39;03010104&#39;)">&nbsp;&nbsp;&nbsp;&nbsp;厂商考核管理工单</a></li><li id="seliid_1000305" onmouseover="lionmouseover(&#39;seliid_1000305&#39;,&#39;0&#39;)" onmouseout="lionmouseout(&#39;seliid_1000305&#39;)"><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#" onclick="oopen(&#39;03010106&#39;)">&nbsp;&nbsp;&nbsp;&nbsp;系统问题管理</a></li><li id="seliid_1000306" onmouseover="lionmouseover(&#39;seliid_1000306&#39;,&#39;0&#39;)" onmouseout="lionmouseout(&#39;seliid_1000306&#39;)"><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#" onclick="oopen(&#39;03010105&#39;)">&nbsp;&nbsp;&nbsp;&nbsp;IT资源申请</a></li><li id="seliid_1000310" onmouseover="lionmouseover(&#39;seliid_1000310&#39;,&#39;0&#39;)" onmouseout="lionmouseout(&#39;seliid_1000310&#39;)"><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#" onclick="oopen(&#39;03010110&#39;)">&nbsp;&nbsp;&nbsp;&nbsp;维护协作</a></li></ul></li><li class=""><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#"><span class="span_menu2">值班管理</span></a><ul><li id="seliid_1000401" onmouseover="lionmouseover(&#39;seliid_1000401&#39;,&#39;0&#39;)" onmouseout="lionmouseout(&#39;seliid_1000401&#39;)"><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#" onclick="oopen(&#39;0401&#39;)">&nbsp;&nbsp;&nbsp;&nbsp;值班作业</a></li><li id="seliid_1000402" onmouseover="lionmouseover(&#39;seliid_1000402&#39;,&#39;0&#39;)" onmouseout="lionmouseout(&#39;seliid_1000402&#39;)"><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#" onclick="oopen(&#39;0402&#39;)">&nbsp;&nbsp;&nbsp;&nbsp;专家值班</a></li></ul></li><li class=""><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#"><span class="span_menu2">投诉管理</span></a><ul><li id="seliid_1000501" onmouseover="lionmouseover(&#39;seliid_1000501&#39;,&#39;0&#39;)" onmouseout="lionmouseout(&#39;seliid_1000501&#39;)"><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#" onclick="oopen(&#39;050101&#39;)">&nbsp;&nbsp;&nbsp;&nbsp;个人投诉</a></li><li id="seliid_1000502" onmouseover="lionmouseover(&#39;seliid_1000502&#39;,&#39;0&#39;)" onmouseout="lionmouseout(&#39;seliid_1000502&#39;)"><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#" onclick="oopen(&#39;050102&#39;)">&nbsp;&nbsp;&nbsp;&nbsp;家客投诉</a></li><li id="seliid_1000503" onmouseover="lionmouseover(&#39;seliid_1000503&#39;,&#39;0&#39;)" onmouseout="lionmouseout(&#39;seliid_1000503&#39;)"><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#" onclick="oopen(&#39;050103&#39;)">&nbsp;&nbsp;&nbsp;&nbsp;集客投诉</a></li><li id="seliid_1000504" onmouseover="lionmouseover(&#39;seliid_1000504&#39;,&#39;0&#39;)" onmouseout="lionmouseout(&#39;seliid_1000504&#39;)"><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#" onclick="oopen(&#39;050104&#39;)">&nbsp;&nbsp;&nbsp;&nbsp;其他投诉</a></li></ul></li><li class=""><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#"><span class="span_menu2">统计分析</span></a><ul><li id="seliid_1000601" onmouseover="lionmouseover(&#39;seliid_1000601&#39;,&#39;0&#39;)" onmouseout="lionmouseout(&#39;seliid_1000601&#39;)"><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#">&nbsp;&nbsp;&nbsp;&nbsp;运维流程</a><span class="spancc"><img src="./files/whitethird.png"></span><ul><li id="seliid_100060101" style="width:141px" onmouseover="lionmouseover(&#39;seliid_100060101&#39;,&#39;0&#39;)" onmouseout="lionmouseout(&#39;seliid_100060101&#39;)"><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#" onclick="oopen(&#39;060101&#39;)">&nbsp;&nbsp;&nbsp;&nbsp;网管室指标</a></li><li id="seliid_100060102" style="width:141px" onmouseover="lionmouseover(&#39;seliid_100060102&#39;,&#39;0&#39;)" onmouseout="lionmouseout(&#39;seliid_100060102&#39;)"><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#" onclick="oopen(&#39;060107&#39;)">&nbsp;&nbsp;&nbsp;&nbsp;传输室指标</a></li><li id="seliid_100060103" style="width:141px" onmouseover="lionmouseover(&#39;seliid_100060103&#39;,&#39;0&#39;)" onmouseout="lionmouseout(&#39;seliid_100060103&#39;)"><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#" onclick="oopen(&#39;060102&#39;)">&nbsp;&nbsp;&nbsp;&nbsp;监控室指标</a></li><li id="seliid_100060104" style="width:141px" onmouseover="lionmouseover(&#39;seliid_100060104&#39;,&#39;0&#39;)" onmouseout="lionmouseout(&#39;seliid_100060104&#39;)"><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#" onclick="oopen(&#39;060103&#39;)">&nbsp;&nbsp;&nbsp;&nbsp;客响室指标</a></li><li id="seliid_100060105" style="width:141px" onmouseover="lionmouseover(&#39;seliid_100060105&#39;,&#39;0&#39;)" onmouseout="lionmouseout(&#39;seliid_100060105&#39;)"><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#" onclick="oopen(&#39;060104&#39;)">&nbsp;&nbsp;&nbsp;&nbsp;网管中心指标</a></li><li id="seliid_100060106" style="width:141px" onmouseover="lionmouseover(&#39;seliid_100060106&#39;,&#39;0&#39;)" onmouseout="lionmouseout(&#39;seliid_100060106&#39;)"><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#" onclick="oopen(&#39;060105&#39;)">&nbsp;&nbsp;&nbsp;&nbsp;EOMS老版指标</a></li><li id="seliid_100060107" style="width:141px" onmouseover="lionmouseover(&#39;seliid_100060107&#39;,&#39;0&#39;)" onmouseout="lionmouseout(&#39;seliid_100060107&#39;)"><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#" onclick="oopen(&#39;060106&#39;)">&nbsp;&nbsp;&nbsp;&nbsp;其他统计</a></li></ul></li><li id="seliid_1000602" onmouseover="lionmouseover(&#39;seliid_1000602&#39;,&#39;0&#39;)" onmouseout="lionmouseout(&#39;seliid_1000602&#39;)"><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#">&nbsp;&nbsp;&nbsp;&nbsp;值班作业统计</a><span class="spancc"><img src="./files/whitethird.png"></span><ul><li id="seliid_100060201" style="width:141px" onmouseover="lionmouseover(&#39;seliid_100060201&#39;,&#39;0&#39;)" onmouseout="lionmouseout(&#39;seliid_100060201&#39;)"><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#" onclick="oopen(&#39;060201&#39;)">&nbsp;&nbsp;&nbsp;&nbsp;值班作业统计</a></li></ul></li><li id="seliid_1000604" onmouseover="lionmouseover(&#39;seliid_1000604&#39;,&#39;0&#39;)" onmouseout="lionmouseout(&#39;seliid_1000604&#39;)"><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#" onclick="oopen(&#39;060401&#39;)">&nbsp;&nbsp;&nbsp;&nbsp;自定义报表</a></li><li id="seliid_1000606" onmouseover="lionmouseover(&#39;seliid_1000606&#39;,&#39;0&#39;)" onmouseout="lionmouseout(&#39;seliid_1000606&#39;)"><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#" onclick="oopen(&#39;060602&#39;)">&nbsp;&nbsp;&nbsp;&nbsp;传输月报</a></li></ul></li><li class=""><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#"><span class="span_menu2">知识管理</span></a><ul><li id="seliid_1000701" onmouseover="lionmouseover(&#39;seliid_1000701&#39;,&#39;0&#39;)" onmouseout="lionmouseout(&#39;seliid_1000701&#39;)" style="background: rgb(81, 180, 110);"><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#" onclick="oopen(&#39;0701&#39;)">&nbsp;&nbsp;&nbsp;&nbsp;案例库</a></li><li id="seliid_1000702" onmouseover="lionmouseover(&#39;seliid_1000702&#39;,&#39;0&#39;)" onmouseout="lionmouseout(&#39;seliid_1000702&#39;)"><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#" onclick="oopen(&#39;0702&#39;)">&nbsp;&nbsp;&nbsp;&nbsp;运维知识</a></li></ul></li><li id="2" class=""><a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#" onclick="oopenUrl(&#39;8&#39;,&#39;../about&#39;,&#39;关于&#39;,&#39;demo_page8&#39;,&#39;false&#39;)"><span class="span_menu3">关于</span></a></li></ul>
+	</div>
+</div>
+<div style="width: 226px;height: 920px;position: relative;float: left;">
+
+	<div style="top: 26px;left: 26px;position: relative;" id="example">
+	<div>
+	<img src="./files/imgioServlet" id="mainface" alt="" style="height: 76px;width: 80px;border-radius:80px;cursor:pointer">
+	</div>
+	<img src="./files/touxiangbj.png" alt="" style="height: 80px;width: 80px;margin-top: -80px;cursor:pointer;"></div>
+	<div style="top: -40px;left: 118px;position: relative;color: white;font-size: 14px;">
+	<span id="namespan">你好！赵丹萍</span>
+	</div>
+	<div style="top: -32px;left: 128px;position: relative;color: white;font-size: 12px;cursor:pointer" onclick="layout()">
+	<span style="text-decoration:underline;" onclick="layout()"><img src="./files/tuichu.png" alt="" onclick="layout()">退出</span>
+	</div>
+	<div style="top: 0px;left: 28px;position: relative;color: white;font-size: 12px;">
+	运维流程：<select id="ywlc" style="width: 120px;" onchange="changeJob(&#39;0&#39;,this.value)"><option value="13721904">开发部</option><option value="2697245">测试部</option></select>
+	</div>
+	<div style="top: 10px;left: 28px;position: relative;color: white;font-size: 12px;">
+	值班作业：<select id="zbzy" style="width: 120px;" onchange="changeJob(&#39;1&#39;,this.value)"><option value="2655026">测试部</option><option value="11414838">洛阳市代维</option><option value="13721896">开发部</option></select>
+	</div>
+	<div style="top: 20px;left: 28px;position: relative;color: white;font-size: 12px;">
+	公共服务：<select id="ggfw" style="width: 120px;" onchange="changeJob(&#39;1&#39;,this.value)"><option value="2655026">测试部</option><option value="11414838">洛阳市代维</option><option value="13721896">开发部</option></select>
+	</div>
+	<div id="loginTime" style="top: 30px;left: 18px;position: relative;color: white;font-size: 12px;">上次登录时间：2020-01-02</div>
+	
+	<div style="height: 190px;position: relative;top:48px;z-index:10000; ">
+		<div style="background-image:url(/workbench/img/body/lefthead.png);height: 42px;width:226px;
+		background-position: center;background-repeat: no-repeat;line-height:42px;color:white;font-size:14px;">
+		&nbsp;&nbsp;&nbsp;&nbsp;<img src="./files/daibanhead.png" alt="">&nbsp;&nbsp;我的待办
+		</div>
+		<div style="background-image:url(/workbench/img/body/daibanbeijing.png);height: 145px;width:226px;
+		background-position: center;background-repeat: no-repeat;line-height:42px;color:white;font-size:14px;position:absolute;">
+			<div style="height: 48px;line-height:48px;cursor:pointer;color: #273f50" onclick="changeDB(&#39;ywdb&#39;)">
+			<div style="float: left;font-size:14px;margin-left: 40px;">运维待办</div> <div id="dbnum" style="margin-left: 20px;float: left;background-image:url(/workbench/img/body/zdb.png);height: 48px;width:36px;color:white;font-size:12px;">&nbsp;&nbsp;&nbsp;&nbsp;2</div>
+			</div>
+			<div style="height: 48px;line-height:48px;cursor:pointer;color: #273f50" onclick="changeDB(&#39;zbzydb&#39;)">
+			<div style="float: left;font-size:14px;margin-left: 40px;">值班作业</div> <div id="zbnum" style="margin-left: 20px;float: left;background-image:url(/workbench/img/body/zdb.png);height: 48px;width:36px;color:white;font-size:12px;">&nbsp;&nbsp;&nbsp;&nbsp;2</div>
+			</div>
+			<!--<div style="height: 48px;line-height:48px;cursor:pointer;color: #273f50" onclick="oopen('xqdb')" >-->
+			<div style="height: 48px;line-height:48px;cursor:pointer;color: #273f50" onclick="changeDB(&#39;xqdb&#39;)">
+				<div style="float: left;font-size:14px;margin-left: 40px;">需求待办</div> 
+				<div id="xqnum" style="margin-left: 20px; float: left; background-image: url(&quot;/workbench/img/body/zdb.png&quot;); height: 48px; width: 36px; color: white; font-size: 12px; text-align: center;">0</div>
+			</div>
+		</div>
+		<div id="ywdb" style="background-color: white;width: 208px;margin-top: 48px;margin-left:8px;position: relative;color: #273f50;display: none;"><ul id="ywdbul"><li class="db2"><div class="db3" onclick="oopenUrl(&#39;050102&#39;,&#39;/eomsnqs/primenu/initMenu?sheetType=HA-058%26menuID=9b2d995cec184b329fad2jtkhtsclgd&#39;,&#39;家庭客户投诉工单&#39;,&#39;HA-058&#39;,&#39;false&#39;)">家庭客户投诉处理工单</div><div class="db4">&nbsp;&nbsp;1</div></li><li class="db1"><div class="db3" onclick="oopenUrl(&#39;020301&#39;,&#39;/eomsnqs/eafSheet/mainPage?sheetType=HA-111%26_rel=HA-111&#39;,&#39;工程预约工单&#39;,&#39;HA-111&#39;,&#39;false&#39;)">工程预约工单</div><div class="db4">&nbsp;&nbsp;1</div></li></ul></div>
+			<div id="zbzydb" style="background-color: white;width: 208px;margin-top: 96px;margin-left:8px;position: relative;color: #273f50;display: none"><ul><li class="db1"><div class="db3" onclick="oopenUrl(&#39;0401&#39;,&#39;http://10.217.1.43:9084/ess/IntoEss.wsm?userName=zhaodanping_gpm_13721904%26url=%2Fess%2Fwpm%2FPlan.do%3Fop%3DinitLogs&#39;,&#39;值班作业待办&#39;,&#39;xqdb&#39;,&#39;true&#39;)">值班作业待办</div><div class="db4">&nbsp;&nbsp;2</div></li></ul></div>
+			<div id="xqdb" style="background-color: white;width: 208px;margin-top: 142px;margin-left:8px;position: relative;color: #273f50;display: none"><li class="db2">
+<div class="db3" onclick="oopenUrl(&#39;03010101&#39;,&#39;/eomswsc/primenu/initMenu?sheetType=HA-001%26menuID=wscxqglgdmenugrtsmenugrtsmenugrtsmenugrtsmenu&#39;,&#39;需求管理工单&#39;,&#39;sheet-manage&#39;,&#39;false&#39;)">需求管理工单</div>
+<div class="db4">&nbsp;&nbsp;0</div>
+</li>
+<li class="db1">
+<div class="db3" onclick="oopenUrl(&#39;03010107&#39;,&#39;/eomswsc/primenu/initMenu?sheetType=HA-002%26menuID=3100002&#39;,&#39;问题工单&#39;,&#39;pagecodewt001&#39;,&#39;false&#39;)">问题工单</div>
+<div class="db4">&nbsp;&nbsp;0</div>
+</li>
+<li class="db2">
+<div class="db3" onclick="oopenUrl(&#39;03010102&#39;,&#39;/eomswsc/primenu/initMenu?sheetType=HA-003%26menuID=wscgjglgdmenugrtsmenugrtsmenugrtsmenugrtsmenu&#39;,&#39;割接管理工单&#39;,&#39;pagecode008&#39;,&#39;false&#39;)">割接管理工单</div>
+<div class="db4">&nbsp;&nbsp;0</div>
+</li>
+<li class="db1">
+<div class="db3" onclick="oopenUrl(&#39;03010104&#39;,&#39;/eomscch/primenu/initMenu?sheetType=HA-008%26menuID=cskhglmenugrtsmenugrtsmenugrtsmenugrtsmenu&#39;,&#39;厂商考核管理工单&#39;,&#39;pagecode1009&#39;,&#39;false&#39;)">厂商考核管理工单</div>
+<div class="db4">&nbsp;&nbsp;0</div>
+</li></div>
+	</div>
+	
+	<div style="height: 300px;position: relative;top:50px;">
+		<div style="background-image:url(/workbench/img/body/lefthead.png);height: 42px;width:226px;
+		background-position: center;background-repeat: no-repeat;line-height:42px;color:white;font-size:14px;">
+		<div style="padding-left:20px;padding-right:20px;position: relative;">
+			<img src="./files/daibanhead.png" alt="">
+			<span>快捷通道</span>
+			<img src="./files/genduo.png" alt="" onclick="oopen(&#39;7&#39;)" style="cursor:pointer;float:right;padding-top:10px;">
+			</div>
+		</div>
+		<div id="kjdiv" style="height: 400px;margin-left: 5px;position:absolute;"><div class="kj6"></div><div class="kj6"></div><div class="kj6"></div><div class="kj6"></div><div class="kj6"></div><div class="kj6"></div><div class="kj6"></div><div class="kj6"></div><div class="kj6"></div><div class="kj6"></div><div class="kj6"></div><div class="kj6"></div></div>
+	</div>
+</div>
+<div style="position: relative;float: left;height: 190px;width:1032px;background-color: white;margin-top: 12px;margin-left: 12px;border: 1px solid #d4d4d4;">
+<div style="height: 38px;width: 1002px;background-color: white;margin: 0 auto;border-bottom: 1px solid #c9e8f0;line-height: 38px">
+<div style="float: left;font-size: 16px;font-weight:bold;color:#115771;">最新公告</div><div style="float: left;margin-left: 850px;font-size: 12px;cursor: pointer;" onclick="oopenUrl(&#39;010201&#39;,&#39;http://10.217.1.44:9084/wrm/Login.do?user=zhaodanping%26myaction=ReceiveAfficheUI.do%26pass=%26flag=portal&#39;,&#39;公告查阅&#39;,&#39;21203571&#39;,&#39;true&#39;)">全部 &gt;&gt;</div>
+</div>
+<div style="height: 152px;">
+<marquee scrollamount="1" height="150" direction="up" scrolldelay="10" onmouseover="this.stop()" onmouseout="this.start()">
+            <table id="strTable" style="color: #3f3f3f;margin-left: 10px;width:1026px;font-size: 12px;"><tbody><tr style="height: 20px;"><td style="width: 60px;text-align: left;color: #105771">[网络变动]</td><td style="width: 750px;cursor: pointer;" onclick="oopenUrl(&#39;010201&#39;,&#39;http://10.217.1.44:9084/wrm/Login.do?user=zhaodanping%26myaction=LookAfficheUI.do?id=781%26afficheType=1%26page=1%26type=receive%26pass=%26flag=portal&#39;,&#39;公告查阅&#39;,&#39;21203571&#39;,&#39;true&#39;)">网管中心-网管中心互联网运营室互联网计划于2019-06-06 00:00对HMS设备进行参数修改操作</td><td style="width:150px;text-align: center">2019-07-01</td></tr><tr style="height: 20px;"><td style="width: 60px;text-align: left;color: #105771">[网络变动]</td><td style="width: 750px;cursor: pointer;" onclick="oopenUrl(&#39;010201&#39;,&#39;http://10.217.1.44:9084/wrm/Login.do?user=zhaodanping%26myaction=LookAfficheUI.do?id=861%26afficheType=1%26page=1%26type=receive%26pass=%26flag=portal&#39;,&#39;公告查阅&#39;,&#39;21203571&#39;,&#39;true&#39;)">网管中心-网管中心互联网运营室互联网计划于2019-06-14 00:00对交换机设备进行参数修改操作</td><td style="width:150px;text-align: center">2019-07-01</td></tr><tr style="height: 20px;"><td style="width: 60px;text-align: left;color: #105771">[网络变动]</td><td style="width: 750px;cursor: pointer;" onclick="oopenUrl(&#39;010201&#39;,&#39;http://10.217.1.44:9084/wrm/Login.do?user=zhaodanping%26myaction=LookAfficheUI.do?id=622%26afficheType=1%26page=1%26type=receive%26pass=%26flag=portal&#39;,&#39;公告查阅&#39;,&#39;21203571&#39;,&#39;true&#39;)">网管中心-网管中心互联网运营室承载网计划于2019-05-31 00:00对南阳GM郑州BSC52和三门峡濮阳信令监测接入，周口老网AR2设备进行业务调整/设备替换/业务割接操作</td><td style="width:150px;text-align: center">2019-07-01</td></tr><tr style="height: 20px;"><td style="width: 60px;text-align: left;color: #105771">[网络变动]</td><td style="width: 750px;cursor: pointer;" onclick="oopenUrl(&#39;010201&#39;,&#39;http://10.217.1.44:9084/wrm/Login.do?user=zhaodanping%26myaction=LookAfficheUI.do?id=641%26afficheType=1%26page=1%26type=receive%26pass=%26flag=portal&#39;,&#39;公告查阅&#39;,&#39;21203571&#39;,&#39;true&#39;)">网管中心-网管中心互联网运营室云计算计划于2019-05-30 22:00对政务云平台设备进行业务调整/设备替换/业务割接操作</td><td style="width:150px;text-align: center">2019-07-01</td></tr><tr style="height: 20px;"><td style="width: 60px;text-align: left;color: #105771">[网络变动]</td><td style="width: 750px;cursor: pointer;" onclick="oopenUrl(&#39;010201&#39;,&#39;http://10.217.1.44:9084/wrm/Login.do?user=zhaodanping%26myaction=LookAfficheUI.do?id=801%26afficheType=1%26page=1%26type=receive%26pass=%26flag=portal&#39;,&#39;公告查阅&#39;,&#39;21203571&#39;,&#39;true&#39;)">网管中心-网管中心互联网运营室云计算计划于2019-06-06 00:00对政务云平台ManageOne升级设备进行软件补丁加载操作</td><td style="width:150px;text-align: center">2019-07-01</td></tr><tr style="height: 20px;"><td style="width: 60px;text-align: left;color: #105771">[网络变动]</td><td style="width: 750px;cursor: pointer;" onclick="oopenUrl(&#39;010201&#39;,&#39;http://10.217.1.44:9084/wrm/Login.do?user=zhaodanping%26myaction=LookAfficheUI.do?id=841%26afficheType=1%26page=1%26type=receive%26pass=%26flag=portal&#39;,&#39;公告查阅&#39;,&#39;21203571&#39;,&#39;true&#39;)">网管中心-网管中心互联网运营室云计算计划于2019-06-11 00:00对交换机设备进行软件补丁加载操作</td><td style="width:150px;text-align: center">2019-07-01</td></tr><tr style="height: 20px;"><td style="width: 60px;text-align: left;color: #105771">[网络变动]</td><td style="width: 750px;cursor: pointer;" onclick="oopenUrl(&#39;010201&#39;,&#39;http://10.217.1.44:9084/wrm/Login.do?user=zhaodanping%26myaction=LookAfficheUI.do?id=182%26afficheType=1%26page=1%26type=receive%26pass=%26flag=portal&#39;,&#39;公告查阅&#39;,&#39;21203571&#39;,&#39;true&#39;)">网管中心-网管中心监控室核心网计划于2018-11-21 00:00对BSC设备进行其它操作</td><td style="width:150px;text-align: center">2019-06-14</td></tr><tr style="height: 20px;"><td style="width: 60px;text-align: left;color: #105771">[网络变动]</td><td style="width: 750px;cursor: pointer;" onclick="oopenUrl(&#39;010201&#39;,&#39;http://10.217.1.44:9084/wrm/Login.do?user=zhaodanping%26myaction=LookAfficheUI.do?id=821%26afficheType=1%26page=1%26type=receive%26pass=%26flag=portal&#39;,&#39;公告查阅&#39;,&#39;21203571&#39;,&#39;true&#39;)">网管中心-网管中心互联网运营室互联网计划于2019-06-11 00:00对CE12812交换机设备进行参数修改操作</td><td style="width:150px;text-align: center">2019-06-10</td></tr><tr style="height: 20px;"><td style="width: 60px;text-align: left;color: #105771">[网络变动]</td><td style="width: 750px;cursor: pointer;" onclick="oopenUrl(&#39;010201&#39;,&#39;http://10.217.1.44:9084/wrm/Login.do?user=zhaodanping%26myaction=LookAfficheUI.do?id=761%26afficheType=1%26page=1%26type=receive%26pass=%26flag=portal&#39;,&#39;公告查阅&#39;,&#39;21203571&#39;,&#39;true&#39;)">网管中心-网管中心互联网运营室承载网计划于2019-06-06 00:00对城域网设备进行参数修改操作</td><td style="width:150px;text-align: center">2019-06-05</td></tr><tr style="height: 20px;"><td style="width: 60px;text-align: left;color: #105771">[网络变动]</td><td style="width: 750px;cursor: pointer;" onclick="oopenUrl(&#39;010201&#39;,&#39;http://10.217.1.44:9084/wrm/Login.do?user=zhaodanping%26myaction=LookAfficheUI.do?id=741%26afficheType=1%26page=1%26type=receive%26pass=%26flag=portal&#39;,&#39;公告查阅&#39;,&#39;21203571&#39;,&#39;true&#39;)">网管中心-网管中心互联网运营室互联网计划于2019-05-31 00:00对内容网络中兴日志服务器设备进行其它（RDB漏洞加固）操作</td><td style="width:150px;text-align: center">2019-06-05</td></tr><tr style="height: 20px;"><td style="width: 60px;text-align: left;color: #105771">[网络变动]</td><td style="width: 750px;cursor: pointer;" onclick="oopenUrl(&#39;010201&#39;,&#39;http://10.217.1.44:9084/wrm/Login.do?user=zhaodanping%26myaction=LookAfficheUI.do?id=721%26afficheType=1%26page=1%26type=receive%26pass=%26flag=portal&#39;,&#39;公告查阅&#39;,&#39;21203571&#39;,&#39;true&#39;)">网管中心-网管中心互联网运营室承载网计划于2019-06-03 00:00对周口DC4的9槽位故障板卡更换、南阳NAY-BITS3-HW网元接入设备进行其它操作</td><td style="width:150px;text-align: center">2019-06-04</td></tr></tbody></table>
+        </marquee>
+</div>
+</div>
+<div id="chartmainbox" style="position:relative;float: left;width:760px;height: 330px;background:white;margin-top: 12px;margin-left: 12px;border: 1px solid #d4d4d4;" onmouseover="bmo()" onmouseout="bmu()">
+<div id="biaot" style="height: 40px;line-height: 40px;margin-left: 15px;font-weight:bold;font-size:16px;color:#115771;">故障处理时长分析表</div>
+	<div id="biaottt" class="pt-main" style="height: 10px; line-height: 10px; font-size: 10px; margin-left: 500px; display: none;">
+	<div style="height: 10px;width: 15px;background-color: #5ecce8;float: left;"></div>
+	<div style="float: left;margin-left: 10px;">在线用户总数</div>
+	<div style="height: 10px;width: 15px;background-color: #c3e4f2;float: left;margin-left: 20px;"></div>
+	<div style="float: left;margin-left: 10px;">地市账号总数</div></div>
+	<div id="aktuals_field" style="overflow:hidden; position:relative;width:740px;"> 
+		<table> 
+		<tbody><tr> 
+		<td> 
+	  	<div id="divCanvas1" class="pt-page" style="height: 250px; width: 740px; margin-left: 10px; margin-top: 0px; display: block; position: relative; left: 0px; top: 0px;">
+	    <canvas id="LChart_9918622825014" width="740" height="250" style="margin: 0px; cursor: auto;"><p>您的浏览器不支持HTML5！</p></canvas></div>
+	    </td>
+	    <td>
+	    <div id="divCanvas2" class="pt-page" style="height: 250px; width: 740px; margin-left: 10px; margin-top: 0px; display: block; position: relative; left: 0px; top: 0px;">
+	    
+	    <canvas id="LChart_00881274430794" width="740" height="250" style="margin: 0px; cursor: auto;"><p>您的浏览器不支持HTML5！</p></canvas></div>
+	    </td>
+	    <td>
+	    <div id="divCanvas3" class="pt-page" style="height: 250px; width: 740px; margin-left: 10px; margin-top: 0px; display: block; position: relative; left: 0px; top: 0px;">
+	    
+	    <canvas id="LChart_29781804671534" width="740" height="250" style="margin: 0px; cursor: auto;"><p>您的浏览器不支持HTML5！</p></canvas></div>
+	    </td>
+		</tr>
+	    </tbody></table> 
+    </div>
+    <div id="teteter" style="height: 12px;line-height:12px;width:98px;background-image:url(/workbench/img/body/qhbj.png);margin-left: 330px">
+	    <div id="xy1" onclick="swmytable(&#39;1&#39;,&#39;noauto&#39;)" style="margin-top: 2px; margin-left: 18px; float: left; height: 8px; width: 8px; background: rgb(255, 255, 255);"></div>
+	    <div id="xy2" onclick="swmytable(&#39;2&#39;,&#39;noauto&#39;)" style="margin-top: 2px; margin-left: 18px; float: left; height: 8px; width: 8px; background: rgb(3, 29, 140);"></div>
+	    <div id="xy3" onclick="swmytable(&#39;3&#39;,&#39;noauto&#39;)" style="margin-top: 2px; margin-left: 18px; float: left; height: 8px; width: 8px; background: rgb(255, 255, 255);"></div>
+
+    </div>
+</div>
+
+<div style="position:relative;float: left;width:260px;height: 468px;background:white;margin-top: 12px;margin-left: 12px;border: 1px solid #d4d4d4;">
+<div style="height: 38px;width: 240px;background-color: white;margin: 0 auto;border-bottom: 1px solid #c9e8f0;line-height: 38px">
+ <div style="float: left;font-size: 16px;font-weight:bold;color:#115771;">专家值班</div><div style="float: left;margin-left: 120px;font-size: 12px;cursor: pointer;" onclick="oopenUrl(&#39;110101&#39;,&#39;http://10.217.1.44:9085/edm/IntoEdm.wsm?userName=zhaodanping%26url=CurrentShift.do?option=contact&#39;,&#39;专家值班&#39;,&#39;21203603&#39;,&#39;true&#39;)">全部 &gt;&gt;</div>
+</div>
+ <div style="height: 60px;width:240px;margin: 0 auto;border-bottom: 1px solid #c9e8f0;">
+	 <div style="position:relative; float: left;margin-top:10px;margin-left: 6px ;height: 36px;width: 40px;background-image:url(/workbench/img/body/mp.png);font-size: 14px;line-height:14px;">
+			<div style="padding-top: 4px;padding-left: 4px;">值班班长</div>
+	 </div>
+ 
+		<div style="position:relative; float: left;width: 40px;height: 40px;margin-top:10px;margin-left: 14px;">
+		<img src="./files/imgioServlet(1)" id="pp1" alt="" style="height: 40px;width: 40px;border-radius:40px;cursor:pointer">
+		</div>
+	
+		<div style="position:relative; float: left;width: 80px;height: 40px;margin-top:10px;margin-left: 14px;">
+			 <div id="name1" style="height: 20px;width: 140px;position:relative; float: left;font-size: 12px;"></div>
+	
+			 <div id="sg1" style="height: 20px; width: 140px; position: relative; float: left; font-size: 12px; display: none;">
+			 <img src="./files/sj.png" alt="" style="height: 12px;width: 7px;border-radius:40px;cursor:pointer">&nbsp;<span id="phone1"></span>
+			 </div>
+	 	</div>
+ </div>
+ <div style="height: 60px;width:240px;margin: 0 auto;border-bottom: 1px solid #c9e8f0;">
+	 <div style="position:relative; float: left;margin-top:10px;margin-left: 6px ;height: 36px;width: 40px;background-image:url(/workbench/img/body/mp.png);font-size: 14px;line-height:14px;">
+			<div style="padding-top: 4px;padding-left: 4px;">值班助理</div>
+	 </div>
+ 
+		<div style="position:relative; float: left;width: 40px;height: 40px;margin-top:10px;margin-left: 14px;">
+		<img src="./files/imgioServlet(1)" id="pp2" alt="" style="height: 40px;width: 40px;border-radius:40px;cursor:pointer">
+		</div>
+	
+		<div style="position:relative; float: left;width: 80px;height: 40px;margin-top:10px;margin-left: 14px;">
+			 <div id="name2" style="height: 20px;width: 140px;position:relative; float: left;font-size: 12px;"></div>
+	
+			 <div id="sg2" style="height: 20px; width: 140px; position: relative; float: left; font-size: 12px; display: none;">
+			 <img src="./files/sj.png" alt="" style="height: 12px;width: 7px;border-radius:40px;cursor:pointer">&nbsp;<span id="phone2"></span>
+			 </div>
+	 	</div>
+ </div>
+ <div style="height: 60px;width:240px;margin: 0 auto;border-bottom: 1px solid #c9e8f0;">
+	 <div style="position:relative; float: left;margin-top:10px;margin-left: 6px ;height: 36px;width: 40px;background-image:url(/workbench/img/body/mp.png);font-size: 14px;line-height:28px;">
+			<div style="padding-top: 4px;padding-left: 4px;">监控</div>
+	 </div>
+ 
+		<div style="position:relative; float: left;width: 40px;height: 40px;margin-top:10px;margin-left: 14px;">
+		<img src="./files/imgioServlet(1)" id="pp3" alt="" style="height: 40px;width: 40px;border-radius:40px;cursor:pointer">
+		</div>
+	
+		<div style="position:relative; float: left;width: 80px;height: 40px;margin-top:10px;margin-left: 14px;">
+			 <div id="name3" style="height: 20px;width: 140px;position:relative; float: left;font-size: 12px;"></div>
+	
+			 <div id="sg3" style="height: 20px; width: 140px; position: relative; float: left; font-size: 12px; display: none;">
+			 <img src="./files/sj.png" alt="" style="height: 12px;width: 7px;border-radius:40px;cursor:pointer">&nbsp;<span id="phone3"></span>
+			 </div>
+	 	</div>
+ </div>
+ 
+ <div style="height: 60px;width:240px;margin: 0 auto;border-bottom: 1px solid #c9e8f0;">
+	 <div style="position:relative; float: left;margin-top:10px;margin-left: 6px ;height: 36px;width: 40px;background-image:url(/workbench/img/body/mp.png);font-size: 14px;line-height:28px;">
+			<div style="padding-top: 4px;padding-left: 4px;">传输</div>
+	 </div>
+ 
+		<div style="position:relative; float: left;width: 40px;height: 40px;margin-top:10px;margin-left: 14px;">
+		<img src="./files/imgioServlet(1)" id="pp5" alt="" style="height: 40px;width: 40px;border-radius:40px;cursor:pointer">
+		</div>
+	
+		<div style="position:relative; float: left;width: 80px;height: 40px;margin-top:10px;margin-left: 14px;">
+			 <div id="name5" style="height: 20px;width: 140px;position:relative; float: left;font-size: 12px;"></div>
+	
+			 <div id="sg5" style="height: 20px; width: 140px; position: relative; float: left; font-size: 12px; display: none;">
+			 <img src="./files/sj.png" alt="" style="height: 12px;width: 7px;border-radius:40px;cursor:pointer">&nbsp;<span id="phone5"></span>
+			 </div>
+	 	</div>
+ </div>
+ 
+ <div style="height: 60px;width:240px;margin: 0 auto;border-bottom: 1px solid #c9e8f0;">
+	 <div style="position:relative; float: left;margin-top:10px;margin-left: 6px ;height: 36px;width: 40px;background-image:url(/workbench/img/body/mp.png);font-size: 14px;line-height:28px;">
+			<div style="padding-top: 4px;padding-left: 4px;">交换</div>
+	 </div>
+ 
+		<div style="position:relative; float: left;width: 40px;height: 40px;margin-top:10px;margin-left: 14px;">
+		<img src="./files/imgioServlet(1)" id="pp6" alt="" style="height: 40px;width: 40px;border-radius:40px;cursor:pointer">
+		</div>
+	
+		<div style="position:relative; float: left;width: 80px;height: 40px;margin-top:10px;margin-left: 14px;">
+			 <div id="name6" style="height: 20px;width: 140px;position:relative; float: left;font-size: 12px;"></div>
+	
+			 <div id="sg6" style="height: 20px; width: 140px; position: relative; float: left; font-size: 12px; display: none;">
+			 <img src="./files/sj.png" alt="" style="height: 12px;width: 7px;border-radius:40px;cursor:pointer">&nbsp;<span id="phone6"></span>
+			 </div>
+	 	</div>
+ </div>
+ 
+ <div style="height: 60px;width:240px;margin: 0 auto;border-bottom: 1px solid #c9e8f0;">
+	 <div style="position:relative; float: left;margin-top:10px;margin-left: 6px ;height: 36px;width: 40px;background-image:url(/workbench/img/body/mp.png);font-size: 14px;line-height:28px;">
+			<div style="padding-top: 4px;padding-left: 4px;">数据</div>
+	 </div>
+ 
+		<div style="position:relative; float: left;width: 40px;height: 40px;margin-top:10px;margin-left: 14px;">
+		<img src="./files/imgioServlet(1)" id="pp8" alt="" style="height: 40px;width: 40px;border-radius:40px;cursor:pointer">
+		</div>
+	
+		<div style="position:relative; float: left;width: 80px;height: 40px;margin-top:10px;margin-left: 14px;">
+			 <div id="name8" style="height: 20px;width: 140px;position:relative; float: left;font-size: 12px;"></div>
+	
+			 <div id="sg8" style="height: 20px; width: 140px; position: relative; float: left; font-size: 12px; display: none;">
+			 <img src="./files/sj.png" alt="" style="height: 12px;width: 7px;border-radius:40px;cursor:pointer">&nbsp;<span id="phone8"></span>
+			 </div>
+	 	</div>
+ </div>
+ 
+ <div style="height: 60px;width:240px;margin: 0 auto;border-bottom: 1px solid #c9e8f0;">
+	 <div style="position:relative; float: left;margin-top:10px;margin-left: 6px ;height: 36px;width: 40px;background-image:url(/workbench/img/body/mp.png);font-size: 14px;line-height:28px;">
+			<div style="padding-top: 4px;padding-left: 4px;">网管</div>
+	 </div>
+ 
+		<div style="position:relative; float: left;width: 40px;height: 40px;margin-top:10px;margin-left: 14px;">
+		<img src="./files/imgioServlet(1)" id="pp7" alt="" style="height: 40px;width: 40px;border-radius:40px;cursor:pointer">
+		</div>
+	
+		<div style="position:relative; float: left;width: 80px;height: 40px;margin-top:10px;margin-left: 14px;">
+			 <div id="name7" style="height: 20px;width: 140px;position:relative; float: left;font-size: 12px;"></div>
+	
+			 <div id="sg7" style="height: 20px; width: 140px; position: relative; float: left; font-size: 12px; display: none;">
+			 <img src="./files/sj.png" alt="" style="height: 12px;width: 7px;border-radius:40px;cursor:pointer">&nbsp;<span id="phone7"></span>
+			 </div>
+	 	</div>
+ </div>
+</div>
+
+<div style="position:relative;float: left;width:760px;height: 352px;background:white;margin-top: -126px;margin-left: 12px;border: 1px solid #d4d4d4;">
+   <div style="height:48px;width: 740px;background-color: white;margin: 0 auto;border-bottom: 1px solid #c9e8f0;line-height: 48px">
+ <div style="float: left;font-size: 16px;font-weight:bold;color:#115771;">留言板</div><div style="float: left;margin-left: 620px;font-size: 12px;cursor: pointer;" onclick="oopenUrl(&#39;11&#39;,&#39;http://10.217.1.44:9084/wrm/Login.do?user=zhaodanping%26myaction=MessageBoardUI.do%26pass=%26flag=portal&#39;,&#39;网管留言板&#39;,&#39;21203663&#39;,&#39;true&#39;)">全部 &gt;&gt;</div>
+</div>
+<div id="mesdiv"><div class="mes1"><div class="mes2"><div class="mes3" onclick="oopenUrl(&#39;10&#39;,&#39;http://10.217.1.44:9084/wrm/Login.do?user=zhaodanping%26myaction=LookMessage.do?id=21209600%26num=1%26pass=%26flag=portal&#39;,&#39;网管留言板&#39;,&#39;21203663&#39;,&#39;true&#39;)">赵丹萍</div></div><div class="mes4"><div class="mes5" onclick="oopenUrl(&#39;10&#39;,&#39;http://10.217.1.44:9084/wrm/Login.do?user=zhaodanping%26myaction=LookMessage.do?id=21209600%26num=1%26pass=%26flag=portal&#39;,&#39;网管留言板&#39;,&#39;21203663&#39;,&#39;true&#39;)">测试</div><div class="mes6">2019-11-04</div></div></div><div class="mes1"><div class="mes2"><div class="mes3" onclick="oopenUrl(&#39;10&#39;,&#39;http://10.217.1.44:9084/wrm/Login.do?user=zhaodanping%26myaction=LookMessage.do?id=21204160%26num=1%26pass=%26flag=portal&#39;,&#39;网管留言板&#39;,&#39;21203663&#39;,&#39;true&#39;)">姬盈利</div></div><div class="mes4"><div class="mes5" onclick="oopenUrl(&#39;10&#39;,&#39;http://10.217.1.44:9084/wrm/Login.do?user=zhaodanping%26myaction=LookMessage.do?id=21204160%26num=1%26pass=%26flag=portal&#39;,&#39;网管留言板&#39;,&#39;21203663&#39;,&#39;true&#39;)">测试</div><div class="mes6">2018-09-30</div></div></div><div class="mes1"><div class="mes2"><div class="mes3" onclick="oopenUrl(&#39;10&#39;,&#39;http://10.217.1.44:9084/wrm/Login.do?user=zhaodanping%26myaction=LookMessage.do?id=21203700%26num=1%26pass=%26flag=portal&#39;,&#39;网管留言板&#39;,&#39;21203663&#39;,&#39;true&#39;)">赵丹萍</div></div><div class="mes4"><div class="mes5" onclick="oopenUrl(&#39;10&#39;,&#39;http://10.217.1.44:9084/wrm/Login.do?user=zhaodanping%26myaction=LookMessage.do?id=21203700%26num=1%26pass=%26flag=portal&#39;,&#39;网管留言板&#39;,&#39;21203663&#39;,&#39;true&#39;)">使用咨询</div><div class="mes6">2016-01-07</div></div></div><div class="mes1"><div class="mes2"><div class="mes3" onclick="oopenUrl(&#39;10&#39;,&#39;http://10.217.1.44:9084/wrm/Login.do?user=zhaodanping%26myaction=LookMessage.do?id=21203681%26num=1%26pass=%26flag=portal&#39;,&#39;网管留言板&#39;,&#39;21203663&#39;,&#39;true&#39;)">赵丹萍</div></div><div class="mes4"><div class="mes5" onclick="oopenUrl(&#39;10&#39;,&#39;http://10.217.1.44:9084/wrm/Login.do?user=zhaodanping%26myaction=LookMessage.do?id=21203681%26num=1%26pass=%26flag=portal&#39;,&#39;网管留言板&#39;,&#39;21203663&#39;,&#39;true&#39;)">新版测试</div><div class="mes6">2015-12-01</div></div></div></div>
+<div style="height: 62px;width:760px;margin: 0 auto;text-align: center;">
+<img src="./files/xjly.png" alt="" style="margin-top: 18px;cursor:pointer;" onclick="newly()">
+</div>
+</div>
+<div style="position:relative;float: left;width:260px;height: 214px;background:white;margin-top: 12px;margin-left: 12px;border: 1px solid #d4d4d4;">
+  <div style="height: 38px;width: 240px;background-color: white;margin: 0 auto;border-bottom: 1px solid #c9e8f0;line-height: 38px">
+ <div style="float: left;font-size: 16px;font-weight:bold;color:#115771;">短信定制</div>
+ <!-- <div style="float: left;margin-left: 120px;font-size: 12px;cursor: pointer;" onclick="oopen('09')">全部 >></div> -->
+</div>
+
+<div style="margin-left: 2px;margin-top: 4px;background-image:url(/workbench/img/body/kjout.png);position: relative;float: left;height: 80px;width:80px;">
+				<div style="text-align:center;margin-top: 12px;">
+                            <a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#"><img src="./files/gzgddx.png" border="0" style="width: 32px;height:32px;" alt="" onclick="oopenUrl(&#39;12&#39;,&#39;http://10.87.61.48/gpm/IntoGpm.gpm?userName=zhaodanping%26url=GoInitTthSheetSmsConfigUI.do&#39;,&#39;故障工单短信&#39;,&#39;21203657&#39;,&#39;true&#39;)"></a>
+                        </div>
+                        <div style="text-align: center;font-size: 12px;line-height:16px;margin-top: 0px;margin-left:16px;font-family:&#39;Microsoft Yahei&#39;, &#39;宋体&#39;;color: #000000;width: 50px;">
+                            <a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#" style="text-decoration: none;color: #000000;" onclick="oopenUrl(&#39;12&#39;,&#39;http://10.87.61.48/gpm/IntoGpm.gpm?userName=zhaodanping%26url=GoInitTthSheetSmsConfigUI.do&#39;,&#39;故障工单短信&#39;,&#39;21203657&#39;,&#39;true&#39;)">故障工单短信</a>
+                        </div>
+			</div>
+			<div style="margin-left: 2px;margin-top: 4px;background-image:url(/workbench/img/body/kjout.png);position: relative;float: left;height: 80px;width:80px;">
+				<div style="text-align:center;margin-top: 12px;">
+                            <a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#"><img src="./files/fgzdx.png" border="0" style="width: 32px;height: 32px;" alt="" onclick="oopenUrl(&#39;14&#39;,&#39;http://10.87.61.48/gpm/IntoGpm.gpm?userName=zhaodanping%26url=SmsConfigUI.do&#39;,&#39;非故障工单短信&#39;,&#39;21203658&#39;,&#39;true&#39;)"></a>
+                        </div>
+                         <div style="text-align: center;font-size: 12px;line-height:16px;margin-top: 0px;margin-left:16px;font-family:&#39;Microsoft Yahei&#39;, &#39;宋体&#39;;color: #000000;width: 50px;">
+                            <a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#" style="text-decoration: none;color: #000000;" onclick="oopenUrl(&#39;14&#39;,&#39;http://10.87.61.48/gpm/IntoGpm.gpm?userName=zhaodanping%26url=SmsConfigUI.do&#39;,&#39;非故障工单短信&#39;,&#39;21203658&#39;,&#39;true&#39;)">非故障工单短信</a>
+                        </div>
+			</div>
+			<div style="margin-left: 2px;margin-top: 4px;background-image:url(/workbench/img/body/kjout.png);position: relative;float: left;height: 80px;width:80px;">
+				<div style="text-align:center;margin-top: 12px;">
+                            <a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#"><img src="./files/ggdx.png" border="0" style="width: 32px;height: 32px;" alt="" onclick="oopenUrl(&#39;10&#39;,&#39;http://10.217.1.44:9084/wrm/Login.do?user=zhaodanping%26myaction=ToMsgManage.do?op=gotoMsgManage%26pass=%26flag=portal&#39;,&#39;公共服务短信&#39;,&#39;21203660&#39;,&#39;true&#39;)"></a>
+                        </div>
+                       <div style="text-align: center;font-size: 12px;line-height:16px;margin-top: 0px;margin-left:16px;font-family:&#39;Microsoft Yahei&#39;, &#39;宋体&#39;;color: #000000;width: 50px;">
+                            <a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#" style="text-decoration: none;color: #000000;" onclick="oopenUrl(&#39;10&#39;,&#39;http://10.217.1.44:9084/wrm/Login.do?user=zhaodanping%26myaction=ToMsgManage.do?op=gotoMsgManage%26pass=%26flag=portal&#39;,&#39;公共服务短信&#39;,&#39;21203660&#39;,&#39;true&#39;)">公共服务短信</a>
+                        </div>
+			</div>
+			<div style="margin-left: 2px;margin-top: 4px;background-image:url(/workbench/img/body/kjout.png);position: relative;float: left;height: 80px;width:80px;">
+			
+			<div style="text-align:center;margin-top: 12px;">
+                            <a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#"><img src="./files/xqdx.png" border="0" style="width: 32px;height:32px;" alt="" onclick="oopenUrl(&#39;14&#39;,&#39;http://10.217.1.33:9083/wsc/IntoWsc.wsm?userName=zhaodanping%26url=SmsConfigUI.do&#39;,&#39;需求管理短信&#39;,&#39;21203659&#39;,&#39;true&#39;)"></a>
+                        </div>
+                          <div style="text-align: center;font-size: 12px;line-height:16px;margin-top: 0px;margin-left:16px;font-family:&#39;Microsoft Yahei&#39;, &#39;宋体&#39;;color: #000000;width: 50px;">
+                            <a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#" style="text-decoration: none;color: #000000;" onclick="oopenUrl(&#39;14&#39;,&#39;http://10.217.1.33:9083/wsc/IntoWsc.wsm?userName=zhaodanping%26url=SmsConfigUI.do&#39;,&#39;需求管理短信&#39;,&#39;21203659&#39;,&#39;true&#39;)">需求管理短信</a>
+                        </div>
+			</div>
+			<div style="margin-left: 2px;margin-top: 4px;background-image:url(/workbench/img/body/kjout.png);position: relative;float: left;height: 80px;width:80px;">
+				<div style="text-align:center;margin-top: 12px;">
+                            <a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#"><img src="./files/zbdx.png" border="0" style="width: 32px;height: 32px;" alt="" onclick="oopen(&#39;15&#39;)"></a>
+                        </div>
+                          <div style="text-align: center;font-size: 12px;line-height:16px;margin-top: 0px;margin-left:16px;font-family:&#39;Microsoft Yahei&#39;, &#39;宋体&#39;;color: #000000;width: 50px;">
+                            <a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#" style="text-decoration: none;color: #000000;" onclick="oopen(&#39;15&#39;)">值班管理短信</a>
+                        </div>
+			</div>
+			<div style="margin-left: 2px;margin-top: 4px;background-image:url(/workbench/img/body/kjout.png);position: relative;float: left;height: 80px;width:80px;">
+				<div style="text-align:center;margin-top: 12px;">
+					<a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#"><img src="./files/fgzdx.png" border="0" style="width: 32px;height: 32px;" alt="" onclick="oopenUrl(&#39;700021&#39;,&#39;/ddmnew/sms/smsConfig/ddmNewSMSPage&#39;,&#39;机房管理短信&#39;,&#39;jfgldxdzpage9&#39;,&#39;false&#39;)"></a>
+				</div>
+				<div style="text-align: center;font-size: 12px;line-height:16px;margin-top: 0px;margin-left:16px;font-family:&#39;Microsoft Yahei&#39;, &#39;宋体&#39;;color: #000000;width: 50px;">
+					<a href="http://10.217.1.31:9082/workbench/jsp/frame/frame.jsp#" style="text-decoration: none;color: #000000;" onclick="oopenUrl(&#39;700021&#39;,&#39;/ddmnew/sms/smsConfig/ddmNewSMSPage&#39;,&#39;机房管理短信&#39;,&#39;jfgldxdzpage9&#39;,&#39;false&#39;)">机房管理短信</a>
+				</div>
+			</div>
+</div>
+
+<div style="height: 22px;float: left;width: 100%;position: relative;font-size: 12px;">
+<div id="zxrs" style="position:relative;float: left;margin-left: 30px;color: white;">在线人数:21</div>
+<div style="position:relative;float: left;margin-left: 30px">版权所有：中国移动通信集团河南有限公司</div>
+<div style="position:relative;float: left;margin-left: 30px">技术支持：郑州正信科技发展股份有限公司</div>
+<div style="position:relative;float: left;margin-left: 30px">服务热线：15890101008</div>
+<div style="position:relative;float: left;margin-left: 30px">建议系统分辨率设置为1280*1024或更高</div>
+<div style="position:relative;float: left;margin-left: 30px">建议使用IE8及以上版本</div>
+</div>
+
+</div>
+<script>
+	var outflag = 0;//控制当刷新页面的时候不弹出提示框
+	var goold = 0;
+	
+	window.onbeforeunload=function(){
+		var bro = $.browser;
+		if(outflag == 0 && goold == 0){//使用系统自带的系统消息框
+			if(bro.version == '8.0'){//规避IE 8.0下提示两次
+				goold = 1;
+			}
+			return "确实要离开当前页面？";
+		}
+	}
+	
+	function goFristPage(){
+		outflag = 1;
+		location.reload();
+	}
+</script>
+
+<script type="text/javascript">
+
+	var rootPath = "/workbench";
+	
+	var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
+	var listB=new Array();
+	var listBI=new Array();
+	var ggid;
+	var listgzcl=new Array();
+	var listgzls=new Array();
+	
+	
+	var lineChartData = {
+	    labels : ["郑州",  "开封", "洛阳",  "平顶山", "安阳", "鹤壁", "新乡", "焦作", "濮阳", "许昌", "漯河", "三门峡", "南阳", "商丘", "信阳", "周口", "驻马店", "济源"],
+	    datasets : [{fillColor : "#c3e4f2",strokeColor : "#c3e4f2",pointColor : "#c3e4f2",pointStrokeColor : "#fff",data :listB},
+	        {fillColor : "#5ecce8",strokeColor : "#5ecce8",pointColor : "#5ecce8",pointStrokeColor : "#fff",data : listBI}]};
+	
+	var barChartData = {
+		    labels : ["郑州",  "开封", "洛阳",  "平顶山", "安阳", "鹤壁", "新乡", "焦作", "濮阳", "许昌", "漯河", "三门峡", "南阳", "商丘", "信阳", "周口", "驻马店", "济源"],
+		    datasets : [{fillColor : "#f49150",strokeColor : "#f49150",highlightFill: "#f49150",highlightStroke: "rgba(199,220,239,1)",data :listgzcl}]};
+		    
+	var barChartData2 = {
+		    labels : ["郑州",  "开封", "洛阳",  "平顶山", "安阳", "鹤壁", "新乡", "焦作", "濮阳", "许昌", "漯河", "三门峡", "南阳", "商丘", "信阳", "周口", "驻马店", "济源"],
+		    datasets : [{fillColor : "#b6d750",strokeColor : "#b6d750",highlightFill: "#b6d750",highlightStroke: "rgba(199,220,239,1)",data : listgzls}]};
+		
+		
+	function adFloat(AdID){
+	    var x = Math.round(Math.random()*document.body.offsetWidth);
+	    var y = Math.round(Math.random()*document.body.offsetHeight);
+	    var xin = true,yin = true;
+	    var step = 1;
+	    var delay = 10;
+	    var obj = document.getElementById(AdID);
+	    obj.style.display="block";
+	    this.float = function(){
+	      var L = T = 0;
+	      var R = document.documentElement.clientWidth - obj.offsetWidth;
+	      var B = document.documentElement.clientHeight - obj.offsetHeight;
+	      obj.style.left = x + document.body.scrollLeft+"px";
+	      obj.style.top = y + document.body.scrollTop+"px";
+	      x = x + step * (xin ? 1 : -1);
+	      if (x < L) {
+	        xin = true;
+	        x = L;
+	      }
+	      if (x > R) {
+	        xin = false;
+	        x = R;
+	      }
+	      y = y + step * (yin ? 1 : -1);
+	      if (y < T) {
+	        yin = true;
+	        y = T;
+	      }
+	      if (y > B) {
+	        yin = false;
+	        y = B;
+	      }
+	    };
+	    this.start=function(){
+	        var THIS = this;
+	        var itl = setInterval(
+	            function(){
+	                THIS.float();
+	            }
+	            , delay);
+	        obj.onmouseover = function() {
+	          clearInterval(itl);
+	        };
+	        obj.onmouseout = function() {
+	          itl = setInterval(
+	            function(){
+	                THIS.float();
+	            }
+	            , delay);
+	        };
+	    };
+	}
+	
+	
+	var myjktsurl = "";//集客投诉地址
+	var zdybburl = "";//自定义报表地址
+	var yyzsUrl = "";//运维知识地址
+	var zbgldxUrl = "";//值班管理短信定制
+	var csybUrl = "";//传输月报
+	var jtsbztUrl = "";//家客投诉上报集团专题保障
+	var ywktUrl = "";//业务开通
+	var itresdiv = "";//IT资源申请
+	var itresnum = 0;
+	var mydbnum = 0;
+	var newxqnum = 0;
+	var newxqstr = "";
+	$(function ($) {
+		$("button")
+	      .button()
+	      .click(function( event ) {
+	    });
+		$.ajax({
+	     	async:false,
+	     	cache:false,
+	     	type: 'POST',
+	        dataType:'json',
+	     	url: "/workbench/cc/logininit",//请求的action路径
+	     	data:{orderby:now_orderby},
+	     	error: function () {//请求失败处理函数
+	     	
+	     	},
+		    success:function(data){ //请求成功后处理函数。
+		    	
+		    	var fristwmmslist = data.fristwmmslist;//一级菜单数据
+		    	var secwmmlist = data.secwmmlist;//二级菜单数据
+		    	var thrwmmlist = data.thrwmmlist;//三级菜单数据
+		    	
+		    	$("#nav-ul").html('');
+		    	var lihtml = '<li id="1"><a href="#" onclick="goFristPage()"><span class="span_menu" >首页</span></a></li>';
+		    	for(var fil=0;fil<fristwmmslist.length;fil++){//遍历主页一级菜单
+			    	var frwmmid = fristwmmslist[fil].id;
+			    	var frwmmname = fristwmmslist[fil].name;//主页一级菜单
+			    	lihtml += '<li><a href="#"><span class="span_menu2">' + frwmmname + '</span></a><ul>';
+			    	for(var secl=0;secl<secwmmlist.length;secl++){
+			    		var secid = secwmmlist[secl].id;
+			    		var secparid = secwmmlist[secl].parentid;
+			    		var secname = secwmmlist[secl].name;
+			    		var secnum = secwmmlist[secl].cnum;
+			    		if(frwmmid == secparid){//主页二级菜单
+			    			var _flags = 0;
+			    		    if(frwmmname == "系统管理"){
+			    		    	_flags = 1;
+			    		    }
+			    			lihtml += '<li id="seliid_' + secid + '" onmouseover="lionmouseover(\'seliid_' + secid + '\',\'' + _flags + '\')" onmouseout="lionmouseout(\'seliid_' + secid + '\')">';
+			    			if(secnum == 0){
+					    		var secmenutype = secwmmlist[secl].menutype;//二级菜单的菜单类型(原)
+						    	lihtml += '<a href="#" onclick="oopen(\'' + secmenutype + '\')">&nbsp;&nbsp;&nbsp;&nbsp;' + secname + '</a></li>';
+			    			}else{
+			    				lihtml += '<a href="#">&nbsp;&nbsp;&nbsp;&nbsp;' + secname + '</a>';
+			    				lihtml += '<span class="spancc"><img src="' + rootPath + '/img/body/whitethird.png"></img></span>';
+			    				if(frwmmname == "系统管理"){//如果一级菜单是系统管理
+				    				lihtml += '<ul style="left: -191px;">';
+			    				}else{
+			    					lihtml += '<ul>';
+			    				}
+			    				for(var thrl=0;thrl<thrwmmlist.length;thrl++){
+			    					var thrid = thrwmmlist[thrl].id;
+			    					var thrparid = thrwmmlist[thrl].parentid;
+			    					var thrname = thrwmmlist[thrl].name;
+			    					if(secid == thrparid){
+			    						var thrmenutype = thrwmmlist[thrl].menutype;//三级菜单的菜单类型(原)
+			    						var uiliwidth = 141;
+			    						if(secname == "工单监控"){
+			    							uiliwidth = 190;
+			    						}
+			    						lihtml += '<li id="seliid_' + thrid + '" style="width:' + uiliwidth + 'px" onmouseover="lionmouseover(\'seliid_' + thrid + '\',\'0\')" onmouseout="lionmouseout(\'seliid_' + thrid + '\')">';
+			    						lihtml += '<a href="#" onclick="oopen(\'' + thrmenutype + '\')">&nbsp;&nbsp;&nbsp;&nbsp;' + thrname + '</a></li>';
+			    					}
+			    				}
+			    				lihtml += '</ul></li>';
+			    			}
+			    		}
+			    	}
+			    	lihtml += '</ul></li>';
+		    	}
+		    	lihtml += '<li id="2"><a href="#" onclick="oopenUrl(\'8\',\'../about\',\'关于\',\'demo_page8\',\'false\')"><span class="span_menu3" >关于</span></a></li>';
+		    	$("#nav-ul").html(lihtml);
+		    	
+		    	myjktsurl = data.jktszzUrl;//集客投诉地址
+		    	zdybburl = data.zdybbUrl;//自定义报表
+		    	csybUrl = data.csybUrl;//传输月报
+		    	jtsbztUrl = data.jtsbzt;//家客投诉上报集团专题保障
+		    	ywktUrl = data.ywktUrl;//业务开通
+		    	oldwcsURL = data.oldwcsURL;
+		    	oldsystemurl = data.oldgrgztUrl;
+		    	yyzsUrl = data.yyzsUrl;//运维知识地址
+		    	zbgldxUrl = data.zbgldxUrl;//值班管理短信定制
+		    	itresdiv = data.itresdiv;//IT资源申请
+		    	itresnum = data.itresnum;//IT资源数量
+		    	if(data.ggflag=='0'){
+		    		document.getElementById("myimg").style.display="inline";
+		    		ggid = data.ggid;
+		    		var ad=new adFloat('myimg');
+			    	ad.start();
+		    	}
+		    	
+		    	$("#pp1").attr("src","/workbench/imgioServlet?type=0&userid="+data.userid1);
+		    	$("#pp2").attr("src","/workbench/imgioServlet?type=0&userid="+data.userid2);
+		    	$("#pp3").attr("src","/workbench/imgioServlet?type=0&userid="+data.userid3);
+		    	$("#pp5").attr("src","/workbench/imgioServlet?type=0&userid="+data.userid5);
+		    	$("#pp6").attr("src","/workbench/imgioServlet?type=0&userid="+data.userid6);
+		    	$("#pp7").attr("src","/workbench/imgioServlet?type=0&userid="+data.userid7);
+		    	$("#pp8").attr("src","/workbench/imgioServlet?type=0&userid="+data.userid8);
+		    	$("#name1").html(data.name1);
+	
+			    if(!data.name1){
+			    	$("#sg1").css('display','none');
+			    }
+		    	$("#phone1").html(data.phone1);
+		    	$("#name2").html(data.name2);
+		    	 if(!data.name2){
+				    	$("#sg2").css('display','none');
+				    }
+		    	$("#phone2").html(data.phone2);
+		    	$("#name3").html(data.name3);
+		    	 if(!data.name3){
+				    	$("#sg3").css('display','none');
+				    }
+		    	$("#phone3").html(data.phone3);
+		    	$("#name5").html(data.name5);
+		    	 if(!data.name5){
+				    	$("#sg5").css('display','none');
+				    }
+		    	$("#phone5").html(data.phone5);
+		    	$("#name6").html(data.name6);
+		    	 if(!data.name6){
+				    	$("#sg6").css('display','none');
+				    }
+		    	$("#phone6").html(data.phone6);
+		    	$("#name7").html(data.name7);
+		    	 if(!data.name7){
+				    	$("#sg7").css('display','none');
+				    }
+		    	$("#phone7").html(data.phone7);
+		    	
+		    	$("#name8").html(data.name8);
+		    	 if(!data.name8){
+				    	$("#sg8").css('display','none');
+				 }
+		    	$("#phone8").html(data.phone8);
+		    	$("#mesdiv").html(data.mstr);
+		    	$("#ywdb").html(data.dbstr);
+		    	$("#dbnum").html(data.dbnum);
+		    	mydbnum = data.mydbnums;
+		    	$("#zbzydb").html(data.zbstr);
+		    	$("#zbnum").html(data.zbnum);
+		    	newxqnum = data.newxqnum;
+		    	newxqstr = data.newxqstr;
+		    	//$("#xqnum").html(data.newxqnum);//新版需求管理工单数量
+		    	//$("#newxqdb").html(data.newxqstr);//新版需求管理工单
+		    	//需求待办
+		    	loadxqdbInfo();
+		    	
+		    	$("#kjdiv").html(data.kjdiv);
+		    	
+		    	
+		    	$("#namespan").html(data.name);
+		    	$("#loginTime").html(data.logintime);
+		    	$("#strTable").html(data.strTable);
+		    	$("#zxrs").html("在线人数:"+data.zxrs);
+		    	
+		    	if(data.listB){
+		    		for(var i = 0, l = data.listB.length; i < l; i++) {
+		    			listB[i] = data.listB[i].num;
+					}
+		    	}
+		    	
+		    	if(data.listgzcl){
+		    		listgzcl = data.listgzcl;
+		    	}
+		    	
+		    	if(data.listgzls){
+		    		listgzls = data.listgzls;
+		    	}
+		    	
+		    	if(data.listBI){
+		    		for(var i = 0, l = data.listBI.length; i < l; i++) {
+		    			listBI[i] = data.listBI[i];
+					}
+		    	}
+		    	
+		    	if(data.listU){
+		    		var ywlc = document.getElementById ("ywlc");
+		    		for(var i = 0, l = data.listU.length; i < l; i++) {
+		    			   var opt = document.createElement ("option");
+			    		    opt.value = data.listU[i].id;
+			    		    opt.innerText = data.listU[i].shortname;
+			    		    if(data.listU[i].flag == '1'){
+			    		    	opt.selected = true;
+			    		    }
+			    		    ywlc.appendChild (opt);
+					}
+		    	}
+		    	
+		    	if(data.listK){
+		    		var ggfw = document.getElementById ("ggfw");
+		    		for(var i = 0, l = data.listK.length; i < l; i++) {
+		    			   var opt = document.createElement ("option");
+			    		    opt.value = data.listK[i].id;
+			    		    opt.innerText = data.listK[i].shortname;
+			    		    if(data.listK[i].flag == '1'){
+			    		    	opt.selected = true;
+			    		    }
+			    		  
+			    		    ggfw.appendChild (opt);
+					}
+		    	}
+		    	
+		    	if(data.listK){
+		    		var zbzy = document.getElementById ("zbzy");
+		    		for(var i = 0, l = data.listK.length; i < l; i++) {
+		    			   var opt = document.createElement ("option");
+			    		   opt.value = data.listK[i].id;
+			    		   opt.innerText = data.listK[i].shortname;
+			    		   if(data.listK[i].flag == '1'){
+			    		    	opt.selected = true;
+			    		   }
+			    		   zbzy.appendChild (opt);
+					}
+		    	}
+		    }
+	     });
+		
+		
+		function loadxqdbInfo(){
+			$("#xqnum").html('');
+			$("#xqnum").css("width","25px");
+			$("#xqnum").css("height","25px");
+			$("#xqnum").css("background-image","url(/workbench/images/jzz.gif)");
+			
+			$.ajax({
+		     	async:true,
+		     	cache:false,
+		     	type: 'POST',
+		        dataType:'json',
+		     	url: "/workbench/cc/xqdbContent",//请求的action路径
+		     	data:{orderby:now_orderby},
+		     	error: function () {//请求失败处理函数
+		     		
+		     	},
+			    success:function(data){ //请求成功后处理函数。
+			    	newxqstr = newxqstr + (data.xqstr).replace("itresdivitresdiv",itresdiv);
+			    	var sfnum = Number(newxqnum) + Number(data.xqns) + Number(itresnum);
+			 		$("#xqdb").html(newxqstr);
+			     	$("#xqnum").html(sfnum);
+					$("#xqnum").css("width","36px");
+					$("#xqnum").css("height","48px");
+					$("#xqnum").css("text-align","center");
+					$("#xqnum").css("background-image","url(/workbench/img/body/zdb.png)");
+			    }
+		     });
+		}
+	
+		
+		//弹出登录
+		$("#example").hover(function () {
+			
+		}, function () {
+			
+		}).on('click', function () {
+			var diag = new Dialog();
+			diag.Width = 540;
+			diag.Height = 360;
+			diag.Title = "上传头像";
+			diag.URL = "newHead.jsp";
+			diag.CancelEvent=function(){document.getElementById("mainface").src = "/workbench/imgioServlet?type=0&rnd="+Math.random();diag.close();};
+			diag.show();
+		});
+	});
+
+	function changeDB(id){
+		var sbtitle=document.getElementById(id);
+		if(sbtitle){
+		   if(sbtitle.style.display=='block'){
+		   sbtitle.style.display='none';
+		   }else{
+		   sbtitle.style.display='block';
+		   }
+		}
+		
+		if(id!='ywdb'){
+			document.getElementById('ywdb').style.display='none';
+		}
+		if(id!='zbzydb'){
+			document.getElementById('zbzydb').style.display='none';
+		}
+		if(id!='xqdb'){
+			document.getElementById('xqdb').style.display='none';
+		}
+	}
+
+	var now_orderby = 0;
+	var win=null; 
+	var ii=1;
+	function changeJob(ttype,newjob){
+	
+		if(win&&win.open&&!win.closed){ 
+	         win.opener=null; 
+	         win.close();
+	    }
+		
+		$.ajax({
+	     	async:false,
+	     	cache:false,
+	     	type: 'POST',
+	        dataType:'json',
+	     	url: "/workbench/cc/changeJob",//请求的action路径
+	     	data:{newjob:newjob,type:ttype},
+	     	error: function () {//请求失败处理函数
+	     	
+	     	},
+		    success:function(data){ //请求成功后处理函数。
+		    	outflag = 1;
+		    	location.reload();
+		    	
+		    }
+	     });
+		
+	}
+
+	var time1;
+	function navHover(){
+	    if(!document.getElementById) return ;
+	    var nav_ul=document.getElementById('nav-ul');
+	    for(var i=0; i<nav_ul.childNodes.length;i++){
+	        var node=nav_ul.childNodes[i];
+	        if(node.nodeName=='LI'&&node.id=='1'){
+	                node.onmouseover=function(){
+	                	var childs=this.getElementsByTagName('span')[0];
+	        		    childs.className="span_menu_over";
+	                	this.className="hover";                                                
+	                }
+	                node.onmouseout=function(){
+	                	var childs=this.getElementsByTagName('span')[0];
+	        		    childs.className="span_menu";
+	                    this.className='';
+	                }
+	        }else if(node.nodeName=='LI'&&node.id=='2'){
+	        	 node.onmouseover=function(){
+	             	var childs=this.getElementsByTagName('span')[0];
+	     		    childs.className="span_menu3_over";
+	             	this.className="hover";                                                
+	             }
+	             node.onmouseout=function(){
+	             	var childs=this.getElementsByTagName('span')[0];
+	     		    childs.className="span_menu3";
+	                     this.className='';
+	             }
+	        }else{
+	        	 node.onmouseover=function(){
+	              	var childs=this.getElementsByTagName('span')[0];
+	      		    childs.className="span_menu2_over";
+	              	this.className="hover";                                                
+	              }
+	              node.onmouseout=function(){
+	              	var childs=this.getElementsByTagName('span')[0];
+	      		    childs.className="span_menu2";
+	                this.className='';
+	              }
+	        }
+	    };
+		cc1();//初始化图表
+		cc2();//
+		cc3();//
+		time1=setInterval("circulateExecute();",10*1000);
+	}
+
+	//鼠标移入展示下级菜单
+	function lionmouseover(seliid,flags){
+		$("#"+seliid).css('background','#59c4b9');
+		var ulnum = $("#"+seliid).children("ul").length;
+		if(ulnum == 1){
+			$("#" + seliid + " ul").css("display","block")
+			if(seliid == "seliid_1000805"){//工单监控
+				$("#" + seliid + " ul").css("left","-191px");
+			}else{//
+				if(flags == "1"){//系统管理里面除了工单监控的菜单
+					$("#" + seliid + " ul").css("left","-141px");
+				}else{//非系统管理里面的菜单
+					$("#" + seliid + " ul").css("left","141px");
+				}
+			}
+		}
+	}
+	//鼠标移出隐藏下级菜单
+	function lionmouseout(seliid){
+		$("#"+seliid).css('background','#51b46e');
+		var ulnum = $("#"+seliid).children("ul").length;
+		if(ulnum == 1){
+			$("#" + seliid + " ul").css("display","none");
+		}
+	}
+	
+	function bmo(){
+		clearInterval(time1);
+	}
+	
+	function bmu(){
+		time1=setInterval("circulateExecute();",5*1000);
+	}
+	
+	function circulateExecute(){
+		ii=ii+1;
+		if(ii>3){
+			ii=1;
+		}
+		swmytable(ii,"auto");//自动翻滚
+	}
+
+	function swmytable(inx,aflag){
+		if(((Number(inx) == Number(ii)) && aflag == "auto") || (((Number(inx) != Number(ii)) && aflag == "noauto"))){//auto:自动翻滚		noauto:手动翻滚
+			ii = inx;
+			$("#xy1").css("background","#FFFFFF");
+			$("#xy2").css("background","#FFFFFF");
+			$("#xy3").css("background","#FFFFFF");
+			if(ii==1){
+				$("#xy1").css("background","#031D8C");
+				jQuery('#aktuals_field').scrollTo('#divCanvas1', 1100, {easing:'easeInOutExpo', axis:'x' });
+				$("#biaot").html("系统用户在线分析表");
+				$("#biaottt").css("display","block");
+			}else if(ii==2){
+				$("#xy2").css("background","#031D8C");
+				jQuery('#aktuals_field').scrollTo('#divCanvas2', 1100, {easing:'easeInOutExpo', axis:'x' });
+				$("#biaot").html("故障处理时长分析表");
+				$("#biaottt").css("display","none");
+			}else if(ii==3){
+				$("#xy3").css("background","#031D8C");
+				jQuery('#aktuals_field').scrollTo('#divCanvas3', 1100, {easing:'easeInOutExpo', axis:'x' });
+				$("#biaot").html("故障历时分析图表");
+				$("#biaottt").css("display","none");
+			}
+		}
+	}
+
+	function cc1(){
+		 var labels =["郑州",  "开封", "洛阳",  "平顶山", "安阳", "鹤壁", "新乡", "焦作", "濮阳", "许昌", "漯河", "三门峡", "南阳", "商丘", "信阳", "周口", "驻马店", "济源"];
+	    
+	     var data = [
+	         { text: '地市账号总数', value: listB, color: '#213B7A' },
+	         { text: '在线用户总数', value: listBI, color: '#000000' }
+	     ];
+	
+	     var options = {
+	         valueType: 'n', animationSteps: 30,
+	         background:{bordercolor:'#ffffff'},
+	         node: { lineColor: "#213B7A", linewidth: 1 },
+	         scaleShowLabels : true,
+	         // 字体
+	         scaleFontFamily : "'Arial'",
+	         // 文字大小
+	         scaleFontSize : 8,
+	         valueAxis: { linewidth: 1, verticalcomputeP: true, heap: true ,fontsize: 12},
+	         labelAxis: { labels: labels },
+	         legend: { elementtype: "l" },
+	         scale: { linewidth: 1, backcolors: ['#FFFFFF', '#EEEEEE'] },
+	         tip: { merge: true },
+	         legend: { show:false}
+	     };
+	
+	     window.lchart = new LChart.Line('divCanvas1', 'CN');
+	     lchart.SetSkin('BlackAndWhite');
+	     lchart.SetOptions(options);
+	     lchart.Draw(data);
+	}
+
+	function cc2(){
+        var options = {
+            valueType: 'n', animationSteps: 60,
+            bar: { useSameColor: true },
+            histogram: { useSameColor: true },
+            valueAxis: { linewidth: 1,fontsize: 12 },
+            title:{show:false},
+            background:{bordercolor:'#ffffff'},
+            scale: { linewidth: 1, backcolors: ['rgba(175,199,238,0.2)', 'rgba(245,222,179,0.2)'] },
+            cross: { linewidth: 3, linecolor: '#ffffff' },
+            shadow: { show: false, color: 'rgba(10,10,10,1)', blur: 3, offsetX: -3, offsetY: 3 }
+        };
+
+        window.lchart = new LChart.Histogram('divCanvas2', 'CN');
+        lchart.SetSkin('BlackAndWhite');
+        lchart.SetOptions(options);
+        lchart.Draw(listgzcl);
+	}
+
+	function cc3(){
+	    var options = {
+	        valueType: 'n', animationSteps: 60,
+	        bar: { useSameColor: true },
+	        histogram: { useSameColor: true },
+	        valueAxis: { linewidth: 1,fontsize: 12 },
+	        title:{show:false},
+	        background:{bordercolor:'#ffffff'},
+	        scale: { linewidth: 1, backcolors: ['rgba(175,199,238,0.2)', 'rgba(245,222,179,0.2)'] },
+	        cross: { linewidth: 3, linecolor: '#ffffff' },
+	        shadow: { show: false, color: 'rgba(10,10,10,1)', blur: 3, offsetX: -3, offsetY: 3 }
+	    };
+	
+	    window.lchart = new LChart.Histogram('divCanvas3', 'CN');
+	    lchart.SetSkin('BlackAndWhite');
+	    lchart.SetOptions(options);
+	    lchart.Draw(listgzls);
+	
+	}
+
+	function addLoadEvent(func){
+		var oldonload=window.onload;
+		if(typeof window.onload!='function'){
+			window.onload=func;
+		}else{
+		    window.onload= function(){
+		    	oldonload();
+		        func();
+		    }        
+		}
+	}
+	
+	addLoadEvent(navHover);
+	
+	var myflag = "0";//
+	var mytype = "";
+	function oopen(type){
+		
+		if(type == '0808'){
+			oopenUrl('0808','../sysnotice?type=0808','系统公告','demo_page9','false')
+		}else if(type == '0809'){//网管云盘
+			oopenUrl('0809','../sysFile?type=0809','网管云盘','demo_page10','false')
+		}else if(type == '0807'){//集客投诉追踪
+			win=window.open (myjktsurl, 'win124');
+			win.focus();
+		}else if(type == '0810'){//自定义报表
+			win=window.open (zdybburl, 'win126');
+			win.focus();
+		}else if(type == '060401'){//打开已发布的自定义报表页面
+			oopenUrl(type,'http://10.217.1.11:9082/eoms_rp/pages/report-list.jsp','自定义报表','demo_page060401','true');
+		}else if(type == '060501'){//传输月报
+			win=window.open(csybUrl, 'wincsybUrl');
+			win.focus();
+		}else if(type == '0813'){//家客投诉上报集团专题保障
+			win=window.open(jtsbztUrl, 'winjtsbztUrl');
+			win.focus();
+		}else if(type == '0702'){//运维知识
+			win=window.open (yyzsUrl, 'win125');
+			win.focus();
+		}else if(type == '7'){//快捷通道
+			oopenUrl(type,'../kjdispose?type=1','运维管理','demo_page7','false');
+		}else if(type == '0301'){
+			oopenUrl(type,'http://10.97.87.200/wsc/IntoWsc.wsm?userName=zhaodanping','指标统计','demo_page0301','true');
+			//oopenUrl(type,'/wsc/Menu.do?type=newFrame_min','指标统计','demo_page0301','false');
+		}else if(type == '15'){//值班管理短信定制
+			oopenUrl(type,zbgldxUrl,'值班管理短信定制','demo_page10','true');
+		}else{
+			//屏蔽公共服务
+			if(type == 'AA010201' || type == 'AA010202' || type == 'AA0701' || type == 'AA080201'){//公共服务
+				mytype = type;
+				myflag = "0";
+				oldtips();
+			}else{
+				win=window.open('../secframe.jsp?type='+type, 'win123');
+				win.focus();
+			}
+		}
+		
+		//记录菜单点击情况
+		$.ajax({
+	     	async:false,
+	     	cache:false,
+	     	type: 'POST',
+            dataType:'json',
+	     	url: "/workbench/click/mainPageClick",//请求的action路径
+	     	data:{funid:type},
+	     	error: function () {//请求失败处理函数
+	     		
+	     	},
+		    success:function(data){ //请求成功后处理函数。
+		    	
+		    }
+		});
+	}
+	
+	
+	function oopenUrl(type,url,urlName,urlCode,external){
+		win=window.open ('../secframe.jsp?type='+type+'&url='+url+'&urlName='+urlName+'&urlCode='+urlCode+'&external='+external, 'win123') ;
+		win.focus();
+	}
+	
+	function newly(){
+		var diag = new Dialog();
+		diag.Width = 540;
+		diag.Height = 300;
+		diag.Title = "新建留言信息";
+		diag.URL = "newMes.jsp";
+		diag.CancelEvent=function(){
+			outflag = 1;
+			location.reload();
+		};
+		diag.show();
+	}
+	
+	
+	var oldsystemurl = "";
+	var oldwcsURL = "";
+	
+	//切换到旧版
+	function switchOldSystem(){
+		outflag = 0;
+		window.location.href = oldsystemurl;
+	}
+	
+	//打开业务开通
+	function openBspsSystem(){
+		outflag = 1;
+		win=window.open (ywktUrl, 'bspssystem');
+	}
+	
+	function downloadapk(){
+		win=window.open ('http://211.138.20.220:38092/ultramobile/app/apk/UltraME-client.apk', 'downloadapk');
+	}
+   
+   	//退出系统
+    function layout(){
+    	$( "#dialog-confirm" ).dialog({
+	      resizable: false,
+	      width:320,
+	      height:180,
+	      modal: true
+	    });
+    }
+   	//旧版提示
+    function oldtips(){
+    	$( "#dialog-oldtips" ).dialog({
+	      resizable: false,
+	      width:320,
+	      height:180,
+	      modal: true
+	    });
+    }
+    
+    //退出系统
+    function mylayout(){
+    	$.ajax({
+    	     	async:false,
+    	     	cache:false,
+    	     	type: 'POST',
+                dataType:'json',
+    	     	url: "/workbench/cc",//请求的action路径
+    	     	data:{username:'123',password:'223'},
+    	     	error: function () {//请求失败处理函数
+    	     		
+    	     	},
+    		    success:function(data){ //请求成功后处理函数。
+    		    	outflag = 1;
+    		    	var form = $('#logout');
+    			    form.submit();
+    		    }
+    	});
+    }
+    
+    function myimgover(){
+    	var v = document.getElementById('myimg').offsetTop+document.body.scrollTop;
+    	var l = document.getElementById('myimg').offsetLeft;
+    	var d=document.getElementById('myimg');
+    	d.style.animation="mymove2 45s infinite";
+    	d.style.top=v+'px';
+    	d.style.left=l+'px';
+    }
+    
+    //关闭浮窗
+    function myimgout(){
+    	document.getElementById("myimg").style.display="none";
+		var datas = "mysysid=" + ggid;
+		$.ajax({
+			type: 'POST',
+			dataType:"json",
+			data:datas,
+			url: "/workbench/sysnotice/querySysNoticeById",//请求的action路径
+			async:false,
+			cache:false,
+			error: function () {//请求失败处理函数
+				alert('请求失败');
+			},
+			success:function(data){ //请求成功后处理函数。
+				
+			}
+		});
+    }
+    
+    //打开浮窗内容
+    function openMyimg(){
+    	document.getElementById("myimg").style.display="none";
+		var datas = "sysid=" + ggid + "&mysysid=" + ggid;
+		$.ajax({
+			type: 'POST',
+			dataType:"json",
+			data:datas,
+			url: "/workbench/sysnotice/querySysNoticeById",//请求的action路径
+			async:false,
+			cache:false,
+			error: function () {//请求失败处理函数
+				alert('请求失败');
+			},
+			success:function(data){ //请求成功后处理函数。
+				var sysww = my_ww-500;
+				var syswh = my_wh-160;
+				$("#syswinnotice").css("width",sysww);
+				$("#sysclosebut").css("margin-left",sysww/2 - 34);
+				$( "#dialog-sysnotice" ).dialog({
+				  title:"系统公告：" + data.title,
+			      resizable: false,
+			      width:sysww,
+			      height:syswh,
+			      modal: true
+			    });
+			    
+			    $("#mytitles").html(data.title);
+				$("#myputdate").html("发布日期：" + data.putdate);
+				$("#mybodys").val(data.bodys);
+			}
+		});
+    }
+    
+    var showflag = 0;//默认不显示
+    //鼠标划入显示
+    function onmouseoverShow(){
+    	if(showflag == 0){
+	    	showflag = 1;
+	    	$("#dododo").show();
+    	}
+    }
+    //鼠标划出隐藏
+    function onmouseoverHide(){
+    	if(showflag == 1){
+    		showflag = 0;
+	    	$("#dododo").hide();
+    	}
+    }
+    
+    //【退出】窗口【确定】退出系统
+    function logok(){
+    	mylayout();
+    }
+    
+    //【退出】窗口【取消】关闭对话窗口
+    function logcal(){
+    	$( "#dialog-confirm" ).dialog( "close" );
+    }
+    
+    //未开发完成提示关闭窗口后打开二级页面
+    function tipswincal(){
+    	$( "#dialog-oldtips" ).dialog( "close" );
+    	if(myflag == "0"){
+    		win=window.open ('../secframe.jsp?type='+mytype, 'win123');
+    	}else{
+	    	win=window.open (oldwcsURL,'oldwsc');
+    	}
+    }
+    
+    //关闭系统公告展示窗口
+    function syswincal(){
+    	$( "#dialog-sysnotice" ).dialog( "close" );
+    }
+    
+	var my_wh = 0;
+	var my_ww = 0;
+	function windlayout(){
+		my_wh = $(window).height();
+		my_ww = $(window).width();
+	}
+	windlayout();
+	$(window).resize(function(){windlayout()});
+</script>
+
+</body></html>

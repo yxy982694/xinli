@@ -79,7 +79,7 @@
               for (var i=0;i<arr.length;i++) {
                 obj = {
                   id: arr[i].id,
-                  location: arr[i].location?arr[i].location: 'http://www.baidu.com/',
+                  location: arr[i].location?arr[i].location: '/static/jsp/secframe.html?type=020101',///static/jsp/secframe.html?type=020101
                   label: arr[i].name
                 }
                 this.centerList.push(obj)

@@ -1,7 +1,8 @@
 <template>
   <div class='children-tab'>
     <p class="children-tab-p" v-for="(item,index) in centerList" :key="item.id+index" @click="addTab(item.label,item.location,item.id)">
-     <img src="../../../common/image/contentImg22.png" class="children-tab-image" />
+     <!-- <img src="../../../common/image/contentImg22.png" class="children-tab-image" /> -->
+     <i class="iconfont icon-daichuli"></i>
      <span class="children-tab-text">{{item.label}}</span>
     </p>
   </div>
@@ -103,8 +104,8 @@
     box-sizing: border-box
     .children-tab-p
       width: 12%
-      min-width: 100px
-      height: 80px
+      min-width: 120px
+      height: 60px
       text-align: center
       border: 1px solid $color-lightgray
       // box-shadow: 0 0 1px 1px $color-lightgray
@@ -115,21 +116,29 @@
       margin-left: 2%
       margin-top: 15px
       position: relative
-  .children-tab-image
-    display: block
-    position:absolute
-    left: 0
-    top: 0
-    width: 100%
-    height: 50%
-    // width: 100px
-    // height: 30px
-    border-radius: 5px 5px 0 0
+      display: flex
+      align-items: center
+      .iconfont
+        font-size: 40px
+        color: #122555
+        margin: 0 5px
+  // .children-tab-image
+  //   display: block
+  //   position:absolute
+  //   left: 0
+  //   top: 0
+  //   width: 100%
+  //   height: 50%
+  //   // width: 100px
+  //   // height: 30px
+  //   border-radius: 5px 5px 0 0
   .children-tab-text
     display: block
-    position:absolute
-    left: 0
-    bottom: 10px
-    width: 100%
+    line-height: 20px
+    font-size: 13px
+    // position:absolute
+    // left: 0
+    // bottom: 10px
+    // width: 100%
     text-align: center
 </style>

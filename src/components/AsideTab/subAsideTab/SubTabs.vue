@@ -121,7 +121,7 @@
             handler: function () {
               this.locationUrl = this.currentTabLabel
               console.log(this.locationUrl)
-              if (this.currentTabLabel && this.currentTabLabel.indexOf('http') > -1) {
+              if (this.currentTabLabel && this.currentTabLabel.indexOf('http') > -1 || this.currentTabLabel.indexOf('.html') > -1) {
                 this.who = ''
                 this.iframeUrl = this.currentTabLabel
               } else if (this.currentTabLabel && this.currentTabLabel.indexOf('http') == -1) {

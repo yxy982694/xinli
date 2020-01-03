@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>欢迎使用集中运维管理系统</title>
+<link href="../etc/dwz-ria/themes/default/style.css" rel="stylesheet" type="text/css" media="screen"/>
+<link href="../etc/dwz-ria/themes/css/core.css" rel="stylesheet" type="text/css" media="screen"/>
+<link href="../etc/dwz-ria/themes/css/print.css" rel="stylesheet" type="text/css" media="print"/>
+<link href="../etc/dwz-ria/uploadify/css/uploadify.css" rel="stylesheet" type="text/css" media="screen"/>
+<script src="../js/jquery-1.7.2.js" type="text/javascript"></script>
+<script src="../js/jquery.cookie.js" type="text/javascript"></script>
+<script src="../js/jquery.validate.js" type="text/javascript"></script>
+<script src="../js/jquery-ui.min.js"></script>
+<script src="../js/dwz.min.js" type="text/javascript"></script>
+<script src="../js/jquery.datetimepicker.js" type="text/javascript"></script>
+<link href="../css/jquery.datetimepicker.css" rel="stylesheet" type="text/css"/>
+<link href="../css/secmain.css" rel="stylesheet" type="text/css" />
+
+
+<script src="../etc/dwz-ria/js/messages_zh.js" type="text/javascript"></script>
+<script src="../etc/dwz-ria/js/jquery.bgiframe.js" type="text/javascript"></script>
+<script src="../etc/dwz-ria/xheditor/xheditor-1.2.1.min.js" type="text/javascript"></script>
+<script src="../etc/dwz-ria/xheditor/xheditor_lang/zh-cn.js" type="text/javascript"></script>
+<script src="../etc/dwz-ria/uploadify/scripts/jquery.uploadify.js" type="text/javascript"></script>
+
+<!-- svg图表  supports Firefox 3.0+, Safari 3.0+, Chrome 5.0+, Opera 9.5+ and Internet Explorer 6.0+ -->
+<script type="text/javascript" src="../etc/dwz-ria/chart/raphael.js"></script>
+<script type="text/javascript" src="../etc/dwz-ria/chart/g.raphael.js"></script>
+<script type="text/javascript" src="../etc/dwz-ria/chart/g.bar.js"></script>
+<script type="text/javascript" src="../etc/dwz-ria/chart/g.line.js"></script>
+<script type="text/javascript" src="../etc/dwz-ria/chart/g.pie.js"></script>
+<script type="text/javascript" src="../etc/dwz-ria/chart/g.dot.js"></script>
+
+<script src="../etc/dwz-ria/js/dwz.regional.zh.js" type="text/javascript"></script>
+<link rel="stylesheet" href="../etc/jquery/zTree_v3/css/zTreeStyle/zTreeStyle.css" type="text/css"/>
+<script type="text/javascript" src="../etc/jquery/zTree_v3/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../etc/jquery/zTree_v3/js/jquery.ztree.excheck-3.5.js"></script>
+
+<script type="text/javascript" src="../etc/common/sendData.js"></script>
+<script type="text/javascript" src="../etc/easyui/js/mydatagrid.js"></script>
+
+<link rel="stylesheet" type="text/css" href="../etc/easyui/css/easyui.css">
+<script type="text/javascript" src="../etc/easyui/js/jquery.parser.js"></script>
+<script type="text/javascript" src="../etc/easyui/js/jquery.panel.js"></script>
+<script type="text/javascript" src="../etc/easyui/js/jquery.resizable.js"></script>
+<script type="text/javascript" src="../etc/easyui/js/jquery.linkbutton.js"></script>
+<script type="text/javascript" src="../etc/easyui/js/jquery.pagination.js"></script>
+<script type="text/javascript" src="../etc/easyui/js/jquery.datagrid.js"></script>
+<script type="text/javascript" src="../etc/easyui/js/easyui-lang-zh_CN.js"></script>
+<style type="text/css">
+  *{
+    padding: 0;
+    margin: 0;
+  }
+  body,html{
+    height: 100%;
+    width: 100%;
+  }
+  #container {
+    position: relative;
+    top: 0;
+    left: 0;
+    height: 100%;
+  }
+  #navTab{
+    height:100%;
+    overflow: hidden;
+    position: relative;
+    left: 0;
+    top: 0;
+  }
+  #div_content_id{
+    overflow-y: hidden !important;
+    height: 100%;
+  }
+  #qiantao{
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 100%;
+  }
+</style>
+</head>
+<body>
+<div id="layout">
+  <div id="container">
+    <div id="navTab" class="tabsPage">
+      <div id="div_content_id" style="position:absolute;width:100%;overflow-x:hidden;overflow-y:scroll;" class="navTab-panel tabsPageContent layoutBox">
+        <div class="page unitBox" id="qiantao"></div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+<script type="text/javascript">
+  console.log('90909')
+  // if (!sessionStorage.getItem('oldScriptFlag')) {
+    var ss
+    if (!ss) {
+      ss = setTimeout(function () {
+        let con = document.getElementById('qiantao')
+        let oldScripts = document.querySelectorAll('#qiantao script')
+        let newScript
+        console.log(con)
+        console.log(oldScripts)
+        for (let i=0;i<oldScripts.length;i++) {
+          console.log(oldScripts[i].src)
+          if (oldScripts[i].src) {
+            newScript = document.createElement('script')
+            newScript.type = 'text/javascript'
+            newScript.src = oldScripts[i].src
+          } else {
+            newScript = document.createElement('script')
+            newScript.type = 'text/javascript'
+            newScript.innerHTML = oldScripts[i].innerHTML
+          }
+          con.removeChild(oldScripts[i])
+          con.appendChild(newScript)
+        }
+        console.log(con.innerHTML)
+        sessionStorage.setItem('oldScriptFlag',true)
+        // console.log(oldScripts)
+      }, 500)
+    }
+
+  // }
+
+</script>
+</html>

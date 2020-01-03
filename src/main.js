@@ -8,6 +8,7 @@ import i18n from './i18n'
 import store from './store'
 import global from '@/utils/global'
 import ElementUI from 'element-ui'
+import 'element-theme-chalk'
 import 'element-ui/lib/theme-chalk/index.css'
 import 'font-awesome/css/font-awesome.min.css'
 import '@/common/stylus/index.styl'
@@ -18,6 +19,7 @@ Vue.use(ElementUI)
 Vue.use(api)
 
 Vue.prototype.global = global
+// Vue.prototype.HOSTW = '/api'
 
 /* eslint-disable no-new */
 new Vue({
