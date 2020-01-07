@@ -127,6 +127,22 @@
       }
     },
     mounted() {
+      // let url = '/comments/hotflow'
+      let url = '../../static/index.html'
+      // console.log(url)
+      axios({
+          url: url,
+          method: 'get',
+          // params: {
+          //   id: '4456665455400277',
+          //   mid: '4456665455400277',
+          //   max_id_type: '0'
+          // }
+      }).then(function (data) {
+        console.log(typeof data.data)
+      }).catch(function (data) {
+        console.log(data)
+      })
       this.refreshCaptcha()
     }
   }

@@ -110,26 +110,26 @@ function addDynamicMenuAndRoutes(userName, to, from) {
 /**
  * 处理IFrame嵌套页面 目前并没有用到嵌套页面
  */
-if (typeof String.prototype.endsWith != 'function') {
-  String.prototype.endsWith = function(suffix) {
-    return this.indexOf(suffix, this.length - suffix.length) !== -1
-   }
-}
+// if (typeof String.prototype.endsWith != 'function') {
+//   String.prototype.endsWith = function(suffix) {
+//     return this.indexOf(suffix, this.length - suffix.length) !== -1
+//    }
+// }
 function handleIFrameUrl(path) {
   // 嵌套页面，保存iframeUrl到store，供IFrame组件读取展示
   let url = path
   let length = store.state.iframe.iframeUrls.length
   // console.log(store.state.iframe.iframeUrls)
-  for(let i=0; i<length; i++) {
-    let iframe = store.state.iframe.iframeUrls[i]
-    if(path != null && path.endsWith(iframe.path)) { // 如果要跳转的路由满足一定条件
-      // 则把嵌套路由数组中的某个路径,设置成当前路径
-      // 说明嵌套路由数组中的某个路径,在要跳转的路由
-      url = iframe.url
-      store.commit('setIFrameUrl', url)
-      break
-    }
-  }
+  // for(let i=0; i<length; i++) {
+  //   let iframe = store.state.iframe.iframeUrls[i]
+  //   if(path != null && path.endsWith(iframe.path)) { // 如果要跳转的路由满足一定条件
+  //     // 则把嵌套路由数组中的某个路径,设置成当前路径
+  //     // 说明嵌套路由数组中的某个路径,在要跳转的路由
+  //     url = iframe.url
+  //     store.commit('setIFrameUrl', url)
+  //     break
+  //   }
+  // }
 }
 
 /**

@@ -10,7 +10,16 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+        '/comments': {
+            target: 'https://m.weibo.cn',
+            changeOrigin: true,
+            logLevel: 'debug',
+            // pathRewrite: {
+            //   '^/api': '/api'
+            // }
+        }
+    },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
@@ -42,8 +51,10 @@ module.exports = {
 
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
-    assetsSubDirectory: './',
-    assetsPublicPath: './',
+    assetsSubDirectory: './sub',
+    assetsPublicPath: '/',
+    // assetsSubDirectory: './',
+    // assetsPublicPath: './',
     // assetsSubDirectory: 'static',
     // assetsPublicPath: './',
 
