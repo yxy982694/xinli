@@ -45,9 +45,9 @@ function fnCreate (mod, isOpen = true) {
           //     return this.indexOf(suffix, this.length - suffix.length) !== -1
           //    }
           // }
-          if(!url.endsWith("/")) {
-            url = url + "/"
-          }
+          // if(!url.endsWith("/")) {
+          //   url = url + "/"
+          // }
           url = url + res.url
           // console.log(url)
           // 模拟后台接口,当前台axios的url和type匹配mock中的url和type时,会执行mock里面的回调函数

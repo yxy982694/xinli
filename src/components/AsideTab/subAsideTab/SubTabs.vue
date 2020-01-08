@@ -32,6 +32,12 @@
         components: { SubMain },
         props: ['leftList'],
         computed: {
+          routerId: {
+            get: function () {
+              return this.$store.state.routerIdData.routerId
+            },
+            set: function () {}
+          },
           contextMenuFlag: { // 点击右键，显示右键菜单
             get: function () {
               return this.$store.state.contextMenu.contextMenuFlag
@@ -94,7 +100,6 @@
           },
         },
         mounted: function () {
-          this.tabObj = this.mainIdStoreTabObj[sessionStorage.getItem('id')]
           // console.log('this.tabObj')
           this.initData()
           var _this = this
@@ -117,6 +122,9 @@
           //   }
           //   this.bindShortcut()
           // }
+          routerId: function () {
+            this.initData()
+          },
           currentTabId: { // 当tab中的id变化时，进行路由跳转，显示不同的内容
             handler: function () {
               this.locationUrl = this.currentTabLabel
@@ -258,6 +266,8 @@
             },
             // 初始化，进入页面时
             initData: function () {
+              this.tabObj = this.mainIdStoreTabObj[sessionStorage.getItem('id')]
+              console.log(this.tabObj)
                 if (this.tabObj) { // 先使用store中的数据
                   this.setCurrentTabLabel(this.tabObj.currentTabLabel)
                   this.setEditableTabs(this.tabObj.editableTabs)

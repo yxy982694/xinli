@@ -3,7 +3,7 @@
     <div class="todo-header">
       <div class="todo-userimg"></div>
       <div class="todo-usertext">
-        <p class="toto-username">您好，{{userName}}</p>
+        <p class="toto-username" :title="'您好,'+userName">您好，{{userName}}</p>
         <p class="todo-userdep">所属部门：资管室</p>
       </div>
     </div>
@@ -81,7 +81,8 @@
         .toto-username
           font-size: $font-size-medium-x
           font-weight: bold
-          max-width: 100px
+          max-width: 165px
+          line-height: 20px
           no-wrap()
    .todo-items
      flex: 1

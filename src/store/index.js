@@ -18,6 +18,7 @@ import routerIdData from "./modules/routerIdData"
 import resourceLeftTop from "./modules/resourceLeftTop"
 import mainIdStoreTab from "./modules/mainIdStoreTab"
 import loadData from "./modules/loadData"
+import showIframe from "./modules/showIframe"
 
 const store = new vuex.Store({
   modules: {
@@ -34,7 +35,8 @@ const store = new vuex.Store({
     routerIdData: routerIdData,
     resourceLeftTop: resourceLeftTop,
     mainIdStoreTab: mainIdStoreTab,
-    loadData: loadData
+    loadData: loadData,
+    showIframe: showIframe
   }
 })
 

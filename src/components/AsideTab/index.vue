@@ -1,14 +1,19 @@
 <template>
   <div class="left-right-container">  <!-- :style="{height: conHeight}" -->
     <el-container class="el-con">
-      <el-aside width="180px">
-        <div v-for="v in leftList" :key="v.id" class="text-item" @click="addSubTab(v.label,v.location,v.id)">
-          <p class="aside-title">
-            <span class="fa fa-file-text"></span>
-            <span>{{ v.label }}</span>
-          </p>
+      <div class="left-aside-container">
+        <div class="aside-scroll">
+          <el-aside width="180px">
+            <div v-for="v in leftList" :key="v.id" class="text-item" @click="addSubTab(v.label,v.location,v.id)">
+              <p class="aside-title">
+                <span class="fa fa-file-text"></span>
+                <span>{{ v.label }}</span>
+              </p>
+            </div>
+          </el-aside>
         </div>
-      </el-aside>
+        <div class="left-right-splitbar"></div>
+      </div>
       <el-container class="el-con2">
         <!-- <i class="iconfont icon-tubiao115"></i> -->
         <el-main>
@@ -58,7 +63,7 @@
             // }
         },
         mounted() {
-          document.querySelector('.left-right-container').style.height = document.body.clientHeight-131 + 'px'
+          // document.querySelector('.left-right-container').style.height = document.body.clientHeight-131 + 'px'
           // document.querySelector('.el-con').style.height = document.body.clientHeight-150 + 'px'
             // var _this = this
             // this.conHeight = this.getClientHeight() -100 + 'px'
@@ -77,34 +82,28 @@
     // overflow: hidden
     // background:url('../../common/image/contentImg.png') no-repeat
     // background-size: 100% 100%
-  .el-aside
+    // position: relative
+  .el-con
+    flex: 1
+    overflow: hidden
+    position: relative
+    display: flex
+  .left-aside-container
+    width: 180px
+    margin-left: 8px
+    border: 1px solid $color-border
+    position: relative
+  .aside-scroll
     font-size: 14px
-    // background-color: rgb(205,244,253)
-    // background-color: rgb(48, 65, 86)
-    position: fixed
-    top: 130px
-    left: 0
-    bottom: 62px
+    height: 100%
+    // position: fixed
+    // top: 125px
+    // left: 5px
+    // bottom: 48px
     overflow-x: hidden
     overflow-y: auto
-    /* IE 浏览器 */
-    /*三角箭头的颜色*/
-    scrollbar-arrow-color: #fff
-    /*滚动条滑块按钮的颜色*/
-    scrollbar-face-color: #0099dd
-    /*滚动条整体颜色*/
-    scrollbar-highlight-color: #0099dd
-    /*滚动条阴影*/
-    scrollbar-shadow-color: #0099dd
-    /*滚动条轨道颜色*/
-    scrollbar-track-color: #0066ff
-    /*滚动条3d亮色阴影边框的外观颜色——左边和上边的阴影色*/
-    scrollbar-3dlight-color:#0099dd
-    /*滚动条3d暗色阴影边框的外观颜色——右边和下边的阴影色*/
-    scrollbar-darkshadow-color: #0099dd
-    /*滚动条基准颜色*/
-    scrollbar-base-color: #0099dd
-    /* chrome & safari 浏览器 */
+    // overflow: auto
+
     &::-webkit-scrollbar
       width: 6px
       height: 6px
@@ -121,8 +120,8 @@
     color: #333
     // color: rgb(191, 203, 217)
     border-bottom: 1px solid $color-border
-    height: 56px
-    line-height: 56px
+    height: 46px
+    line-height: 46px
     text-align: left
     padding-left: 15px
   .el-con .el-main
@@ -133,13 +132,22 @@
     color: #333
     text-align: center
     overflow: hidden
-  .el-con
-    flex: 1
-    overflow: hidden
+  .left-right-splitbar
+    position: absolute
+    top: 0
+    bottom: 0
+    right: -4px
+    width: 5px
+    // background: url('../../common/image/mainbox.png')
+    z-index: 9999
+    cursor: col-resize
   .el-con2
     height: 100%
     overflow: hidden
     position: relative
+    margin-left: 1px
+    margin-right: 8px
+    flex: 1
     // .icon-tubiao115
     //   position: absolute
     //   left: 11px

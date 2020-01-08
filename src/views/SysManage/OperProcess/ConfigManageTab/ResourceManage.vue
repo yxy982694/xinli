@@ -71,8 +71,11 @@
         <el-form-item label="菜单描述" prop="remark">
           <el-input v-model="dataForm.remark" auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="菜单图标路径" prop="image">
-          <el-input v-model="dataForm.image" auto-complete="off"></el-input>
+        <el-form-item label="菜单图标路径" prop="image" class="menu-location">
+          <!-- <el-input type="file"></el-input> -->
+          <input ref="menuInput" type="file" @change="selectMenuImg" accept="image/gif,image/jpeg,image/jpg,image/png,image/svg">
+          <img ref="menuImg" class="menu-location-img" src="../../../../common/image/default.png" alt="">
+          <!-- <el-input v-model="dataForm.image" auto-complete="off"></el-input> -->
         </el-form-item>
         <el-form-item label="创建时间" prop="createTime">
           <el-input v-model="dataForm.createTime" auto-complete="off"></el-input>
@@ -100,6 +103,7 @@
 </template>
 <script>
   import { mapMutations } from 'vuex'
+  import axios from 'axios'
   import KtButton from "@/components/KtButton/index"
   import KtTable from "@/components/KtTable/KtTable"
   import KtButtons from "@/components/KtButtons/KtButtons"
@@ -237,6 +241,33 @@
         'setResourceFlag': 'setResourceFlag',
         'setResourceArr': 'setResourceArr'
       }),
+      // 选择菜单图标图片
+      selectMenuImg: function () {
+        let file = this.$refs.menuInput.files[0]
+        let formData = new FormData()
+        formData.append('fileImg', file)
+        formData.append('id', this.currentId)
+        this.$refs.menuImg.src = window.URL.createObjectURL(file)
+        axios.post('/addImage',
+        // axios.post('http://10.89.138.133:9091/addImage',
+        // axios.post('http://10.89.138.147:9091/addImage',
+          formData,
+          {
+            headers: {"Content-Type": "multipart/form-data"}
+          }
+        ).then(function (res) {
+          console.log(res)
+        })
+        // axios.get('comments/hotflow',{
+        //   params: {
+        //     id: '4457825889709441',
+        //     mid: '4457825889709441',
+        //     max_id_type: 0
+        //   }
+        // }).then(function (res) {
+        //   console.log(res)
+        // })
+      },
       changeShortCutInfo: function (obj) {
         // console.log(obj)
         // this.showShortCut = obj.showShortCut
@@ -436,4 +467,8 @@
   .table-seat
     height: 10px
     width: 100%
+  .menu-location-img
+    width: 40px
+    height: 40px
+    border: 1px solid red
 </style>

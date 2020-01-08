@@ -1,6 +1,6 @@
 /**
  * @author ZhangHuihua@msn.com
- * 
+ *
  */
 var navTab = {
 	componentBox: null, // tab component. contain tabBox, prevBut, nextBut, panelBox
@@ -11,18 +11,18 @@ var navTab = {
 	_moreBut:null,
 	_moreBox:null,
 	_currentIndex: 0,
-	
+
 	_op: {id:"navTab", stTabBox:".navTab-tab", stPanelBox:".navTab-panel", mainTabId:"main", close$:"a.close", prevClass:"tabsLeft", nextClass:"tabsRight", stMore:".tabsMore", stMoreLi:"ul.tabsMoreList"},
-	
+
 	init: function(options){
 		if ($.History) $.History.init("#container");
 		var $this = this;
 		$.extend(this._op, options);
 
 		this.componentBox = $("#"+this._op.id);
-		this._tabBox = this.componentBox.find(this._op.stTabBox);
-		this._panelBox = this.componentBox.find(this._op.stPanelBox);
-		var ih = navTab._panelBox.height();
+		this._tabBox = this.componentBox.find(this._op.stTabBox); // 展示tab的容器
+		this._panelBox = this.componentBox.find(this._op.stPanelBox); // 展示对应tab里面内容的容器
+		var ih = navTab._panelBox.height(); // 内容高度
 		alert(ih);
 		this._prevBut = this.componentBox.find("."+this._op.prevClass);
 		this._nextBut = this.componentBox.find("."+this._op.nextClass);
@@ -36,27 +36,27 @@ var navTab = {
 			return false;
 		});
 		$(document).click(function(){$this._moreBox.hide()});
-		
-		this._contextmenu(this._tabBox);
-		this._contextmenu(this._getTabs());
-		
+
+		this._contextmenu(this._tabBox); // ul元素,1个元素
+		this._contextmenu(this._getTabs()); // ul里面的li元素,多个元素
+
 		this._init();
 		this._ctrlScrollBut();
-		
+
 		ih = navTab._panelBox.height();
 		alert("lala"+ih);
 	},
 	_init: function(){
 		var $this = this;
-		this._getTabs().each(function(iTabIndex){
+		this._getTabs().each(function(iTabIndex){ // 为tab中每个li绑定事件
 			$(this).unbind("click").click(function(event){
 				$this._switchTab(iTabIndex);
 			});
-			$(this).find(navTab._op.close$).unbind("click").click(function(){
+			$(this).find(navTab._op.close$).unbind("click").click(function(){ // 为每个小叉号绑定事件
 				$this._closeTab(iTabIndex);
 			});
 		});
-		this._getMoreLi().each(function(iTabIndex){
+		this._getMoreLi().each(function(iTabIndex){ // 为最右边more列表中的每个li绑定事件
 			$(this).find(">a").unbind("click").click(function(event){
 				$this._switchTab(iTabIndex);
 			});
@@ -101,12 +101,12 @@ var navTab = {
 				} else if ($tabLi.size() == 2) {
 					mOther.addClass("disabled");
 				}
-				
+
 			}
 		});
 	},
-	
-	_getTabs: function(){
+
+	_getTabs: function(){ //tab ul里面的li元素,多个元素
 		return this._tabBox.find("> li");
 	},
 	_getPanels: function(){
@@ -133,7 +133,7 @@ var navTab = {
 		});
 		return iW;
 	},
-	_indexTabId: function(tabid){
+	_indexTabId: function(tabid){ // 有则返回null  无则返回-1
 		if (!tabid) return -1;
 		var iOpenIndex = -1;
 		this._getTabs().each(function(index){
@@ -147,7 +147,7 @@ var navTab = {
 	_getScrollBarW: function(){
 		return this.componentBox.width()-55;
 	},
-	
+
 	_visibleStart: function(){
 		var iLeft = this._getLeft(), iW = 0;
 		var $tabs = this._getTabs();
@@ -176,7 +176,7 @@ var navTab = {
 		var iEnd = this._visibleEnd();
 		if (iEnd < this._getTabs().size()){
 			this._scrollTab(-this._getTabsW(0, iEnd+1) + this._getScrollBarW());
-		}	
+		}
 	},
 	_scrollTab: function(iLeft, isNext){
 		var $this = this;
@@ -208,33 +208,33 @@ var navTab = {
 				this._prevBut.addClass("tabsLeftDisabled");
 			} else if (this._getLeft() <= this._getScrollBarW() - iW) {
 				this._nextBut.addClass("tabsRightDisabled");
-			} 
+			}
 		}
 	},
-	
+
 	_switchTab: function(iTabIndex){
 		var $tab = this._getTabs().removeClass("selected").eq(iTabIndex).addClass("selected");
 		this._getPanels().hide().eq(iTabIndex).show();
 
 		this._getMoreLi().removeClass("selected").eq(iTabIndex).addClass("selected");
 		this._currentIndex = iTabIndex;
-		
+
 		this._scrollCurrent();
 		this._reload($tab);
 	},
-			
+
 	_closeTab: function(index, openTabid){
 
 		this._getTabs().eq(index).remove();
 		this._getPanels().eq(index).trigger(DWZ.eventType.pageClear).remove();
 		this._getMoreLi().eq(index).remove();
 		if (this._currentIndex >= index) this._currentIndex--;
-		
+
 		if (openTabid) {
 			var openIndex = this._indexTabId(openTabid);
 			if (openIndex > 0) this._currentIndex = openIndex;
 		}
-		
+
 		this._init();
 		this._scrollCurrent();
 		this._reload(this._getTabs().eq(this._currentIndex));
@@ -269,9 +269,9 @@ var navTab = {
 		}
 	},
 
-	_loadUrlCallback: function($panel){
-		$panel.find("[layoutH]").layoutH();
-		$panel.find(":button.close").click(function(){
+	_loadUrlCallback: function($panel){ // 点击左菜单按钮后,调取接口成功后的回调
+		$panel.find("[layoutH]").layoutH(); // 动态指定div面板内容高度 为父元素高度-layoutH的值
+		$panel.find(":button.close").click(function(){ // 给'取消'绑定点击事件
 			navTab.closeCurrentTab();
 		});
 	},
@@ -281,14 +281,14 @@ var navTab = {
 		if (flag && url) {
 			$tab.data("reloadFlag", null);
 			var $panel = this.getPanel($tab.attr("tabid"));
-			
+
 			if ($tab.hasClass("external")){
 				navTab.openExternal(url, $panel);
 			}else {
 				//获取pagerForm参数
 				var $pagerForm = $("#pagerForm", $panel);
 				var args = $pagerForm.size()>0 ? $pagerForm.serializeArray() : {}
-				
+
 				$panel.loadUrl(url, args, function(){navTab._loadUrlCallback($panel);});
 			}
 		}
@@ -304,7 +304,7 @@ var navTab = {
 		var op = $.extend({data:{}, navTabId:"", callback:null}, options);
 		var $tab = op.navTabId ? this._getTab(op.navTabId) : this._getTabs().eq(this._currentIndex);
 		var $panel =  op.navTabId ? this.getPanel(op.navTabId) : this._getPanels().eq(this._currentIndex);
-		
+
 		if ($panel){
 			if (!url) {
 				url = $tab.attr("url");
@@ -317,7 +317,7 @@ var navTab = {
 						var $pagerForm = $("#pagerForm", $panel);
 						op.data = $pagerForm.size()>0 ? $pagerForm.serializeArray() : {}
 					}
-					
+
 					$panel.ajaxUrl({
 						type:"POST", url:url, data:op.data, callback:function(response){
 							navTab._loadUrlCallback($panel);
@@ -335,21 +335,23 @@ var navTab = {
 		var json = DWZ.jsonEval(this.getCurrentPanel().html());
 		if (json && json.statusCode == DWZ.statusCode.timeout) this.closeCurrentTab();
 	},
-	openExternal:function(url, $panel){
+	openExternal:function(url, $panel){ // 往tab对应的面板处,插入iframe标签
 		var ih = navTab._panelBox.height();
 		$panel.html(DWZ.frag["externalFrag"].replaceAll("{url}", url).replaceAll("{height}", ih+"px"));
 	},
 	/**
-	 * 
+	 *
 	 * @param {Object} tabid
 	 * @param {Object} url
 	 * @param {Object} params: title, data, fresh
 	 */
 	openTab: function(tabid, url, options){ //if found tabid replace tab, else create a new tab.
+
 		var op = $.extend({title:"New Tab", data:{}, fresh:true, external:false}, options);
 
-		var iOpenIndex = this._indexTabId(tabid);
-alert(iOpenIndex)
+		var iOpenIndex = this._indexTabId(tabid); // 在左菜单中点击按钮,看在tab里面有没有.有的话返回在整个tab中的索引值
+    // 没有的话,返回-1
+    alert(iOpenIndex)
 		if (iOpenIndex >= 0){
 			var $tab = this._getTabs().eq(iOpenIndex);
 			var span$ = $tab.attr("tabid") == this._op.mainTabId ? "> span > span" : "> span";
@@ -370,7 +372,8 @@ alert(iOpenIndex)
 				}
 			}
 			this._currentIndex = iOpenIndex;
-		} else {
+		}
+    else { // 之前没有显示过,这是第一次点击
 			var tabFrag = '<li tabid="#tabid#"><a href="javascript:" title="#title#" class="#tabid#"><span>#title#</span></a><a href="javascript:;" class="close">close</a></li>';
 			this._tabBox.append(tabFrag.replaceAll("#tabid#", tabid).replaceAll("#title#", op.title));
 			var ih = navTab._panelBox.height();
@@ -379,23 +382,23 @@ alert(iOpenIndex)
 			ih = navTab._panelBox.height();
 			alert("3:"+ih)
 			this._moreBox.append('<li><a href="javascript:" title="#title#">#title#</a></li>'.replaceAll("#title#", op.title));
-			
-			var $tabs = this._getTabs();
-			var $tab = $tabs.filter(":last");
-			var $panel = this._getPanels().filter(":last");
-			
-			if (op.external || url.isExternalUrl()) {
+
+			var $tabs = this._getTabs(); // tab ul中li元素
+			var $tab = $tabs.filter(":last"); // 最后一个li元素
+			var $panel = this._getPanels().filter(":last"); // 最后一个div面板元素
+			if (op.external || url.isExternalUrl()) { // 以iframe方式打开url页面
 				$tab.addClass("external");
-				navTab.openExternal(url, $panel);
+				navTab.openExternal(url, $panel); // 把url放到iframe的src处
 			} else {
 				$tab.removeClass("external");
-				$panel.ajaxUrl({
+				$panel.ajaxUrl({ // 调取url对应的接口数据,并把html代码插入到对应面板中,并经过initUI()进行处理
 					type:"GET", url:url, data:op.data, callback:function(){
+            // 回调,指定面板高度和给'取消'绑定事件
 						navTab._loadUrlCallback($panel);
 					}
 				});
 			}
-			
+
 			if ($.History) {
 				setTimeout(function(){
 					$.History.addHistory(tabid, function(tabid){
@@ -404,14 +407,14 @@ alert(iOpenIndex)
 					}, tabid);
 				}, 10);
 			}
-				
+
 			this._currentIndex = $tabs.size() - 1;
 			this._contextmenu($tabs.filter(":last").hoverClass("hover"));
 		}
-		
+
 		this._init();
 		this._scrollCurrent();
-		
+
 		this._getTabs().eq(this._currentIndex).attr("url", url);
 	}
 };

@@ -1,13 +1,13 @@
 <template>
   <!--页面导航-->
   <div class="submain-container">
-    <iframe v-if="!who" :src="iframeUrl" frameborder="0" style="width:100%;height:400px;" id="iframe"></iframe>
+    <iframe v-if="!who" :src="iframeUrl" frameborder="0" style="width:100%;height:350px;" id="iframe"></iframe>
     <component v-else :is="who"></component>
     <!-- <div id="dd" style="position:absolute;left: 0;top: 10px;" @click="clickdd">dd</div> -->
   </div>
 </template>
 <script>
-
+    // import '@/common/js/mixin.js'
     // import { mapMutations } from 'vuex'
     import axios from "axios"
     export default {

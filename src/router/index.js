@@ -153,7 +153,8 @@ function addDynamicRoutes (menuList = [], routes = []) {
         meta: {
           icon: menuList[i].icon,
           index: menuList[i].id,
-          keepAlive: true
+          keepAlive: true,
+          location: menuList[i].location
         }
       }
       let path = getIFramePath(menuList[i].location)
@@ -175,8 +176,8 @@ function addDynamicRoutes (menuList = [], routes = []) {
             url += array[i].substring(0,1).toUpperCase() + array[i].substring(1) + '/'
           }
           url = url.substring(0, url.length - 1)
-          // route['component'] = resolve => require(['@/components/MainToTab/MainToTab'], resolve)
-          route['component'] = resolve => require([`@/views/${url}`], resolve)
+          route['component'] = resolve => require(['@/components/MainToTab/MainToTab'], resolve)
+          // route['component'] = resolve => require([`@/views/${url}`], resolve)
         } catch (e) {}
       }
       routes.push(route)

@@ -2,7 +2,8 @@ export default {
     state: {
         routerId: '', // 点击导航时对应的id
         routerData: null,
-        routerObj: {}
+        routerObj: {},
+        routerLocation: '',
     },
     getters: {
 
@@ -17,6 +18,9 @@ export default {
         setRouterObj(state, obj){  // 保存导航按钮对应的id
             state.routerObj[obj.id] = obj.arr
         },
+        setRouterLocation(state, location) {
+          state.routerLocation = location
+        }
     },
     actions: {
     }

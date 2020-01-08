@@ -5,7 +5,38 @@
   display: flex
   flex-direction: column
   justify-content: space-between
-  overflow: hidden
+  height: 100%
+  overflow-y: auto
+  overflow-x: hidden
+  /* IE 浏览器 */
+  /*三角箭头的颜色*/
+  // scrollbar-arrow-color: #fff
+  /*滚动条滑块按钮的颜色*/
+  // scrollbar-face-color: #0099dd
+  /*滚动条整体颜色*/
+  // scrollbar-highlight-color: #0099dd
+  /*滚动条阴影*/
+  // scrollbar-shadow-color: #0099dd
+  /*滚动条轨道颜色*/
+  // scrollbar-track-color: #0066ff
+  /*滚动条3d亮色阴影边框的外观颜色——左边和上边的阴影色*/
+  // scrollbar-3dlight-color:#0099dd
+  /*滚动条3d暗色阴影边框的外观颜色——右边和下边的阴影色*/
+  // scrollbar-darkshadow-color: #0099dd
+  /*滚动条基准颜色*/
+  // scrollbar-base-color: #0099dd
+  /* chrome & safari 浏览器 */
+  &::-webkit-scrollbar
+    width: 6px
+    height: 6px
+    background: transparent
+  &::-webkit-scrollbar-thumb
+    background: transparent
+    border-radius: 4px
+  &:hover::-webkit-scrollbar-thumb
+    background: hsla(0, 0%, 53%, 0.4)
+  &:hover::-webkit-scrollbar-track
+    background: hsla(0, 0%, 53%, 0.1)
   .el-row
     padding: 0 15px
 .content-radius
@@ -55,3 +86,5 @@
 .el-carousel__button
     background-color: $color-blue !important
     width: 10px !important
+.el-carousel__indicator+.el-carousel__indicator
+  margin-top: 5px

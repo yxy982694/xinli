@@ -1,12 +1,12 @@
-<script type="text/javascript" src="/eoms/sheet/js/rootPathVal.js"></script>
-<script type="text/javascript" src="/eoms/sheet/js/common_page.js"></script>
+<script type="text/javascript" src="http://10.217.1.31:9082/eoms/sheet/js/rootPathVal.js"></script>
+<script type="text/javascript" src="http://10.217.1.31:9082/eoms/sheet/js/common_page.js"></script>
 <div class="pageContent">
-    <form action="/eoms/form/inst/save" id="_formId"
+    <form action="http://10.217.1.31:9082/eoms/form/inst/save" id="_formId"
           class="pageForm required-validate"
           enctype="multipart/form-data"
           method="post"
-         onsubmit="return iframeCallback(this, navTabAjaxDone);" 
-            >
+         onsubmit="return iframeCallback(this, navTabAjaxDone);"
+    >
     <div class="pageFormContent" layoutH="56">
 ﻿<input type="hidden" name="sheetType" id="sheetType" value="HA-051"/>
 <input type="hidden" name="processDefName" id="processDefName" value=""/>
@@ -35,115 +35,115 @@
                name="selJobID"  readonly
                value="501">
         <input type="hidden" id="netClass"
-               name="netClass"  
+               name="netClass"
                value="">
         <p class="nowrap" id="p_TITLE">
             <label>主题<span style="color:red">**</span>：</label>
-            
+
                 <input type="text" id="TITLE"
                        name="TITLE"
                        value=""
                        class="required"
-                       
-                       style="width:577px;"  
-                         
-                       
+
+                       style="width:577px;"
+
+
                        maxlength="100"
                         >
-            
+
         </p>
             <div class="divider" id="div_TITLE"></div>
         <p id="p_createUserName">
             <label>操作人：</label>
-            
+
                 <input type="text" id="createUserName"
                        name="createUserName"
                        value="赵丹萍"
                        class=""
-                       
+
                        style=""  readonly
-                         
-                       
-                       
+
+
+
                         >
-            
+
         </p>
         <input type="hidden" id="organid"
-               name="organid"  
+               name="organid"
                value="100569">
         <p id="p_organName">
             <label>操作人部门：</label>
-            
+
                 <input type="text" id="organName"
                        name="organName"
                        value="厂家正信测试部"
                        class=""
-                       
+
                        style=""  readonly
-                         
-                       
-                       
+
+
+
                         >
-            
+
         </p>
         <p id="p_disposephone">
             <label>操作人联系方式：</label>
-            
+
                 <input type="text" id="disposephone"
                        name="disposephone"
                        value="16620087643"
                        class=""
-                       
+
                        style=""  readonly
-                         
-                       
-                       
+
+
+
                         >
-            
+
         </p>
         <input type="hidden" id="createuserphone"
                name="createuserphone"  readonly
                value="16620087643">
         <p id="p_createTime">
             <label>工单生成时间：</label>
-            
+
                 <input type="text" id="createTime"
                        name="createTime"
                        value="2020-01-03 16:38:53"
                        class="date "
                        dateFmt='yyyy-MM-dd HH:mm:ss'
                        style=""  readonly
-                         
-                       
-                       
+
+
+
                         ><a class="inputDateButton" href="javascript:;">选择</a>
-            
+
         </p>
         <input type="hidden" id="roleId"
                name="roleId"  readonly
                value="500">
         <p id="p_currentRole">
             <label>派单角色：</label>
-            
+
                 <input type="text" id="currentRole"
                        name="currentRole"
                        value="故障建单人"
                        class=""
-                       
+
                        style=""  readonly
-                         
-                       
-                       
+
+
+
                         >
-            
+
         </p>
         <p id="p_faultFindType">
             <label>故障发现方式：</label>
-            
+
                     <select id="faultFindType" name="faultFindType"
                             class="combox "
-                              
-                             
+
+
                             style="" readonly >
                             <option value="999"
                                      >其他方式</option>
@@ -154,30 +154,30 @@
                             <option value="002"
                                      >作业计划</option>
                     </select>
-            
+
         </p>
         <p id="p_faultStartTime">
             <label>故障发生时间：</label>
-            
+
                 <input type="text" id="faultStartTime"
                        name="faultStartTime"
                        value="2020-01-03 16:37:53"
                        class="date "
-                       
+
                        style=""  dateFmt='yyyy-MM-dd HH:mm:ss'readonly
-                         
-                       
-                       
+
+
+
                         ><a class="inputDateButton" href="javascript:;">选择</a>
-            
+
         </p>
         <p id="p_faultResponseLevel">
             <label>故障处理响应级别：</label>
-            
+
                     <select id="faultResponseLevel" name="faultResponseLevel"
                             class="combox "
-                              
-                            ref="exigence" refUrl="/eoms/form/inst/options?sel=none&id=o_fault_gjjb"
+
+                            ref="exigence" refUrl="http://10.217.1.31:9082/eoms/form/inst/options?sel=none&id=o_fault_gjjb"
                             style="" onchange='changeTime()' >
                             <option value="1"
                                      >一级响应</option>
@@ -186,16 +186,16 @@
                             <option value="3"
                                     selected >三级响应</option>
                     </select>
-            
+
         </p>
             <div class="divider" id="div_faultResponseLevel"></div>
         <p id="p_oneLevelTthNetwork">
             <label>故障专业一级分类<span style="color:red">**</span>：</label>
-            
+
                     <select id="oneLevelTthNetwork" name="oneLevelTthNetwork"
                             class="combox required"
-                              
-                            ref="twoLevelTthNetwork" refUrl="/eoms/form/inst/options?id=o_fault_twoLevelTthNetwork"
+
+                            ref="twoLevelTthNetwork" refUrl="http://10.217.1.31:9082/eoms/form/inst/options?id=o_fault_twoLevelTthNetwork"
                             style="" onchange='shows()' >
                             <option value=""
                                     selected >请选择</option>
@@ -224,41 +224,41 @@
                             <option value="69"
                                      >IT网</option>
                     </select>
-            
+
         </p>
         <p id="p_twoLevelTthNetwork">
             <label>故障专业二级分类<span style="color:red">**</span>：</label>
-            
+
                     <select id="twoLevelTthNetwork" name="twoLevelTthNetwork"
                             class="combox required"
-                              
-                            ref="netWorkType" refUrl="/eoms/form/inst/options?id=o_fault_netWorkType"
+
+                            ref="netWorkType" refUrl="http://10.217.1.31:9082/eoms/form/inst/options?id=o_fault_netWorkType"
                             style=""  >
                             <option value=""
                                     selected >请选择</option>
                     </select>
-            
+
         </p>
         <p id="p_netWorkType">
             <label>故障专业三级分类<span style="color:red">**</span>：</label>
-            
+
                     <select id="netWorkType" name="netWorkType"
                             class="combox required"
-                              
-                             refUrl="/eoms/form/inst/options?id=o_fault_companyIds"
+
+                             refUrl="http://10.217.1.31:9082/eoms/form/inst/options?id=o_fault_companyIds"
                             style=""  >
                             <option value=""
                                     selected >请选择</option>
                     </select>
-            
+
         </p>
         <p id="p_companyId">
             <label>故障设备厂商：</label>
-            
+
                     <select id="companyId" name="companyId"
                             class="combox "
-                              
-                             
+
+
                             style=""  >
                             <option value=""
                                     selected >请选择</option>
@@ -2362,15 +2362,15 @@
                             <option value="4002411"
                                      >淄博火炬能源有限责任公司</option>
                     </select>
-            
+
         </p>
         <p id="p_gzsbcs">
             <label>故障设备厂商：</label>
-            
+
                     <select id="gzsbcs" name="gzsbcs"
                             class="combox "
-                              
-                             
+
+
                             style=""  >
                             <option value=""
                                     selected >请选择</option>
@@ -4494,45 +4494,45 @@
                             <option value="2901"
                                      >爱立信</option>
                     </select>
-            
+
         </p>
         <p class="nowrap" id="p_brasFaultPort">
             <label>故障端口：</label>
-            
+
                 <input type="text" id="brasFaultPort"
                        name="brasFaultPort"
                        value=""
                        class=""
-                       
-                       style="min-width:580px;"  
-                         
-                       
+
+                       style="min-width:580px;"
+
+
                        maxlength="100"
                         >
-            
+
         </p>
         <p id="p_coverType">
             <label>覆盖类型：</label>
-            
+
                 <input type="text" id="coverType"
                        name="coverType"
                        value=""
                        class=""
-                       
+
                        style=""  readonly
-                         
-                       
-                       
+
+
+
                         >
-            
+
         </p>
         <p id="p_exigence">
             <label>告警级别<span style="color:red">**</span>：</label>
-            
+
                     <select id="exigence" name="exigence"
                             class="combox required"
-                              
-                             
+
+
                             style=""  >
                             <option value=""
                                      >请选择</option>
@@ -4541,22 +4541,22 @@
                             <option value="002"
                                      >四级</option>
                     </select>
-            
+
         </p>
         <p id="p_pdfs">
             <label>派单方式：</label>
-            
+
                 <input type="text" id="pdfs"
                        name="pdfs"
                        value="手工派单"
                        class=""
-                       
+
                        style=""  readonly
-                         
-                       
-                       
+
+
+
                         >
-            
+
         </p>
         <input type="hidden" id="createType"
                name="createType"  readonly
@@ -4566,132 +4566,132 @@
                value="1">
         <p class="nowrap" id="p_alarmid">
             <label>网管告警ID：</label>
-            
+
                 <input type="text" id="ba"
                        name="alarmid"
                        value=""
                        class=""
-                       
-                       style="min-width:580px;"  
-                         
-                       
+
+                       style="min-width:580px;"
+
+
                        maxlength="100"
                         >
-            
+
         </p>
         <p class="nowrap" id="p_alarmSheetId">
             <label>网管告警流水号：</label>
-            
+
                 <input type="text" id="alarmSheetId"
                        name="alarmSheetId"
                        value=""
                        class=""
-                       
-                       style="min-width:580px;"  
-                         
-                       
-                       
+
+                       style="min-width:580px;"
+
+
+
                         >
-            
+
         </p>
-        
+
         <p id="p_alarmLogicType">
             <label>告警逻辑分类：</label>
-            
+
                 <input type="text" id="alarmLogicType"
                        name="alarmLogicType"
                        value=""
                        class=""
-                       
-                       style=""  
-                         
-                       
-                       
+
+                       style=""
+
+
+
                         >
-            
+
         </p>
         <p id="p_alarmSubClass">
             <label>告警逻辑子类：</label>
-            
+
                 <input type="text" id="alarmSubClass"
                        name="alarmSubClass"
                        value=""
                        class=""
-                       
-                       style=""  
-                         
-                       
-                       
+
+                       style=""
+
+
+
                         >
-            
+
         </p>
         <p id="p_alarmSource">
             <label>告警来源：</label>
-            
+
                 <input type="text" id="alarmSource"
                        name="alarmSource"
                        value=""
                        class=""
-                       
-                       style=""  
-                         
-                       
+
+                       style=""
+
+
                        maxlength="100"
                         >
-            
+
         </p>
         <p id="p_alarmFoundTime">
             <label>告警发现时间：</label>
-            
+
                 <input type="text" id="alarmFoundTime"
                        name="alarmFoundTime"
                        value=""
                        class="date "
                        dateFmt='yyyy-MM-dd HH:mm:ss'
                        style=""  readonly
-                         
-                       
-                       
+
+
+
                         ><a class="inputDateButton" href="javascript:;">选择</a>
-            
+
         </p>
         <p id="p_alarmCount">
             <label>关联子告警数：</label>
-            
+
                 <input type="text" id="alarmCount"
                        name="alarmCount"
                        value=""
                        class=""
-                       
-                       style=""  
-                         
-                       
+
+                       style=""
+
+
                        maxlength="100"
                         >
-            
+
         </p>
         <p id="p_clearTime">
             <label>告警清除时间：</label>
-            
+
                 <input type="text" id="clearTime"
                        name="clearTime"
                        value=""
                        class="date "
-                       
+
                        style=""  dateFmt='yyyy-MM-dd HH:mm:ss'readonly
-                         
-                       
-                       
+
+
+
                         ><a class="inputDateButton" href="javascript:;">选择</a>
-            
+
         </p>
         <p id="p_ONUPattern">
             <label>ONU模式：</label>
-            
+
                     <select id="ONUPattern" name="ONUPattern"
                             class="combox "
-                              
-                             
+
+
                             style=""  >
                             <option value=""
                                     selected >请选择</option>
@@ -4702,15 +4702,15 @@
                             <option value="3"
                                      >其他</option>
                     </select>
-            
+
         </p>
         <p id="p_relevantArea">
             <label>所属区域<span style="color:red">**</span>：</label>
-            
+
                     <select id="relevantArea" name="relevantArea"
                             class="combox required"
-                              
-                             
+
+
                             style=""  >
                             <option value=""
                                     selected >请选择</option>
@@ -4721,135 +4721,135 @@
                             <option value="2"
                                      >不确定</option>
                     </select>
-            
+
         </p>
         <p class="nowrap" id="p_acName">
             <label>小区名称（有线宽带）：</label>
-            
+
                 <input type="text" id="acName"
                        name="acName"
                        value=""
                        class=""
-                       
-                       style="min-width:580px;"  
-                         
-                       
-                       
+
+                       style="min-width:580px;"
+
+
+
                         >
-            
+
         </p>
         <p class="nowrap" id="p_portinfo">
             <label>端口信息：</label>
-            
+
                 <input type="text" id="portinfo"
                        name="portinfo"
                        value=""
                        class=""
-                       
-                       style="min-width:580px;"  
-                         
-                       
-                       
+
+                       style="min-width:580px;"
+
+
+
                         >
-            
+
         </p>
         <p class="nowrap" id="p_cellCode">
             <label>小区编码：</label>
-            
+
                 <input type="text" id="cellCode"
                        name="cellCode"
                        value="小区编码若为多个请用英文分号分隔"
                        class=""
-                       
-                       style="min-width:580px; color:#6C6C6C"  
+
+                       style="min-width:580px; color:#6C6C6C"
                          onblur="if(this.value=='') {this.value='小区编码若为多个请用英文分号分隔';this.style.color='#6C6C6C';}"
                        onfocus="if(this.value=='小区编码若为多个请用英文分号分隔') {this.value='';}this.style.color='#000000';"
-                       
+
                         >
-            
+
         </p>
         <p class="nowrap" id="p_netName">
             <label>网元名称<span style="color:red">**</span>：</label>
-            
+
                 <input type="text" id="netName"
                        name="netName"
                        value=""
                        class="required"
-                       
-                       style="min-width:580px;"  
-                         
-                       
+
+                       style="min-width:580px;"
+
+
                        maxlength="100"
                         >
-            
+
         </p>
         <p id="p_neId">
             <label>网元ID：</label>
-            
+
                 <input type="text" id="neId"
                        name="neId"
                        value=""
                        class=""
-                       
-                       style=""  
-                         
-                       
+
+                       style=""
+
+
                        maxlength="100"
                         >
-            
+
         </p>
         <p id="p_towerSiteName">
             <label>铁塔站址名称：</label>
-            
+
                 <input type="text" id="towerSiteName"
                        name="towerSiteName"
                        value=""
                        class=""
-                       
-                       style=""  
-                         
-                       
+
+                       style=""
+
+
                        maxlength="100"
                         >
-            
+
         </p>
         <p id="p_towerSiteId">
             <label>铁塔站址编码：</label>
-            
+
                 <input type="text" id="towerSiteId"
                        name="towerSiteId"
                        value=""
                        class=""
-                       
-                       style=""  
-                         
-                       
+
+                       style=""
+
+
                        maxlength="100"
                         >
-            
+
         </p>
         <p id="p_cchSheetId">
             <label>相关投诉处理工单号：</label>
-            
+
                 <input type="text" id="cchSheetId"
                        name="cchSheetId"
                        value=""
                        class=""
-                       
-                       style=""  
-                         
-                       
+
+                       style=""
+
+
                        maxlength="100"
                         >
-            
+
         </p>
         <p id="p_wdType">
             <label>退服类型：</label>
-            
+
                     <select id="wdType" name="wdType"
                             class="combox "
-                              
-                             
+
+
                             style=""  >
                             <option value=""
                                     selected >请选择</option>
@@ -4860,15 +4860,15 @@
                             <option value="3"
                                      >基站小区退服</option>
                     </select>
-            
+
         </p>
         <p class="nowrap" id="p_roomProperty">
             <label>所属机房产权性质：</label>
-            
+
                     <select id="roomProperty" name="roomProperty"
                             class="combox "
-                              
-                             
+
+
                             style=""  >
                             <option value=""
                                     selected >请选择</option>
@@ -4891,187 +4891,187 @@
                             <option value="9"
                                      >租用铁塔</option>
                     </select>
-            
+
         </p>
         <p id="p_networkOfAlarmUrl">
             <label>告警网元所属拓扑展示：</label>
-            
-            
+
+
         </p>
         <p id="p_sheetPrioritylevel">
             <label>工单优先级系数P：</label>
-            
+
                 <input type="text" id="sheetPrioritylevel"
                        name="sheetPrioritylevel"
                        value=""
                        class=""
-                       
-                       style=""  
-                         
-                       
-                       
+
+                       style=""
+
+
+
                         >
-            
+
         </p>
         <p id="p_urgencyDegree">
             <label>紧急程度：</label>
-            
+
                 <input type="text" id="urgencyDegree"
                        name="urgencyDegree"
                        value=""
                        class=""
-                       
-                       style=""  
-                         
-                       
-                       
+
+                       style=""
+
+
+
                         >
-            
+
         </p>
         <p id="p_affirmtimelimit">
             <label>受理时限：</label>
-            
+
                 <input type="text" id="affirmtimelimit"
                        name="affirmtimelimit"
                        value=""
                        class=""
-                       
+
                        style=""  readonly
-                         
-                       
-                       
+
+
+
                         >
-            
+
         </p>
         <p id="p_overTime">
             <label>工单处理时限：</label>
-            
+
                 <input type="text" id="overTime"
                        name="overTime"
                        value=""
                        class=""
-                       
+
                        style=""  readonly
-                         
-                       
-                       
+
+
+
                         >
-            
+
         </p>
         <p id="p_t1OverTime">
             <label>T1处理时限：</label>
-            
+
                 <input type="text" id="t1OverTime"
                        name="t1OverTime"
                        value=""
                        class=""
-                       
+
                        style=""  readonly
-                         
-                       
-                       
+
+
+
                         >
-            
+
         </p>
         <p id="p_t2OverTime">
             <label>T2处理时限：</label>
-            
+
                 <input type="text" id="t2OverTime"
                        name="t2OverTime"
                        value=""
                        class=""
-                       
+
                        style=""  readonly
-                         
-                       
-                       
+
+
+
                         >
-            
+
         </p>
         <p id="p_t3OverTime">
             <label>T3处理时限：</label>
-            
+
                 <input type="text" id="t3OverTime"
                        name="t3OverTime"
                        value=""
                        class=""
-                       
+
                        style=""  readonly
-                         
-                       
-                       
+
+
+
                         >
-            
+
         </p>
         <p id="p_transTimeLimit">
             <label>转单时限：</label>
-            
+
                 <input type="text" id="transTimeLimit"
                        name="transTimeLimit"
                        value=""
                        class=""
-                       
+
                        style=""  readonly
-                         
-                       
-                       
+
+
+
                         >
-            
+
         </p>
             <div class="divider" id="div_transTimeLimit"></div>
         <p id="p_pretreatmentFlag">
             <label>是否预处理：</label>
-            
+
                     <select id="pretreatmentFlag" name="pretreatmentFlag"
                             class="combox "
-                              
-                             
+
+
                             style="" onchange='show()' >
                             <option value="0"
                                     selected >否</option>
                             <option value="1"
                                      >是</option>
                     </select>
-            
+
         </p>
         <p id="p_bigFaultFlag">
             <label>是否集团重大故障：</label>
-            
+
                     <select id="bigFaultFlag" name="bigFaultFlag"
                             class="combox "
-                              
-                             
+
+
                             style=""  >
                             <option value="0"
                                     selected >否</option>
                             <option value="1"
                                      >是</option>
                     </select>
-            
+
         </p>
         <p id="p_affOperationFlag">
             <label>是否影响业务：</label>
-            
+
                     <select id="affOperationFlag" name="affOperationFlag"
                             class="combox "
-                              
-                             
+
+
                             style=""  >
                             <option value="0"
                                     selected >否</option>
                             <option value="1"
                                      >是</option>
                     </select>
-            
+
         </p>
-        
+
         <p id="p_predealType">
             <label>预处理分类：</label>
-            
+
                     <select id="predealType" name="predealType"
                             class="combox "
-                              
-                             
+
+
                             style=""  >
                             <option value="1"
                                      >系统预处理</option>
@@ -5082,46 +5082,46 @@
                             <option value="4"
                                      >无</option>
                     </select>
-            
+
         </p>
             <div class="divider" id="div_predealType"></div>
         <p class="nowrap" id="p_alertDeal">
             <label>告警智能处理：</label>
-            
+
                     <textarea id="alertDeal" name="alertDeal"
                               class=""
                               rows="3"
                               cols="120"
                               maxlength="250"
-                                
+
                               style="min-width:580px;"
-                    
+
                             ></textarea>
-            
+
         </p>
             <div class="divider" id="div_alertDeal"></div>
         <p class="nowrap" id="p_businessDamage">
             <label>业务受损情况：</label>
-            
+
                     <textarea id="businessDamage" name="businessDamage"
                               class=""
                               rows="3"
                               cols="120"
                               maxlength="250"
-                                
+
                               style="min-width:580px;"
-                    
+
                             ></textarea>
-            
+
         </p>
             <div class="divider" id="div_businessDamage"></div>
         <p id="p_siteInterruptionReason">
             <label>站址中断原因：</label>
-            
+
                     <select id="siteInterruptionReason" name="siteInterruptionReason"
                             class="combox "
-                              
-                             
+
+
                             style=""  >
                             <option value=""
                                     selected >请选择</option>
@@ -5144,30 +5144,30 @@
                             <option value="AAA"
                                      >AAA</option>
                     </select>
-            
+
         </p>
         <p class="nowrap" id="p_equipModle">
             <label>故障设备型号：</label>
-            
+
                 <input type="text" id="equipModle"
                        name="equipModle"
                        value=""
                        class=""
-                       
-                       style="min-width:580px;"  
-                         
-                       
+
+                       style="min-width:580px;"
+
+
                        maxlength="100"
                         >
-            
+
         </p>
   <p style="width:760px;" class="nowrap">
     <label>故障省份<span style="color:red">**</span>：</label>
     <select name="selectProvince" id="selectProvince"
-					class="combox" style="height:21px;"  
-             
-             onchange="faultProvinces()" 
-             ref="selectCity" refUrl="/eoms/form/inst/options?id=o_cmm_city"
+					class="combox" style="height:21px;"
+
+             onchange="faultProvinces()"
+             ref="selectCity" refUrl="http://10.217.1.31:9082/eoms/form/inst/options?id=o_cmm_city"
             >
                             <option value=""  >请选择</option>
                             <option value="HK"  >HongKong</option>
@@ -5240,18 +5240,18 @@
             >
 </p>
         <input type="hidden" id="faultProvince"
-               name="faultProvince"  
+               name="faultProvince"
                value="">
         <input type="hidden" id="faultCity"
-               name="faultCity"  
+               name="faultCity"
                value="">
   <p style="width:760px;" class="nowrap">
     <label>故障地市<span style="color:red">**</span>：</label>
     <select name="selectCity" id="selectCity"
 					class="combox" style="height:21px;"  onchange='faultCitys()'
-             
-              
-              
+
+
+
             >
                             <option value="" selected >请选择</option>
                             <option value="2100"  >郑州</option>
@@ -5288,86 +5288,86 @@
 </p>
         <p class="nowrap" id="p_alarmDes">
             <label>故障描述：</label>
-            
+
                     <textarea id="alarmDes" name="alarmDes"
                               class=""
-                              
+
                               cols="120"
                               maxlength="1000"
-                                
+
                               style="min-width:580px;"
                     rows='6'
                             ></textarea>
-            
+
         </p>
             <div class="divider" id="div_alarmDes"></div>
         <p id="p_communicateflag">
             <label>是否涉及互联互通：</label>
-            
+
                     <select id="communicateflag" name="communicateflag"
                             class="combox "
-                              
-                             
+
+
                             style=""  >
                             <option value="0"
                                     selected >否</option>
                             <option value="1"
                                      >是</option>
                     </select>
-            
+
         </p>
         <p id="p_safeflag">
             <label>是否涉及安全：</label>
-            
+
                     <select id="safeflag" name="safeflag"
                             class="combox "
-                              
-                             
+
+
                             style=""  >
                             <option value="0"
                                     selected >否</option>
                             <option value="1"
                                      >是</option>
                     </select>
-            
+
         </p>
         <p class="nowrap" id="p_t1rudimentdisposeresult">
             <label>故障初步处理情况：</label>
-            
+
                     <textarea id="t1rudimentdisposeresult" name="t1rudimentdisposeresult"
                               class=""
                               rows="3"
                               cols="120"
-                              
-                                
+
+
                               style="min-width:580px;"
-                    
+
                             ></textarea>
-            
+
         </p>
             <div class="divider" id="div_t1rudimentdisposeresult"></div>
         <p class="nowrap" id="p_explain">
             <label>业务影响说明：</label>
-            
+
                     <textarea id="explain" name="explain"
                               class=""
                               rows="3"
                               cols="120"
                               maxlength="1000"
-                                
+
                               style="min-width:580px;"
-                    
+
                             ></textarea>
-            
+
         </p>
             <div class="divider" id="div_explain"></div>
         <p id="p_scenetype">
             <label>场景模式：</label>
-            
+
                     <select id="scenetype" name="scenetype"
                             class="combox "
-                              
-                            ref="scenetypese" refUrl="/eoms/form/inst/options?id=o_fault_scenetypese"
+
+                            ref="scenetypese" refUrl="http://10.217.1.31:9082/eoms/form/inst/options?id=o_fault_scenetypese"
                             style=""  >
                             <option value=""
                                     selected >请选择</option>
@@ -5384,64 +5384,64 @@
                             <option value="6"
                                      >高速</option>
                     </select>
-            
+
         </p>
         <p id="p_scenetypese">
             <label>场景细分：</label>
-            
+
                     <select id="scenetypese" name="scenetypese"
                             class="combox "
-                              
-                             
+
+
                             style=""  >
                             <option value=""
                                     selected >请选择</option>
                     </select>
-            
+
         </p>
         <p class="nowrap" id="p_remarksone">
             <label>备注1：</label>
-            
+
                     <textarea id="remarksone" name="remarksone"
                               class=""
                               rows="3"
                               cols="120"
                               maxlength="1000"
-                                
+
                               style="min-width:580px;"
-                    
+
                             ></textarea>
-            
+
         </p>
             <div class="divider" id="div_remarksone"></div>
         <p class="nowrap" id="p_remarkstwo">
             <label>备注2：</label>
-            
+
                     <textarea id="remarkstwo" name="remarkstwo"
                               class=""
                               rows="3"
                               cols="120"
                               maxlength="1000"
-                                
+
                               style="min-width:580px;"
-                    
+
                             ></textarea>
-            
+
         </p>
             <div class="divider" id="div_remarkstwo"></div>
         <p class="nowrap" id="p_remarksthree">
             <label>投诉流水号：</label>
-            
+
                     <textarea id="remarksthree" name="remarksthree"
                               class=""
                               rows="3"
                               cols="120"
                               maxlength="1000"
-                                
+
                               style="min-width:580px;"
-                    
+
                             ></textarea>
-            
+
         </p>
             <div class="divider" id="div_remarksthree"></div>
 <p style="width:760px;">
@@ -5453,15 +5453,15 @@
            readonly
            style="width:180px; "  bringBackName='orgLookup.rolename'
             >
-    <a class="btnLook" href="/eoms/sheet/fault/faultsheetTree.jsp?selJobID=501" id="gzjgxzszq" target="dialog" rel="dlg_page10" mask="true" title="选择部门"
+    <a class="btnLook" href="http://10.217.1.31:9082/eoms/sheet/fault/faultsheetTree.jsp?selJobID=501" id="gzjgxzszq" target="dialog" rel="dlg_page10" mask="true" title="选择部门"
        width="600" height="450">查找带回</a>
 </p>
         <p class="nowrap" id="p_attachfile">
             <label>附件：</label>
-            
+
                     <input type="file" size="50" id="attachfile" name="attachfile"/>
                     <button type="button" name="clear" onclick="var obj = document.getElementById('attachfile');obj.outerHTML = obj.outerHTML;document.getElementById('attachfile').value='';">删除</button>
-            
+
         </p>
             <div class="divider" id="div_attachfile"></div>
         </div>
@@ -5472,8 +5472,8 @@
                     <div class="buttonActive">
                         <div class="buttonContent">
                             <button id="saveSheet" type="submit"
-                                    onclick="return _saveSheet()" 
-                                    
+                                    onclick="return _saveSheet()"
+
                                     >保存</button>
                         </div>
                     </div>
@@ -5482,8 +5482,8 @@
                     <div class="buttonActive">
                         <div class="buttonContent">
                             <button id="sendSheet" type="submit"
-                                    onclick="return _sendSheet()" 
-                                    
+                                    onclick="return _sendSheet()"
+
                                     >派发</button>
                         </div>
                     </div>
@@ -5492,8 +5492,8 @@
                     <div class="buttonActive">
                         <div class="buttonContent">
                             <button id="" type="button"
-                                    onclick="refreshPage();" 
-                                    
+                                    onclick="refreshPage();"
+
                                     >重置</button>
                         </div>
                     </div>
@@ -5505,7 +5505,7 @@
 <script type="text/javascript">
 	//页面共用的判断必选的select，内容是否为空，只显示警示红框，不阻止form提交
   function check(){
-	//校验select是否 
+	//校验select是否
 	   if($("a[class=required]",navTab.getCurrentPanel()).length>0){
 			  $("a[class='required']",navTab.getCurrentPanel()).each(function(){
 				if($(this).text()=="请选择"){
@@ -5518,9 +5518,9 @@
   }
 
    //加载xml文件配置的js
-   
+
 	        		$(function(){
-	        		
+
 	        		    var otn=$("select[name='oneLevelTthNetwork']",navTab.getCurrentPanel()).val();
 	                    if(otn != '05'){
 	       			       $('#p_businessDamage',navTab.getCurrentPanel()).hide();
@@ -5529,14 +5529,14 @@
 	       		           $('#p_businessDamage',navTab.getCurrentPanel()).show();
 	       			       $('#div_businessDamage',navTab.getCurrentPanel()).show();
 	       		        }
-	        		
-	        		
+
+
 	        			var cellCode = $('#cellCode',navTab.getCurrentPanel()).val();
 						if(cellCode != '小区编码若为多个请用英文分号分隔'){
 							$('#cellCode',navTab.getCurrentPanel()).attr('style','min-width:580px; color:#000000');
 						}
-	        			
-	        		
+
+
         				$('#activeDefId',navTab.getCurrentPanel()).val('P.TTM.TTH.T0');
 	        			$('#p_gzsbcs',navTab.getCurrentPanel()).hide();
 	        			$('#p_gzsbcs_jt',navTab.getCurrentPanel()).hide();//编辑页面隐藏
@@ -5546,8 +5546,8 @@
 					    $('#p_sheetPrioritylevel',navTab.getCurrentPanel()).hide();
 	        			$('#p_urgencyDegree',navTab.getCurrentPanel()).hide();
 	        			$('#p_networkOfAlarmUrl',navTab.getCurrentPanel()).hide();
-	        			
-	        			
+
+
 	        			if($('#alarmDes').val()== '' || $('#alarmDes',navTab.getCurrentPanel()).val() == null){
 					    	var arr = new Array();
 							arr[0] = "[故障发生时间]:"+faultStartTime;
@@ -5571,7 +5571,7 @@
 	    					$("#div_t1rudimentdisposeresult",navTab.getCurrentPanel()).hide();
 	    					$("#t1rudimentdisposeresult",navTab.getCurrentPanel()).removeClass("required");
 						}
-						
+
 						if( s=="1" ){
 	    					$("#p_communicateflag",navTab.getCurrentPanel()).hide();
 	    					$("#p_safeflag",navTab.getCurrentPanel()).hide();
@@ -5581,7 +5581,7 @@
 						}
     					changeTime();
 	    			});
-	
+
 	    			function show(){
 				       var s=$("select[name='pretreatmentFlag']",navTab.getCurrentPanel()).val();
 				       if(s=="1"){
@@ -5601,8 +5601,9 @@
 				          $('form #role',navTab.getCurrentPanel()).val('501');
       				   }
    					}
-   					
+
    					 function shows(){
+               alert('9090')
 	                     var s=$("select[name='oneLevelTthNetwork']",navTab.getCurrentPanel()).val();
 	                     if(s != '05'){
 	       			        $('#p_businessDamage',navTab.getCurrentPanel()).hide();
@@ -5612,7 +5613,7 @@
 	       			        $('#div_businessDamage',navTab.getCurrentPanel()).show();
 	       		         }
 	                 }
-   					
+
    					 function changeTime(){
 						    var createTime=$('#createTime',navTab.getCurrentPanel()).val();
 						    if(createTime==undefined){
@@ -5630,7 +5631,7 @@
 						    var date4=new Date(date0.getTime()+1000*3600*2);//当前时间后2小时
 						    var date5 = new Date(date0.getTime()+1000*1800)//当前时间后0.5小时
 						    var date7 = new Date(date0.getTime()-1000*60)//当前时间前1分钟
-						    
+
 						    //当前时间
 						    var year0=date0.getFullYear();
 						    var month0=date0.getMonth()+1;
@@ -5652,8 +5653,8 @@
 						    var second0=date0.getSeconds();
 						    if(second0 < 10)
 						    	second0 = "0" + second0;
-						    var str0=year0+"-"+month0+"-"+day0+" "+hour0+":"+minute0+":"+second0;//当前时间  YY-MM-DD HH:mm:ss 
-						    
+						    var str0=year0+"-"+month0+"-"+day0+" "+hour0+":"+minute0+":"+second0;//当前时间  YY-MM-DD HH:mm:ss
+
 						    //12小时后
 						    var year6=date6.getFullYear();
 						    var month6=date6.getMonth()+1;
@@ -5675,8 +5676,8 @@
 						    var second6=date6.getSeconds();
 						    if(second6 < 10)
 						    	second6 = "0" + second6;
-						    var str6=year6+"-"+month6+"-"+day6+" "+hour6+":"+minute6+":"+second6;//24小时后时间  YY-MM-DD HH:mm:ss 
-						    
+						    var str6=year6+"-"+month6+"-"+day6+" "+hour6+":"+minute6+":"+second6;//24小时后时间  YY-MM-DD HH:mm:ss
+
 						    //24小时后
 						    var year1=date1.getFullYear();
 						    var month1=date1.getMonth()+1;
@@ -5698,8 +5699,8 @@
 						    var second1=date1.getSeconds();
 						    if(second1 < 10)
 						    	second1 = "0" + second1;
-						    var str1=year1+"-"+month1+"-"+day1+" "+hour1+":"+minute1+":"+second1;//24小时后时间  YY-MM-DD HH:mm:ss 
-						    
+						    var str1=year1+"-"+month1+"-"+day1+" "+hour1+":"+minute1+":"+second1;//24小时后时间  YY-MM-DD HH:mm:ss
+
 						    //48小时后
 						    var year2=date2.getFullYear();
 						    var month2=date2.getMonth()+1;
@@ -5722,7 +5723,7 @@
 						    if(second2 < 10)
 						    	second2 = "0" + second2;
 						    var str2=year2+"-"+month2+"-"+day2+" "+hour2+":"+minute2+":"+second2;
-						    
+
 						    //72小时后
 						    var year3=date3.getFullYear();
 						    var month3=date3.getMonth()+1;
@@ -5745,7 +5746,7 @@
 						    if(second3 < 10)
 						    	second3 = "0" + second3;
 						    var str3=year3+"-"+month3+"-"+day3+" "+hour3+":"+minute3+":"+second3;
-						    
+
 						    //2小时后
 						    var year4=date4.getFullYear();
 						    var month4=date4.getMonth()+1;
@@ -5768,7 +5769,7 @@
 						    if(second4 < 10)
 						    	second4 = "0" + second4;
 						    var str4=year4+"-"+month4+"-"+day4+" "+hour4+":"+minute4+":"+second4;
-						    
+
 						    //0.5小时后
 						    var year5=date5.getFullYear();
 						    var month5=date5.getMonth()+1;
@@ -5814,15 +5815,15 @@
 								    document.getElementById("affirmtimelimit",navTab.getCurrentPanel()).value=str4;
 								    document.getElementById("overTime",navTab.getCurrentPanel()).value=str2;
 								    document.getElementById("transTimeLimit",navTab.getCurrentPanel()).value=str6;
-							    
+
 							    }else if(lv=="1"){
 							    document.getElementById("affirmtimelimit",navTab.getCurrentPanel()).value=str5;
 							    document.getElementById("overTime",navTab.getCurrentPanel()).value=str1;
 							    document.getElementById("transTimeLimit",navTab.getCurrentPanel()).value=str4;
-							    
+
 				   		  }
 				   	 }
-	        	
+
 				}
-	    
+
 </script>

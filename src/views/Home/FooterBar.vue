@@ -12,8 +12,7 @@
     background-color: #d5dee6
     margin-top: 15px
   .foot-info
-    height: 40px
-    line-height: 40px
+    padding: 10px 0
     color: #6c7382
   .info-text
     margin-left: 60px

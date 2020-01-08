@@ -40,8 +40,8 @@
       return {
         loading: false,
         loginForm: {
-          username: 'zhangyuan20_gpm_13682633',
-          password: '123',
+          username: '',
+          password: '',
           captcha: '',
           src: ''
         },
@@ -62,62 +62,58 @@
     },
     methods: {
       login() {
-        let _this = this
-        this.loading = true
-        let userInfo = {
-          username: this.loginForm.username,
-          password: this.loginForm.password
-          // captcha: this.loginForm.captcha
-        }
-        let userValue = qs.stringify(userInfo)
-        // let userValue = JSON.stringify(userInfo)
-         console.log(userValue)
-		 // let userValue = qs.stringify(userInfo)
-		 // console.log(userInfo)
-		 // console.log(userValue)
-		 // this.$api.login.login(userValue).then((res) => {  // 调用登录接口
-		 //   if(res.msg != null) {
-		 //     this.$message({ message: res.msg, type: 'error' })
-		 //   } else {
-		 //     Cookies.set('token', res.data.token) // 放置token到Cookie
-		 //     sessionStorage.setItem('user', userInfo.account) // 保存用户到本地会话
-		 //     this.$store.commit('menuRouteLoaded',false)//要求重新加载导航菜单
-		 //     // this.$router.push('/')  // 登录成功，跳转到主页
-		 //   }
-		 //   this.loading = false
-		 // }).catch((res) => {
-		 //   this.$message({ message: res.message, type: 'error' })
-		 // })
-     // axios.post('http://10.89.138.147:8080/login',
-        axios.post('http://10.89.138.133:9091/login',
-          userValue,
-          // {
-          //   headers: {'Content-Type':'application/json;charset=UTF-8'}
-          // }
-        ).then((res) => {
-          console.log(res)
-          // if (res.data.code != '00') {
-          if (res.data.msg != null) {
-            this.$message({
-              message: res.data.message,
-              type: 'error'
-            })
-          } else {
-            // console.log('00')
-            Cookies.set('token', res.data.data.token)
-            sessionStorage.setItem('user', userInfo.username)
-            this.$store.commit('menuRouteLoaded', false)
-            // Cookies.set('token', res.data.responseBody.token) // 放置token到Cookie
-            // Cookies.set('Ltpatoken2', res.data.responseBody.LtpaToken2) // 放置token到Cookie
-            // sessionStorage.setItem('user', userInfo.username) // 保存用户到本地会话
-            // this.$store.commit('menuRouteLoaded', false) //要求重新加载导航菜单
-            this.$router.push('/') // 登录成功，跳转到主页
+        this.$refs.loginForm.validate((valid) => {
+          if (valid) {
+            let _this = this
+               this.loading = true
+               let userInfo = {
+                 username: this.loginForm.username,
+                 password: this.loginForm.password
+                 // captcha: this.loginForm.captcha
+               }
+               let userValue = qs.stringify(userInfo)
+                console.log(userValue)
+               axios.post('/login',
+                 userValue,
+                 // {
+                 //   headers: {'Content-Type':'application/json;charset=UTF-8'}
+                 // }
+               ).then((res) => {
+                 console.log(res)
+                 // if (res.data.code != '00') {
+                 if (res.data.code == '00') {
+                   // if (!res.data.msg) {
+                     // Cookies.set('token', res.data.data.token)
+                   Cookies.set('token', res.data.responseBody.token) // 放置token到Cookie
+                   sessionStorage.setItem('user', userInfo.username) // 保存用户到本地会话
+                   this.$store.commit('menuRouteLoaded', false) //要求重新加载导航菜单
+                   this.$router.push('/') // 登录成功，跳转到主页
+                 } else {
+                   this.$message({
+                     message: res.data.message,
+                     type: 'error'
+                   })
+                   // console.log('00')
+                   // Cookies.set('token', res.data.data.token)
+                   // sessionStorage.setItem('user', userInfo.username)
+                   // this.$store.commit('menuRouteLoaded', false)
+                   // console.log(res.data)
+                   // Cookies.set('token', res.data.responseBody.token) // 放置token到Cookie
+                   // // Cookies.set('Ltpatoken2', res.data.responseBody.LtpaToken2) // 放置token到Cookie
+                   // Cookies.set('token', res.data.data.token) // 放置token到Cookie
+                   // Cookies.set('Ltpatoken2', res.data.LtpaToken2) // 放置token到Cookie
+                   // sessionStorage.setItem('user', userInfo.username) // 保存用户到本地会话
+                   // this.$store.commit('menuRouteLoaded', false) //要求重新加载导航菜单
+                   // this.$router.push('/') // 登录成功，跳转到主页
+                 }
+                 this.loading = false
+               }).catch(function(error) {
+                 console.log('catch')
+                 this.$message({ message: res.data.message, type: 'error' })
+               })
           }
-          this.loading = false
-        }).catch(function(error) {
-          console.log('catch')
-          this.$message({ message: res.data.message, type: 'error' })
         })
+
       },
       refreshCaptcha: function() {
         this.loginForm.src = this.global.baseUrl + "/captcha.jpg?t=" + new Date().getTime();

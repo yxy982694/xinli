@@ -13,7 +13,7 @@
       </div>
       <div class="header-right">
         <div class="header-business">
-          <p class="header-business-item user-name">{{userName}} 欢迎您</p>
+          <p class="header-business-item user-name" :title="userName+' 欢迎您'">{{userName}} 欢迎您</p>
           <p class="header-business-item">
             <i class="iconfont icon-xiaoxi"></i>
             <span>消息</span>
@@ -129,7 +129,8 @@
             name: route.name,
             title: route.name,
             icon: route.meta.icon,
-            id: route.meta.index
+            id: route.meta.index,
+			      location: route.meta.location
           }
           if(this.mainTabs.length === 0 && tab.name !== '首页'){
               let homeTab = [
@@ -137,7 +138,8 @@
                       name: '首页',
                       title: '首页',
                       icon: 'fa fa-home fa-lg',
-                      id: 0
+                      id: 0,
+                      location: '0'
                   }
               ]
               this.mainTabs = this.mainTabs.concat(homeTab)

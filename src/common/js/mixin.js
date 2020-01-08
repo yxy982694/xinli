@@ -15,17 +15,20 @@ export const leftListMixin = {
                   //     location: 'http://10.217.1.31:9082/eoms/frame/frame.jsp#demo_page1',
                   //     label: 'emos'
                   // },
-              ]
+              ],
+              // showIframe: false
           }
       },
       mounted: function () {
+        console.log('mounted')
         this.initData()
       },
-      // watch: {
-      //   routerId: function () {
-      //     this.initData()
-      //   }
-      // },
+      watch: {
+        routerId: function () {
+          console.log('routerId')
+          this.initData()
+        }
+      },
       computed: {
         centerMenu: {
           get: function () {
@@ -69,27 +72,34 @@ export const leftListMixin = {
           console.log(id)
           console.log(this.routerObj)
           this.leftList = []
+          // this.showIframe = false
           if (id) { // 如果store中有id，则直接使用保存的值
             let res = this.routerObj[id]
             console.log(res)
-            for (var i=0;i<res.data.length;i++) {
-              console.log(res.data[i].children)
-              // 让左侧导航的id和children分别作为一个对象的属性和属性值
-              // 方便在知道id的情况下找到id对应的数据
-              // 主要为了在中间部分导航平铺的数组数据
-              this.setCenterMenu({
-                id: res.data[i].id,
-                arr: res.data[i].children
-              })
-              console.log(this.centerMenu)
-              obj = {
-                id: res.data[i].id,
-                // location: res.data[i].location?res.data[i].location: '/SysManage/OperProcess/ConfigManageTab/BasicManage',
-                location: res.data[i].location?res.data[i].location: '/AsideTab/SubAsideTab/LeftMenu',
-                label: res.data[i].name
+            if (res) { // 对应id中有数据 以防res不存在时,res.data报错
+              if (res.data.length > 0) { // 而且data中数组长度大于等于1
+                // this.showIframe = true
+                console.log(this.showIframe)
+                for (var i=0;i<res.data.length;i++) {
+                  console.log(res.data[i].children)
+                  // 让左侧导航的id和children分别作为一个对象的属性和属性值
+                  // 方便在知道id的情况下找到id对应的数据
+                  // 主要为了在中间部分导航平铺的数组数据
+                  this.setCenterMenu({
+                    id: res.data[i].id,
+                    arr: res.data[i].children
+                  })
+                  console.log(this.centerMenu)
+                  obj = {
+                    id: res.data[i].id,
+                    // location: res.data[i].location?res.data[i].location: '/SysManage/OperProcess/ConfigManageTab/BasicManage',
+                    location: res.data[i].location?res.data[i].location: '/AsideTab/SubAsideTab/LeftMenu',
+                    label: res.data[i].name
+                  }
+                  this.leftList.push(obj)
+                  // this.leftList.unshift(obj)
+                }
               }
-              this.leftList.push(obj)
-              // this.leftList.unshift(obj)
             }
           } else { // 如果store中不存在id的值，则重新调用一次接口，刷新页面时
             this.$api.menu.resourceManage(sessionStorage.getItem('id')).then((res) => {

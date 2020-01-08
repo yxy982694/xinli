@@ -47,82 +47,249 @@
 <script type="text/javascript" src="../etc/easyui/js/jquery.pagination.js"></script>
 <script type="text/javascript" src="../etc/easyui/js/jquery.datagrid.js"></script>
 <script type="text/javascript" src="../etc/easyui/js/easyui-lang-zh_CN.js"></script>
+
 <style type="text/css">
-  *{
-    padding: 0;
-    margin: 0;
-  }
-  body,html{
+  html,body{
     height: 100%;
-    width: 100%;
+    background:none;
   }
-  #container {
-    position: relative;
+  #container{
+    height:100%;
+  }
+  #splitBarProxy,#splitBar{
+    height:auto !important;
+    top: 0 !important;
+    bottom: 40px !important;
+  }
+  #navTab-tabssss{
+    position:absolute;
+    left: 0 !important;
+  }
+  .tabsPage .tabsPageContent{
+    overflow:auto !important;
+  }
+  #leftside{
+    position:absolute;
     top: 0;
-    left: 0;
-    height: 100%;
+    bottom: 0;
+  }
+  #sidebar{
+    height:auto !important;
+    top: 0;
+    bottom: 40px;
   }
   #navTab{
     height:100%;
-    overflow: hidden;
-    position: relative;
-    left: 0;
-    top: 0;
   }
   #div_content_id{
-    overflow-y: hidden !important;
-    height: 100%;
+    position:absolute;
+    top: 28px;
+    bottom: 40px;
+    height:auto !important;
+    width:100%;
+    overflow:hidden;
   }
-  #qiantao{
-    overflow-y: auto;
-    overflow-x: hidden;
-    height: 100%;
+  #div_content_id .page{
+    height:100%;
+    width: 100%;
+    overflow-x:hidden;
+    overflow-y:auto;
+  }
+  #div_content_id .page .pageFormContent{
+    height:100%;
+    width: 100%;
+    background-image: url('../etc/img/newWelcome.png');
+    background-repeat: no-repeat;
+    background-position: -10px -3px;
+    background-size: cover;
+    padding: 0;
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -ms-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+    filter: grayscale(100%);
+    filter: gray;
+    opacity: 1;
+  }
+  #navTab,
+  #navTab .tabsPageHeader,
+  #navTab .tabsPageHeaderContent{
+    width: 100%;
+  }
+  .footer-container{
+    background-color: #d5dee6;
+    margin-top: 15px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+  }
+  .foot-info{
+    padding: 10px 0;
+    color: #6c7382;
+  }
+  .info-text{
+    margin-left: 60px;
   }
 </style>
+
+<script type="text/javascript">
+	var wb_rootPath="/workbench";
+	$(function(){
+	  window.focus();
+		DWZ.init("../etc/dwz-ria/dwz.frag.xml", {
+			loginUrl:"/workbench/",// loginTitle:"登录",	// 弹出登录对话框
+			statusCode:{ok:200, error:300, timeout:301}, //【可选】
+			pageInfo:{pageNum:"pageNum", numPerPage:"numPerPage", orderField:"orderField", orderDirection:"orderDirection"}, //【可选】
+			debug:false,	// 调试模式 【true|false】
+			callback:function(){
+				initEnv();
+				$("#themeList").theme({themeBase:"../etc/dwz-ria/themes"}); // themeBase 相对于index页面的主题base路径
+				var _myw = screen.availWidth;   //定义一个myw，接受到当前全屏的宽
+	      		var _myh = screen.availHeight;  //定义一个myw，接受到当前全屏的高
+	      		window.moveTo(0, 0);           //把window放在左上脚
+	      		window.resizeTo(_myw, _myh);     //把当前窗体的长宽跳转为myw和myh
+				openUrl();
+			}
+		});
+		var type=getQueryVariable("type");
+		$.ajax({
+			async:false,
+			cache:false,
+			type: 'POST',
+			contentType:"application/json",
+			url: "/workbench/menu/getMenuTree?type="+type,//请求的action路径
+			error: function () {//请求失败处理函数
+				alert('请求失败');
+			},
+			success:function(data){ //请求成功后处理函数。
+				$('#menutree').html(data.menuTree);
+				$('#mytitle').html(data.mytitle);
+				$("a").click(function(){
+					saveEomslog($(this).html());
+				});
+			}
+		});
+	});
+
+	function getQueryVariable(variable){
+               var query = window.location.search.substring(1);
+               var vars = query.split("&");
+               for (var i=0;i<vars.length;i++) {
+                       var pair = vars[i].split("=");
+                       if(pair[0] == variable){return pair[1];}
+               }
+               return(false);
+        }
+    //保存点击菜单日志信息
+    function saveEomslog(title){
+    	$.ajax({
+    		async:false,
+    		cache:false,
+    		type: 'POST',
+    		contentType:"json",
+    		url: "../about/saveEomsLog?title="+escape(encodeURIComponent(title)),//请求的action路径
+    		error: function () {//请求失败处理函数
+
+    		},
+    		success:function(data){ //请求成功后处理函数。
+
+    		}
+    	});
+    }
+
+	function openInParentTab( url,title,tabGroup){
+	    var url_ = url;
+	    var variable = navTab;
+	    variable.openTab(tabGroup, url_, {title:title,external:true});
+	}
+
+	function closemywin(){
+		window.close();
+	}
+
+	function layout(){
+		var wh = $(window).height();
+		var ww = $(window).width();
+	  $("#div_content_id").css("height",$(window).height());
+    console.log('wh:'+wh)
+    console.log('contentH:'+$("#div_content_id").height())
+	}
+	// layout();
+	// $(window).resize(function(){layout()});
+
+</script>
 </head>
 <body>
 <div id="layout">
-  <div id="container">
-    <div id="navTab" class="tabsPage">
-      <div id="div_content_id" style="position:absolute;width:100%;overflow-x:hidden;overflow-y:scroll;" class="navTab-panel tabsPageContent layoutBox">
-        <div class="page unitBox" id="qiantao"></div>
-      </div>
+		<div id="leftside" style="top:0">
+			<div id="sidebar_s">
+				<div class="collapse">
+					<div class="toggleCollapse"><div></div></div>
+				</div>
+			</div>
+			<div id="sidebar">
+				<div id="mytitle" class="toggleCollapse"></div>
+        <div  class="accordion" fillSpace="sidebar" >
+          <div id="menutree" class="accordionContent"></div> <!-- style="background-color: #d4f5f0" -->
+        </div>
+			</div>
+		</div>
+		<div id="container" style="top:0">
+			<div id="navTab" class="tabsPage">
+				<div class="tabsPageHeader">
+					<div class="tabsPageHeaderContent">
+						<ul id="navTab-tabssss" class="navTab-tab">
+							<li tabid="main" class="main"><a href="javascript:;"><span><span class="home_icon">我的主页</span></span></a></li>
+						</ul>
+					</div>
+					<div class="tabsLeft">left</div>
+					<div class="tabsRight">right</div>
+					<div class="tabsMore">more</div>
+				</div>
+				<ul class="tabsMoreList">
+					<li><a href="javascript:;">我的主页</a></li>
+				</ul>
+				<div id="div_content_id" class="navTab-panel tabsPageContent layoutBox">
+					<div class="page unitBox">
+						<div class="pageFormContent"> <!-- layoutH="80" style="margin-right:230px;" -->
+						</div>
+            <!-- <div id="qiantao"></div> -->
+					</div>
+				</div>
+			</div>
+		</div>
+    <div class="footer-container">
+      <p class="foot-info font-smallnum">
+        <span>版权所有:中国移动通信集团河南有限公司</span>
+        <span class="info-text">技术支持:杭州东方通信软件技术有限公司</span>
+        <span class="info-text">服务热线:15936252150</span>
+      </p>
     </div>
   </div>
-</div>
 </body>
-<script type="text/javascript">
-  console.log('90909')
-  // if (!sessionStorage.getItem('oldScriptFlag')) {
-    var ss
-    if (!ss) {
-      ss = setTimeout(function () {
-        let con = document.getElementById('qiantao')
-        let oldScripts = document.querySelectorAll('#qiantao script')
-        let newScript
-        console.log(con)
-        console.log(oldScripts)
-        for (let i=0;i<oldScripts.length;i++) {
-          console.log(oldScripts[i].src)
-          if (oldScripts[i].src) {
-            newScript = document.createElement('script')
-            newScript.type = 'text/javascript'
-            newScript.src = oldScripts[i].src
-          } else {
-            newScript = document.createElement('script')
-            newScript.type = 'text/javascript'
-            newScript.innerHTML = oldScripts[i].innerHTML
-          }
-          con.removeChild(oldScripts[i])
-          con.appendChild(newScript)
-        }
-        console.log(con.innerHTML)
-        sessionStorage.setItem('oldScriptFlag',true)
-        // console.log(oldScripts)
-      }, 500)
-    }
-
-  // }
-
-</script>
 </html>
+<script type="text/javascript">
+var mytabid = "";
+function openUrl(){
+	var me="null";
+	//alert(me);
+	if(me!='null'){
+		var title = "<%=urlName%>";
+		var tabid = "<%=urlCode%>";
+		mytabid = tabid;
+		var external = false;
+		if("<%=external%>"=='true')
+			external=true;
+		navTab.openTab(tabid, me,{title:title,fresh:true,external:external});
+		//navTab.reloadFlag(tabid);
+	}
+	setTimeout(function (){//800毫秒后刷新tab
+		navTab.reloadFlag(mytabid);
+	}, 800);
+	setTimeout(function (){//解决导航莫名其妙的隐藏问题
+		$("#navTab-tabssss").css("LEFT",0 + 'px');
+	}, 4000);
+};
+</script>

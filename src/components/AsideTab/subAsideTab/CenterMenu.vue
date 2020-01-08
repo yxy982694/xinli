@@ -2,7 +2,7 @@
   <div class='children-tab'>
     <p class="children-tab-p" v-for="(item,index) in centerList" :key="item.id+index" @click="addTab(item.label,item.location,item.id)">
      <!-- <img src="../../../common/image/contentImg22.png" class="children-tab-image" /> -->
-     <i class="iconfont icon-daichuli"></i>
+     <i class="iconfont" :class="iconClass(item.label)"></i>
      <span class="children-tab-text">{{item.label}}</span>
     </p>
   </div>
@@ -59,6 +59,46 @@
               'setCurrentTitle': 'setCurrentTitle',
               'setMainIdStoreTabObj': 'setMainIdStoreTabObj'
             }),
+            // 为不同工单添加icon图标
+            iconClass: function (val) {
+              switch (val) {
+                case '新建工单':
+                  return 'icon-tianxiegongdan-kuozhan-hebing'
+                  break
+                case '已派':
+                  return 'icon-yijiedan'
+                  break
+                case '工单查询':
+                  return 'icon-chaxun'
+                  break
+                case '工单权限查询':
+                  return 'icon-chaxun'
+                  break
+                case '已归档':
+                  return 'icon-guidang'
+                  break
+                case '待归档':
+                  return 'icon-daiban'
+                  break
+                case '已处理':
+                  return 'icon-icon-test'
+                  break
+                case '未接工单':
+                  return 'icon-weijiegongdan'
+                  break
+                case '已接工单':
+                  return 'icon-yijiedan'
+                  break
+                case '已撤销':
+                  return 'icon-chexiao1'
+                  break
+                case '草稿箱':
+                  return 'icon-776bianjiqi_congcaogaoxiangjiazai'
+                  break
+                default:
+                  return 'icon-daiban'
+              }
+            },
            addTab(targetLabel,name,id) {
              console.log(targetLabel+'+'+name+'+'+id)
                 this.setCurrentTabLabel(name)
@@ -105,7 +145,7 @@
     .children-tab-p
       width: 12%
       min-width: 120px
-      height: 60px
+      height: 52px
       text-align: center
       border: 1px solid $color-lightgray
       // box-shadow: 0 0 1px 1px $color-lightgray

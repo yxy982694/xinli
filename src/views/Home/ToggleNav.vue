@@ -31,7 +31,20 @@
         },
         mainTabsActiveName: {
           get () { return this.$store.state.tab.mainTabsActiveName },
-          set (val) { this.$store.commit('updateMainTabsActiveName', val) }
+          set (val) { this.$store.commit('updateMainTabsActiveName', val)
+        },
+        routerLocation: {
+          get: function () {
+            return this.$store.state.routerIdData.routerLocation
+          },
+          set: function () {}
+        },
+        showIframe: {
+          get: function () {
+            return this.$store.state.showIframe.showIframe
+          },
+          set: function () {}
+        }
         },
         keepAliveList(){
             // 获取缓存的路由列表
@@ -52,6 +65,8 @@
         'setContextMenuFlag': 'setContextMenuFlag',
         'setRouterId': 'setRouterId',
         'setRouterObj': 'setRouterObj',
+        'setRouterLocation': 'setRouterLocation',
+        'setShowIframe': 'setShowIframe'
       }),
       renderTab: function () {
         var _this = this
@@ -85,6 +100,14 @@
         sessionStorage.setItem('id', tab[0].id)
         // sessionStorage.setItem('arr', this.setRouterObj[tab[0].id].data)
         this.setRouterId(tab[0].id)
+        this.setRouterLocation(tab[0].location)
+        console.log('>>>>>>>>')
+        console.log(tab[0].location)
+        if (parseInt(tab[0].location)) {
+          this.setShowIframe(true)
+        } else {
+          this.setShowIframe(false)
+        }
         if (tab.length >= 1) {
           this.$router.push({ name: tab[0].name })
         }
@@ -102,9 +125,15 @@
             this.$router.push({ name: this.mainTabs[this.mainTabs.length - 1].name }, () => {
               this.mainTabsActiveName = this.$route.name
               this.tempActive = this.$route.name
+              if (parseInt(this.mainTabs[this.mainTabs.length - 1].location)) {
+                this.setShowIframe(true)
+              } else {
+                this.setShowIframe(false)
+              }
             })
             sessionStorage.setItem('id', this.$route.meta.index)
             this.setRouterId(this.$route.meta.index)
+
             // sessionStorage.setItem('arr', this.setRouterObj[this.$route.meta.index].data)
           }
         } else {
@@ -112,7 +141,8 @@
             name: '首页',
             title: '首页',
             icon: 'fa fa-home fa-lg',
-            id: 0
+            id: 0,
+            location: '0'
           }]
           this.$router.push("/")
           this.mainTabsActiveName = '首页'
@@ -128,6 +158,11 @@
         this.mainTabs = this.mainTabs.filter(item => item.name === this.tempActive || item.name==="首页")
         sessionStorage.setItem('id', this.mainTabs[1].id)
         this.setRouterId(this.mainTabs[1].id)
+        if (parseInt(this.mainTabs[1].location)) {
+          this.setShowIframe(true)
+        } else {
+          this.setShowIframe(false)
+        }
         // sessionStorage.setItem('arr', this.setRouterObj[this.mainTabs[1].id].data)
         this.$router.push({ name: this.tempActive})
       },
@@ -137,7 +172,8 @@
           name: '首页',
           title: '首页',
           icon: 'fa fa-home fa-lg',
-          id: 0
+          id: 0,
+          location: '0'
         }]
         this.$router.push("/")
         this.mainTabsActiveName = '首页'
@@ -145,11 +181,18 @@
       // tabs, 刷新当前
       tabsRefreshCurrentHandle () {
         console.log(sessionStorage.getItem('id'))
-        let tempTabName = this.mainTabsActiveName
-        // this.removeTabHandle(tempTabName)
-        this.$nextTick(() => {
-          this.$router.push({ name: tempTabName})
+        this.$api.menu.resourceManage(sessionStorage.getItem('id')).then((res) => {
+          this.setRouterObj({
+            id: sessionStorage.getItem('id'),
+            arr: res
+          })
+          this.setRouterId(sessionStorage.getItem('id'))
         })
+        // let tempTabName = this.mainTabsActiveName
+        // this.removeTabHandle(tempTabName)
+        // this.$nextTick(() => {
+        //   this.$router.push({ name: tempTabName})
+        // })
       }
     },
     watch: {
