@@ -1,0 +1,109 @@
+@import "./variable";
+// 投诉管理样式
+.el-con
+  // height: 400px
+ .el-dropdown
+  width: 40px
+  height: 40px
+  border: 1px solid $color-lightgray
+  position: absolute
+  right: 0
+  top: 0
+.el-container .el-dropdown-selfdefine
+  width: 40px
+  height: 40px
+  text-align: center
+  line-height: 40px
+.el-container .el-icon-arrow-down
+  font-size: 20px
+.el-container .el-tabs__item
+  height: 28px
+  line-height: 28px
+  padding: 0 5px !important
+  // boerder: none !important
+  border: 1px solid $color-lightgray !important
+  // margin-left: 5px
+.el-container .el-main
+  padding: 0 !important
+  height: 100%
+.el-container .el-tabs--card>.el-tabs__header
+  padding: 3px 0
+  border: 1px solid $color-lightgray
+  // border-bottom: 1px solid $color-lightgray !important
+  box-shadow: 0 0 5px 1px $color-lightgray
+  padding-left: 3px
+  // background-color: #f9f9f9
+  background-color: rgb(233, 240, 242)
+.el-container .el-tabs--card>.el-tabs__header .el-tabs__item.is-active
+  // background-color: #42B983 !important
+  background-color: #9896a0 !important
+  color: #fff !important
+  border-bottom: none !important
+.el-container .el-tabs--card>.el-tabs__header .el-tabs__item
+   // border-bottom:none !important
+   // border-bottom: 1px solid $color-lightgray
+   // background: url('../image/tabspage.png') no-repeat
+   // background-size: 100% 100%
+   &+.el-tabs__item
+     // border-left: 1px solid $color-border !important
+.el-container .el-tabs--card>.el-tabs__header .el-tabs__item:first-child
+  // padding-left: 23px !important
+  display: flex
+  align-items: center
+  justify-content: space-around
+  border-left: 1px solid $color-lightgray !important
+.el-container .el-tabs--card>.el-tabs__header .el-tabs__item:first-child:before
+  content: ''
+  display: inline-block
+  width: 16px
+  height: 16px
+  background: url('../image/mainIcon.png') no-repeat
+  background-size: 100% 100%
+  margin-right: 3px
+.el-container .el-tabs__nav
+  display: flex
+  align-items: center
+// .el-aside+.el-container
+//   margin-left: 188px
+//   margin-right: 8px
+.el-container .el-tabs__content
+    width: 100%
+    overflow: hidden
+    flex: 1
+    // overflow: auto
+    position: relative
+    // height: 422px
+    border: 1px solid $color-border
+    box-sizing: border-box
+.children-container
+  position: relative
+  height: 100%
+  overflow: auto
+  display: flex
+  flex-direction: column
+  justity-content: space-between
+  // margin-top: 5px
+  .table-container
+   flex: 1
+.left-right-container
+  padding: 10px 0 0 0
+  display: flex
+  flex-direction: column
+  justify-content: space-between
+  height: 100%
+  overflow: hidden
+  box-sizing: border-box
+  // padding: 0 8px
+.left-right-container .footer-container
+  // margin-top: 20px
+.el-con2 .el-tab-pane
+  height: 100%
+  overflow: hidden
+.el-con2 .el-table
+  overflow: auto
+  flex: 1
+.el-tabs__nav-next, .el-tabs__nav-prev
+  line-height: 30px
+.tab-down-menu p:hover
+  background: #dfdfdf
+  // color: #fff

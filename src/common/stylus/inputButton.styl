@@ -1,0 +1,172 @@
+@import "./variable";
+@import "./mixin";
+.el-button-group
+  margin: 2px 0
+.el-table .cell
+  // text-align: center
+  line-height: 20px
+  font-size: 12px
+  no-wrap()
+th .cell
+  line-height: 25px !important
+.resource-container .el-table .cell
+  line-height: 30px
+.resource-container th .cell
+    line-height: 35px !important
+.el-table th
+  padding: 0
+.el-table td
+  padding: 1px 0
+// input框的样式
+.el-input__inner
+ height: 30px
+ line-height: 30px
+ width: 180px
+.is-in-pagination .el-input__inner
+  width: 35px
+  height: 25px !important
+  border-radius: 0
+.el-form-item
+  display: flex
+  padding-right: 20px
+.el-dialog
+  z-index: 8989898989898
+.el-form-item__content
+  margin-left: 0 !important
+  flex:1
+  line-height: 22px
+  .el-input
+    width: 100%
+    .el-input__inner
+      width: 100%
+.align-left .cell
+  // text-align: left
+.cursor-pointer
+  cursor: pointer
+.el-radio__label
+  padding-left: 6px
+.el-radio
+  margin-right: 15px
+.el-input
+  width: 200px
+  // 日期时间控件
+.el-range-editor.el-input__inner
+  margin: 0 20px
+.el-date-editor .el-range__icon
+.el-date-editor .el-range-separator
+  display: flex
+  align-items: center
+  justify-content: center
+ // 分页样式
+.content-radius .el-pagination
+   display: flex
+   align-items: center
+.content-radius .is-in-pagination
+   height: 25px
+.content-radius .el-pagination__jump
+   height: 25px !important
+   line-height: 25px !important
+.content-radius .el-input__inner
+   height: 25px !important
+   line-height: 25px !important
+   width: 25px !important
+   border-radius: 2px !important
+.el-pagination.is-background.el-pagination--small .btn-next, .el-pagination.is-background.el-pagination--small .btn-prev, .el-pagination.is-background.el-pagination--small .el-pager li
+   width: 25px
+   height: 25px
+   border-radius: 2px
+   background-color: #fff
+   color: $color-textblack
+   border: 1px solid $color-border
+.el-pagination--small .btn-next, .el-pagination--small .btn-prev, .el-pagination--small .el-pager li, .el-pagination--small .el-pager li.btn-quicknext, .el-pagination--small .el-pager li.btn-quickprev, .el-pagination--small .el-pager li:last-child
+   line-height: 25px !important
+.el-pagination.is-background .el-pager li:not(.disabled).active
+   background-color: #fff
+   color: $color-textblue
+   border: 1px solid $color-textblue
+.el-pagination__sizes .el-input__inner
+  width: 100px
+  height: 25px !important
+  line-height: 25px !important
+.el-pagination__total
+  // width: 80px
+  // padding-right: 20px
+  height: 25px !important
+  line-height: 25px !important
+.el-pagination__sizes
+.el-pagination__sizes .el-select
+.el-pagination__sizes .el-select .el-input
+  height: 25px !important
+  line-height: 25px !important
+.el-pagination button, .el-pagination span:not([class*=suffix])
+  height: 25px !important
+  line-height: 25px !important
+  min-width: 25px !important
+  color: #303133
+  // font-weight: 700
+.el-pager li
+  height: 25px !important
+  line-height: 25px !important
+  min-width: 25px !important
+  // margin-left: 5px
+.el-pager+.btn-next
+  // margin-left: 5px
+  // 新增编辑弹框样式
+.el-dialog__body .el-form-item
+  display: flex
+  align-items: center
+.el-table .sort-caret.ascending
+  top: 0
+.el-table .sort-caret.descending
+  bottom: 3px
+.el-table .caret-wrapper
+  height: 25px
+.el-pagination .el-select .el-input .el-input__inner
+  color: #303133
+  border-radius: 0
+  border: none !important
+  // font-weight: 700
+.el-pagination__jump
+  position: relative
+.el-pagination__jump::before
+  content: '第'
+  font-size: 13px
+  display: inline-block
+  text-align: right
+  width: 28px
+  height: 25px
+  position: absolute
+  left: 0
+  top: 0
+  background-color: #DFDFDF
+.upcom-page .el-pagination__jump::before
+  content: '第'
+  font-size: 13px
+  display: inline-block
+  text-align: right
+  width: 28px
+  height: 25px
+  position: absolute
+  left: 0
+  top: 0
+  background-color: #fff
+.el-pagination__editor
+  height: 25px !important
+.el-table__row .el-button--mini
+.el-table__row .el-button--mini.is-round
+  padding: 3px 15px
+.resource-container .el-table__row .el-button--mini
+.resource-container .el-button--mini.is-round
+  padding: 6px 15px
+.right-bottom .table-container
+    margin-top: 0 !important
+.el-tree>.el-tree-node
+    min-width:100%
+    display: inline-block
+.menu-location .el-form-item__content
+   display: flex
+   align-items: center
+   justify-content: space-between
+.menu-location input
+   flex: 1
+   margin-right: 20px
