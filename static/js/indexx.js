@@ -1,1 +1,0 @@
-window.str = '33'
