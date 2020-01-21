@@ -3,7 +3,7 @@
     <div class="content-radius">
       <div class="section-title">
         <p class="section-title-name">专家值班</p>
-        <p class="section-title-click cursor-pointer">全部 >></p>
+        <p class="section-title-click">全部 >></p>
       </div>
       <div class="duty-container">
         <div class="duty-item" v-for="item in dutyData" :key="item.ID">
@@ -33,8 +33,10 @@
           this.$api.home.getExpertDutyList().then((res) => {
               console.log(res)
               const result = res
-              for (let i=0;i<6&&i<res.data.length;i++) {
-                this.dutyData.push(res.data[i])
+              if (res.length > 0) {
+                for (let i=0;i<6&&i<res.data.length;i++) {
+                  this.dutyData.push(res.data[i])
+                }
               }
           })
       },

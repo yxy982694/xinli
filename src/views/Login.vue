@@ -8,20 +8,20 @@
     <el-form-item prop="password">
       <el-input type="password" v-model="loginForm.password" auto-complete="off" placeholder="密码"></el-input>
     </el-form-item>
-    <el-form-item>
-      <el-col :span="12">
-        <el-form-item prop="captcha">
-          <el-input type="test" v-model="loginForm.captcha" auto-complete="off" placeholder="验证码, 单击图片刷新" style="width: 100%;">
-          </el-input>
-        </el-form-item>
-      </el-col>
-      <el-col class="line" :span="1">&nbsp;</el-col>
-      <el-col :span="11">
-        <el-form-item>
-          <img style="width: 100%;" class="pointer" :src="loginForm.src" @click="refreshCaptcha">
-        </el-form-item>
-      </el-col>
-    </el-form-item>
+    <!-- <el-form-item> -->
+      <!-- <el-col :span="12"> -->
+        <!-- <el-form-item prop="captcha"> -->
+          <!-- <el-input type="test" v-model="loginForm.captcha" auto-complete="off" placeholder="验证码, 单击图片刷新" style="width: 100%;"> -->
+          <!-- </el-input> -->
+        <!-- </el-form-item> -->
+      <!-- </el-col> -->
+      <!-- <el-col class="line" :span="1">&nbsp;</el-col> -->
+      <!-- <el-col :span="11"> -->
+        <!-- <el-form-item> -->
+          <!-- <img style="width: 100%;" class="pointer" :src="loginForm.src" @click="refreshCaptcha"> -->
+        <!-- </el-form-item> -->
+      <!-- </el-col> -->
+    <!-- </el-form-item> -->
     <el-form-item style="width:100%;">
       <el-button type="primary" style="width:48%;" @click.native.prevent="reset">重 置</el-button>
       <el-button type="primary" style="width:48%;" @click.native.prevent="login" :loading="loading">登 录</el-button>
@@ -73,7 +73,10 @@
                }
                let userValue = qs.stringify(userInfo)
                 console.log(userValue)
-               axios.post('/login',
+                // http://10.89.138.133:9091/
+                axios.post('http://10.89.138.145:9091/login',
+               // axios.post('http://10.217.1.31:8080/login',
+               // axios.post('/login',
                  userValue,
                  // {
                  //   headers: {'Content-Type':'application/json;charset=UTF-8'}
@@ -81,10 +84,12 @@
                ).then((res) => {
                  console.log(res)
                  // if (res.data.code != '00') {
-                 if (res.data.code == '00') {
-                   // if (!res.data.msg) {
-                     // Cookies.set('token', res.data.data.token)
-                   Cookies.set('token', res.data.responseBody.token) // 放置token到Cookie
+                 // if (res.data.code == '00') {
+                   // if (res.data.code == '99999') {
+                   if (!res.data.msg) {
+                     Cookies.set('token', res.data.data.token)
+                     // console.log(res.data)
+                   // Cookies.set('token', res.data.responseBody.token) // 放置token到Cookie
                    sessionStorage.setItem('user', userInfo.username) // 保存用户到本地会话
                    this.$store.commit('menuRouteLoaded', false) //要求重新加载导航菜单
                    this.$router.push('/') // 登录成功，跳转到主页
@@ -116,31 +121,37 @@
 
       },
       refreshCaptcha: function() {
-        this.loginForm.src = this.global.baseUrl + "/captcha.jpg?t=" + new Date().getTime();
+        this.loginForm.src = this.global.baseUrl + "captcha.jpg?t=" + new Date().getTime();
       },
       reset() {
         this.$refs.loginForm.resetFields()
       }
     },
     mounted() {
-      this.refreshCaptcha()
+      // this.refreshCaptcha()
     }
   }
 </script>
 
 <style lang="scss" scoped>
   .login-container {
+    position:absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
     -webkit-border-radius: 5px;
     border-radius: 5px;
     -moz-border-radius: 5px;
     background-clip: padding-box;
-    margin: 100px auto;
     width: 350px;
     padding: 35px 35px 15px 35px;
     background: #fff;
     border: 1px solid #eaeaea;
     box-shadow: 0 0 25px #cac6c6;
-
+    height: 100%;
+    max-height: 240px;
+    overflow-y: auto;
+    overflow-x: hidden;
     .title {
       margin: 0px auto 30px auto;
       text-align: center;

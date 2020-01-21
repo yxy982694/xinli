@@ -13,7 +13,9 @@ module.exports = {
     proxyTable: {
       '/': {
           // target: 'http://10.89.138.133:9091/',
-          target: 'http://10.217.1.31:8080/',
+          // target: 'http://10.217.1.31:8080/',
+          // target: 'http://10.217.1.31:9082/',
+          target: 'http://10.89.138.145:9091/',
           changeOrigin: true,
           logLevel: 'debug'
        },

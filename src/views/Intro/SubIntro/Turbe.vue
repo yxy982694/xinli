@@ -4,7 +4,7 @@
       <p class="section-title-name">快速通道</p>
     </div>
     <div class="fast-container">
-      <div class="fast-item font-smallnum" v-for="item in channelList" :key="item.id" :title="item.name">
+      <div class="fast-item" v-for="item in channelList" :key="item.id" :title="item.name">
         <p class="fast-item-icon"><i class="iconfont" :class="item.url"></i></p>
         <p class="fast-item-text">
           <span class="fast-text-new">新增</span>
@@ -118,7 +118,7 @@
           padding-right: 15px
           text-align: right
           .fast-text-new
-            font-size: $font-size-medium
+            font-size: $font-size-medium-s
             margin-bottom: 17px
             color: $color-textblack
             display: block

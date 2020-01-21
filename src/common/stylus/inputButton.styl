@@ -1,36 +1,47 @@
 @import "./variable";
 @import "./mixin";
+// 登录页面按钮样式
+.login-container .el-form-item__content
+  display: flex
+.login-container .el-input__inner
+  height: 35px
+  line-height: 35px
+.login-container .el-button
+  padding: 10px 20px
 .el-button-group
   margin: 2px 0
 .el-table .cell
-  // text-align: center
   line-height: 20px
-  font-size: 12px
+  font-size: $font-size-small
   no-wrap()
 th .cell
-  line-height: 25px !important
-.resource-container .el-table .cell
-  line-height: 30px
-.resource-container th .cell
-    line-height: 35px !important
+  line-height: 25px
 .el-table th
   padding: 0
 .el-table td
   padding: 1px 0
+// 资源管理中单元格样式
+.resource-container .el-table .cell
+  line-height: 25px
+.resource-container th .cell
+    line-height: 30px
 // input框的样式
+.el-input
+  width: 200px
 .el-input__inner
- height: 30px
- line-height: 30px
+ height: 25px
+ line-height: 25px
  width: 180px
+ font-size: $font-size-small
 .is-in-pagination .el-input__inner
   width: 35px
-  height: 25px !important
   border-radius: 0
 .el-form-item
   display: flex
   padding-right: 20px
 .el-dialog
   z-index: 8989898989898
+// 弹框中input的样式
 .el-form-item__content
   margin-left: 0 !important
   flex:1
@@ -39,16 +50,10 @@ th .cell
     width: 100%
     .el-input__inner
       width: 100%
-.align-left .cell
-  // text-align: left
-.cursor-pointer
-  cursor: pointer
 .el-radio__label
   padding-left: 6px
 .el-radio
   margin-right: 15px
-.el-input
-  width: 200px
   // 日期时间控件
 .el-range-editor.el-input__inner
   margin: 0 20px
@@ -67,8 +72,6 @@ th .cell
    height: 25px !important
    line-height: 25px !important
 .content-radius .el-input__inner
-   height: 25px !important
-   line-height: 25px !important
    width: 25px !important
    border-radius: 2px !important
 .el-pagination.is-background.el-pagination--small .btn-next, .el-pagination.is-background.el-pagination--small .btn-prev, .el-pagination.is-background.el-pagination--small .el-pager li
@@ -86,11 +89,7 @@ th .cell
    border: 1px solid $color-textblue
 .el-pagination__sizes .el-input__inner
   width: 100px
-  height: 25px !important
-  line-height: 25px !important
 .el-pagination__total
-  // width: 80px
-  // padding-right: 20px
   height: 25px !important
   line-height: 25px !important
 .el-pagination__sizes
@@ -103,11 +102,15 @@ th .cell
   line-height: 25px !important
   min-width: 25px !important
   color: #303133
+  font-size: $font-size-small
   // font-weight: 700
+.el-pagination__sizes .el-input .el-input__inner
+  font-size: $font-size-small
 .el-pager li
   height: 25px !important
   line-height: 25px !important
   min-width: 25px !important
+  font-size: $font-size-small
   // margin-left: 5px
 .el-pager+.btn-next
   // margin-left: 5px
@@ -155,11 +158,6 @@ th .cell
 .el-table__row .el-button--mini
 .el-table__row .el-button--mini.is-round
   padding: 3px 15px
-.resource-container .el-table__row .el-button--mini
-.resource-container .el-button--mini.is-round
-  padding: 6px 15px
-.right-bottom .table-container
-    margin-top: 0 !important
 .el-tree>.el-tree-node
     min-width:100%
     display: inline-block
@@ -170,3 +168,43 @@ th .cell
 .menu-location input
    flex: 1
    margin-right: 20px
+   // 树形结构
+.el-tree-node__label
+  font-size: $font-size-small
+// 按钮组的样式
+.btn-container
+    padding: 2px 0 0 0
+	   display: flex
+	   // border: 1px solid green
+	   border-top: none
+	.btn-container .el-button
+    border-radius: 0
+	  // margin-left: 0
+  .btn-container .el-button+.el-button
+    margin-left: 0px !important
+    border-left: 1px solid #fff
+   // 改变table高度时,多出gutter
+.gutter
+  display: none !important
+  width: 0 !important
+  // 右键菜单样式
+.shortcut-container
+      position: absolute
+      left: 0
+      top: 0
+      width: 65px
+      text-align: center
+      line-height: 30px
+      background: #fff
+      border: 1px solid #dfdfdf
+      padding:2px 0 4px 0
+      cursor: pointer
+      z-index: 9999999
+      .el-button
+        margin-left: 0
+        width: 65px
+        border: none
+   // 搜索框样式
+.search-container
+    padding: 2px 20px 0 20px
+    display: flex

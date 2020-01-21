@@ -90,7 +90,7 @@
 import "@/common/stylus/sys.styl"
 import PopupTreeInput from "@/components/PopupTreeInput"
 import KtTable from "@/components/KtTable/KtTable"
-import KtButton from "@/components/KtButton/index"
+import KtButton from "@/components/KtButton/KtButton"
 import KtButtons from "@/components/KtButtons/KtButtons"
 import TableColumnFilterDialog from "@/views/Core/TableColumnFilterDialog"
 import { format } from "@/utils/datetime"

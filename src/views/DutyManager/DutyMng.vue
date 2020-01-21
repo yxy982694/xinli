@@ -3,7 +3,7 @@
 </template>
 
 <script>
-    import AsideTab from '@/components/AsideTab/index'
+    import AsideTab from '@/components/AsideTab/AsideTab'
     import { leftListMixin } from '@/common/js/mixin.js'
     export default {
         mixins: [leftListMixin],

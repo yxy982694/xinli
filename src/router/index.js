@@ -45,8 +45,20 @@ const router = new Router({
     }
   ]
 })
-
+// url只要改变就会执行这个router.beforeEach
+// 不管是通过点击按钮跳转的,还是通过浏览器前进和后退进行跳转的
 router.beforeEach((to, from, next) => {
+  // 是否显示iframe
+  if (to.path.length>1&&parseInt(to.path.toString().substr(1))) {
+    store.commit('setShowIframe', true)
+  } else {
+    store.commit('setShowIframe', false)
+  }
+  // 改变路由id 当刷新页面时,from.name为null
+  if (from.name) {
+    store.commit('setRouterId', to.meta.index)
+  }
+  console.log('909090------')
   // 登录界面登录成功之后，会把用户信息保存在会话
   // 存在时间为会话生命周期，页面关闭即失效。
   let userName = sessionStorage.getItem('user')

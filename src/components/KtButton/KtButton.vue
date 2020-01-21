@@ -65,8 +65,9 @@ export default {
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
+  @import "../../common/stylus/variable"
   .el-button
-    //padding: 7px 15px
-    font-size: 13px
+    padding: 5px 15px
+    font-size: $font-size-small
     //border-radius: 3px
 </style>

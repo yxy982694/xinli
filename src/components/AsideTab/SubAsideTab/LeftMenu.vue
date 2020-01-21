@@ -35,15 +35,10 @@
           CenterMenu
         },
         computed: {
+          // 获取中间平铺按钮的数据
           centerMenu: {
             get: function () {
               return this.$store.state.centerMenu.centerMenu
-            },
-            set: function () {}
-          },
-          centerMenuId: {
-            get: function () {
-              return this.$store.state.centerMenu.centerMenuId
             },
             set: function () {}
           },
@@ -59,19 +54,17 @@
         // this.centerMenu是根据主菜单id,来对应的
         // this.centerMenu是根据左边菜单id存的对象,每个id对应一个数组
         watch: { // 当切换tab时，id会变化，此时根据id的变化，获取最新中间平铺按钮的数据
-          currentTabId: function (val) {
-            console.log('watch'+val)
+          currentTabId: function () {
             this.loadCenterMenu()
           }
         },
         mounted: function () {
-          console.log('mounted')
+          console.log('LeftMenu.vue mounted')
           this.loadCenterMenu()
         },
         methods: {
+          // 此组件不存在点击操作,只有获取数据部分,并在中间部分进行展示
           loadCenterMenu: function () {
-            // console.log(this.currentTabId)
-            // console.log(this.centerMenu)
             let arr = this.centerMenu[this.currentTabId]
             let obj
             this.centerList = []
@@ -79,7 +72,7 @@
               for (var i=0;i<arr.length;i++) {
                 obj = {
                   id: arr[i].id,
-                  location: arr[i].location?arr[i].location: '/static/jsp/secframe.html?type=020101',///static/jsp/secframe.html?type=020101
+                  location: arr[i].location?arr[i].location: 'eoms/form/inst/page?actionName=fault_draft&sheetType=HA-051&_rel=sheet-new',///static/jsp/secframe.html?type=020101
                   label: arr[i].name
                 }
                 this.centerList.push(obj)

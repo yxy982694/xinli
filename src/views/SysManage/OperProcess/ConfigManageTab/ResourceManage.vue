@@ -3,31 +3,27 @@
   <div class="children-container">
     <kt-buttons>
       <template slot="toolSearch">
-        <el-input v-model="userName" placeholder="用户名"></el-input>
-        <kt-button icon="fa fa-search" :label="$t('action.search')" perms="sys:role:view" type="primary" @click="searchInfo(userName)"></kt-button>
-        <!-- <kt-button icon="fa fa-plus" :label="$t('action.add')" perms="sys:user:add" type="primary" @click="addInfo(false)"></kt-button> -->
+        <el-input v-model="usernameVal" placeholder="用户名"></el-input>
+        <kt-button icon="fa fa-search" :label="$t('action.search')" perms="sys:role:view" type="primary" @click="searchInfo(usernameVal)"></kt-button>
       </template>
     </kt-buttons>
     <kt-table ref="ktTable"
       @changeShortCutInfo="changeShortCutInfo"
       :loading="loading"
-      @findPage="findPage"
       @handleEdit="editInfo"
       @addInfo="addInfo"
       @handleDelete="deleteInfo"
-      :columns="filterColumns"
+      :columns="columns"
       :dataArr="tableData"
-      :border="true"
       :showCheckBox="false"
       :showPage="false"
       rowKey="id"
       :treeProps="treeProps"
-      :showOperate="true"
       :defaultExpandAll="false"></kt-table>
     <!-- <div class="table-seat"></div> -->
     <!--新增编辑界面-->
     <el-dialog :title="operation?'新增':'编辑'" width="40%" :visible.sync="dialogVisible" :close-on-click-modal="false">
-      <el-form :model="dataForm" label-width="100px" :rules="dataFormRules" ref="dataForm" :size="size"
+      <el-form :model="dataForm" label-width="100px" :rules="dataFormRules" ref="dataForm"
         label-position="right">
         <el-form-item label="id" prop="id" v-if="false">
           <el-input v-model="dataForm.id" auto-complete="off"></el-input>
@@ -88,8 +84,8 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button :size="size" @click.native="dialogVisible = false">{{$t('action.cancel')}}</el-button>
-        <el-button :size="size" type="primary" @click.native="submitForm" >{{$t('action.submit')}}</el-button>
+        <el-button @click.native="dialogVisible = false">{{$t('action.cancel')}}</el-button>
+        <el-button type="primary" @click.native="submitForm" >{{$t('action.submit')}}</el-button>
       </div><!-- :loading="editLoading" -->
     </el-dialog>
   </div><!-- v-show="showShortCut" -->
@@ -104,28 +100,14 @@
 <script>
   import { mapMutations } from 'vuex'
   import axios from 'axios'
-  import KtButton from "@/components/KtButton/index"
-  import KtTable from "@/components/KtTable/KtTable"
+  import { tableNoPageMixin } from '@/common/js/mixin.js'
   import KtButtons from "@/components/KtButtons/KtButtons"
   export default {
+    mixins: [tableNoPageMixin],
     data() {
       return {
-        userName: '',
-        columnArr: [],
-        filterColumns: [],
-        showCheckBox: false,
-        showPage: false,
-        operation: false,
-        dialogVisible: false,
-        size: 'small',
-        editLoading: false,
-        showShortCutPlay: 'none',
-        // isShortCut: false,
-        // currentId: null,
-        parentIdd: null,
-        showShortCut: false,
+        parentId: null, // 获取当前行的父节点id
         currentObj: null,
-        loading: true,
         statsArr: [{
           id: 0,
           value: '失效'
@@ -177,45 +159,25 @@
           parentId: ''
         },
         treeProps: {children: 'children', hasChildren: 'hasChildren'},
-        tableData: [],
       }
     },
     components:{
-    	KtButton,
-      KtTable,
       KtButtons
     },
     mounted: function () {
-      let _this = this
-      this.initColumns()
-      this.findPage()
-      window.onclick = function () {
-        // _this.showShortCut = false
-        _this.setResourceDisplay('none')
+      console.log('getTableData')
+      if (this.resourceFlag) {
+        console.log('true')
+        this.usernameVal = this.resourceNameVal
+        this.tableData = this.resourceArr
+      } else {
+        this.getTableData()
       }
     },
     computed: {
-      resourceLeft: {
-        get: function () {
-          return this.$store.state.resourceLeftTop.resourceLeft
-        },
-        set: function () {}
-      },
-      resourceTop: {
-        get: function () {
-          return this.$store.state.resourceLeftTop.resourceTop
-        },
-        set: function () {}
-      },
       currentId: {
         get: function () {
           return this.$store.state.tableCurrentId.currentId
-        },
-        set: function () {}
-      },
-      resourceDisplay: {
-        get: function () {
-          return this.$store.state.resourceLeftTop.resourceDisplay
         },
         set: function () {}
       },
@@ -231,15 +193,19 @@
         },
         set: function () {}
       },
+      resourceNameVal: {
+        get: function () {
+          return this.$store.state.loadData.resourceNameVal
+        },
+        set: function () {}
+      }
     },
     methods: {
       ...mapMutations({
-        'setResourceLeft': 'setResourceLeft',
-        'setResourceTop': 'setResourceTop',
         'setCurrentId': 'setCurrentId',
-        'setResourceDisplay': 'setResourceDisplay',
         'setResourceFlag': 'setResourceFlag',
-        'setResourceArr': 'setResourceArr'
+        'setResourceArr': 'setResourceArr',
+        'setResourceNameVal': 'setResourceNameVal'
       }),
       // 选择菜单图标图片
       selectMenuImg: function () {
@@ -258,34 +224,24 @@
         ).then(function (res) {
           console.log(res)
         })
-        // axios.get('comments/hotflow',{
-        //   params: {
-        //     id: '4457825889709441',
-        //     mid: '4457825889709441',
-        //     max_id_type: 0
-        //   }
-        // }).then(function (res) {
-        //   console.log(res)
-        // })
       },
       changeShortCutInfo: function (obj) {
-        // console.log(obj)
-        // this.showShortCut = obj.showShortCut
         this.setResourceDisplay(obj.showShortCut)
         this.setCurrentId(obj.id)
-        this.setResourceLeft(obj.x)
-        this.setResourceTop(obj.y)
+        this.setResourceLeft(obj.x+'px')
+        this.setResourceTop(obj.y+'px')
       },
       searchInfo: function (name) {
+        this.setResourceNameVal(name)
         this.$api.menu.findByName(name).then(res => {
           console.log(res)
           this.tableData = res.data
-          // this.$set(this.tableData,'content',res.data)
+          this.setResourceArr(res.data)
         })
       },
       deleteShortCutInfo: function (id) {
         let _this = this
-        if (this.parentIdd) {
+        if (this.parentId) {
           this.$confirm('确认删除选中记录吗？', '提示', {
           	type: 'warning'
           }).then(function () {
@@ -296,11 +252,11 @@
         }
       },
       initColumns: function () {
-        this.columnArr = [
+        this.columns = [
           // {prop:"id", label:"id",sortable: false},
-          {prop:"nameCn", label:"中文名称",sortable: true,minWidth: "80px",align: "left"},
+          {prop:"nameCn", label:"中文名称",sortable: true,minWidth: "160px",align: "left"},
           {prop:"name", label:"名称",sortable: true},
-          {prop:"location", label:"路径",sortable: true},
+          {prop:"location", label:"路径",minWidth: "140px",sortable: true},
           // {prop:"type", label:"菜单类型",sortable: false},
           {prop:"isWebpage", label:"是否网页",sortable: true},
           {prop:"orderby", label:"排序序号",sortable: true},
@@ -311,30 +267,18 @@
           {prop:"creator", label:"创建人",sortable: true},
           // {prop:"parentId", label:"父id",sortable: false},
         ]
-        this.filterColumns = JSON.parse(JSON.stringify(this.columnArr));
       },
-      findPage: function () {
+      getTableData: function () {
         let _this = this
-        console.log('findPage')
-        if (this.resourceFlag) {
-          console.log('true')
-          this.loading = false
-          this.tableData = this.resourceArr
-          console.log(this.tableData)
-          this.$refs.ktTable.getCellRow()
-        } else {
-          console.log('false')
-          this.loading = true
-          this.$api.menu.loadResource().then((res) => {
-            _this.tableData = res.data
-            // _this.$set(_this.tableData,'content',res.data)
-            console.log(res)
-            _this.loading = false
-            _this.setResourceFlag(true)
-            _this.setResourceArr(res.data)
-            _this.$refs.ktTable.getCellRow()
-          })
-        }
+        this.loading = true
+        this.$api.menu.loadResource().then((res) => {
+          _this.tableData = res.data
+          console.log(res)
+          _this.loading = false
+          _this.setResourceFlag(true)
+          _this.setResourceArr(res.data)
+          // _this.$refs.ktTable.getCellRow()
+        })
       },
       submitForm: function () {
         let _this = this
@@ -342,7 +286,6 @@
       		if (valid) {
       			_this.$confirm('确认提交吗？', '提示', {}).then(() => {
       				_this.editLoading = true
-      				// let Resources = {}
               let Resources = Object.assign({}, _this.dataForm)
               let intOrder = parseInt(Resources.orderby)
               Resources.orderby = intOrder
@@ -351,7 +294,6 @@
                 Resources = JSON.stringify(Resources)
                 console.log(Resources)
                  _this.$api.menu.addResource(Resources).then((res) => {
-                  // _this.$api.user.save(ss).then((res) => {
                     _this.dialogVisible = false
                     _this.editLoading = false
                     console.log(res)
@@ -362,8 +304,7 @@
                       } else {
                         _this.$message({message: '操作失败, ' + res.msg, type: 'error'})
                       }
-                      _this.setResourceFlag(false)
-                      _this.findPage()
+                      _this.getTableData()
                     }).catch(function () {
                       _this.dialogVisible = false
                     })
@@ -387,8 +328,7 @@
                      } else {
                        _this.$message({message: '操作失败, ' + res.msg, type: 'error'})
                      }
-                     _this.setResourceFlag(false)
-                     _this.findPage()
+                     _this.getTableData()
                    }).catch(function () {
                      _this.dialogVisible = false
                    })
@@ -404,24 +344,17 @@
       },
       deleteInfo: function (id) {
         this.$api.menu.deleteResource(id).then(res => {
-          this.findPage()
-          // if(res.code == 200) {
-          //   this.$message({message: '删除成功', type: 'success'})
-          //   this.findPage()
-          // } else {
-          //   this.$message({message: '操作失败, ' + res.msg, type: 'error'})
-          // }
+          this.getTableData()
         })
       },
-      gainSource: function (id) { // 在点击编辑时，获取某一行的数据
+      getTableOneLine: function (id) { // 在点击编辑时，获取某一行的数据
         this.$api.menu.findResourceById(id).then((res) => {
           if(res.code == 200) {
             this.currentObj = res.data
             this.dataForm = this.currentObj
-            this.parentIdd = this.currentObj.parentId?this.currentObj.parentId:null
+            this.parentId = this.currentObj.parentId?this.currentObj.parentId:null
             this.$set(this.dataForm,'createTime',(new Date()).toLocaleString())
             this.$set(this.dataForm,'creator',sessionStorage.getItem('user'))
-            // this.$message({ message: '操作成功', type: 'success' })
           } else {
             this.$message({message: '操作失败, ' + res.msg, type: 'error'})
           }
@@ -432,15 +365,14 @@
         console.log('点击了操作中的编辑')
         this.operation = false
         this.dialogVisible = true
-        // this.currentId = id
         this.setCurrentId(id)
-        this.gainSource(id)
+        this.getTableOneLine(id)
       },
       editInfoShortCut: function () {
         console.log('点击了右键编辑')
         this.operation = false
         this.dialogVisible = true
-        this.gainSource(this.currentId)
+        this.getTableOneLine(this.currentId)
       },
     }
   }
@@ -449,21 +381,13 @@
   .resource-container
      position: relative
      height: 100%
-  .shortcut-container
-      position: absolute
-      left: 0
-      top: 0
-      width: 65px
-      text-align: center
-      line-height: 30px
-      background: #fff
-      border: 1px solid #dfdfdf
-      padding:2px 0 4px 0
-      cursor: pointer
-      .el-button
-        margin-left: 0
-        width: 65px
-        border: none
+  .children-container
+    position: relative
+    height: 100%
+    overflow: auto
+    display: flex
+    flex-direction: column
+    justity-content: space-between
   .table-seat
     height: 10px
     width: 100%

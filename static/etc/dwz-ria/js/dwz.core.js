@@ -188,7 +188,7 @@ var DWZ = {
 					if (json.statusCode==DWZ.statusCode.error){
 						if (json.message) alertMsg.error(json.message);
 					} else {
-						$this.html(response).initUI();
+						$this.html(response).initUI(); // 调完接口之后,返回的内容经过initUI处理了
 						if ($.isFunction(op.callback)) op.callback(response);
 					}
 					

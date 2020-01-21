@@ -8,6 +8,7 @@ import * as config from './modules/config'
 import * as log from './modules/log'
 import * as loginlog from './modules/loginlog'
 import * as home from './modules/home'
+import * as duty from './modules/duty'
 
 
 // 默认全部导出
@@ -21,5 +22,6 @@ export default {
   config,
   log,
   loginlog,
-  home
+  home,
+  duty
 }

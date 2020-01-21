@@ -28,15 +28,15 @@
 			</div>
 			<div class="right-bottom">
         <kt-table
-        :loading="loadingTable"
+        :loading="loading"
         :dataArr="tableData"
-        :border="border"
         @selectAll="selectAll"
         @selectionChange="selectionChange"
         @clickCell="clickCell"
         :columns="columns"
         @handleSizeChange="handleSizeChange"
         @handleCurrentChange="handleCurrentChange"
+        @changeShortCutInfo="changeShortCutInfo"
         :currentPage="currentPage"
         :pageSizes="pageSizes"
         :pageSize="pageSize"
@@ -47,7 +47,7 @@
 		</div>
 	  <!--新增编辑界面-->
 	  <el-dialog :title="operation?'新增':'编辑'" width="40%" :visible.sync="dialogVisible" :close-on-click-modal="false">
-	    <el-form :model="dataForm" label-width="100px" :rules="dataFormRules" ref="dataForm" :size="size"
+	    <el-form :model="dataForm" label-width="100px" :rules="dataFormRules" ref="dataForm"
 	      label-position="right">
 	      <el-form-item label="organid" prop="organid" v-if="false">
 	        <el-input v-model="dataForm.organid" auto-complete="off"></el-input>
@@ -80,99 +80,30 @@
 	      </el-form-item>
 	    </el-form>
 	    <div slot="footer" class="dialog-footer">
-	      <el-button :size="size" @click.native="dialogVisible = false">{{$t('action.cancel')}}</el-button>
-	      <el-button :size="size" type="primary" @click.native="submitForm" :loading="editLoading">{{$t('action.submit')}}</el-button>
+	      <el-button @click.native="dialogVisible = false">{{$t('action.cancel')}}</el-button>
+	      <el-button type="primary" @click.native="submitForm" :loading="editLoading">{{$t('action.submit')}}</el-button>
 	    </div><!-- :loading="editLoading" -->
 	  </el-dialog>
+    <!-- 右键菜单 -->
+    <div class="shortcut-container" :style="{position: 'absolute',top: resourceTop,left: resourceLeft,display: resourceDisplay}"><!--  v-if="ifShortCut" -->
+      <!-- <kt-button icon="fa fa-plus" :label="$t('action.add')" @click="addInfo" /> -->
+      <kt-button icon="fa fa-edit" :label="$t('action.edit')" @click="editInfo" />
+      <kt-button icon="fa fa-trash" :label="$t('action.delete')" @click="deleteInfo" />
+    </div>
   </div>
 </template>
 
 <script>
-	import '../../../../common/stylus/userManage.styl'
-	import KtButton from "@/components/KtButton/index"
-  import KtTable from "@/components/KtTable/KtTable"
   import { mapMutations } from 'vuex'
+  import { tablePageMixin } from '@/common/js/mixin.js'
 	export default {
+    mixins: [tablePageMixin],
 		data: function() {
 			return {
-            dateValue: '',
-            editAble: true,
-        		checkedBox: false,
-            selectedVal: '',
-            radioVal: '',
-            currentDepId: '0',
-            loadingTable: false,
-            loadingTree: false,
-            border: true,
-            // loadingTable: false,
-            // loadingTree: false,
-            usernameVal: '',
-            total: 0,
-            pageSize: 15,
-            currentPage: 1,
-            pageSizes: [15,50,100,200],
-            size: 'small',
-            dialogVisible: false,
-            operation: false,
-            editLoading: false,
-            userId: null,
-		        outData: [{
-		          name: '',
-		          age: ''
-		        }],
-				treeData: [
-          {
-            name: '一级 1',
-            id: 1,
-            children: [{
-              name: '二级',
-              id: 11,
-              children: [{
-                label: '三级',
-                id: 111
-              }]
-            }]
-          }, {
-            name: '一级 2',
-            id: 2,
-            children: [{
-              name: '二级 2-1一级',
-              id: 21,
-              children: [{
-                name: '三级 2-1-1一级2-1-1',
-                id: 211
-              }]
-            }, {
-              name: '二级 2-2一级 1',
-              id: 22,
-              children: [{
-                name: '三级 2-2-1一级',
-                id: 221
-              }]
-            }]
-          }, {
-            name: '一级 3',
-            id: 3,
-            children: [{
-              name: '二级 3-1',
-              id: 31,
-              children: [{
-                name: '三级 3-1-1',
-                id: 311
-              }]
-            }, {
-              name: '二级 3-2',
-              id: 32,
-              children: [{
-                name: '三级 3-2-1',
-                id: 321
-              }]
-            }]
-				},
-        ],
+        loadingTree: false,
+        userId: null, // 用户id
+				treeData: [],
         defaultProps: {
-          // children: 'children',
-          // label: 'name',
           children: 'Children',
           label: 'Name'
         },
@@ -192,16 +123,6 @@
           createTime: '',
           accountEffectTime: '',
           accountExpireTime: '',
-          // rowid: ''
-          // id: '',
-          // USERNAME: '',
-          // NAME: '',
-          // PHONE: '',
-          // ID: '',
-          // MANIN_ACCOUNT: '',
-          // ORGANID: '',
-          // ROW_ID: '',
-          // VALID: '',
         },
         dataFormRules: {
         	username: [
@@ -214,150 +135,12 @@
           	{ required: true, message: '请选择有效性', trigger: 'blur' }
           ],
         },
-				tableData: [{
-            USERNAME: 'yxy1',
-            NAME: '袁晓宇',
-            VALID: '可用',
-            CREATEUSER: 'yxy',
-            CREATETIME: '2019/12/27',
-            ACCOUNTEFFECTTIME: '2019/12/27',
-            ACCOUNTEXPIRETIME: '2019/12/31',
-            ROW_ID: 1
-					}, {
-						USERNAME: 'yxy2',
-						NAME: '袁晓宇',
-						VALID: '可用',
-						CREATEUSER: 'yxy',
-						CREATETIME: '2019/12/27',
-						ACCOUNTEFFECTTIME: '2019/12/27',
-						ACCOUNTEXPIRETIME: '2019/12/31',
-						ROW_ID: 2
-					}, {
-						USERNAME: 'yxy3',
-						NAME: '袁晓宇',
-						VALID: '可用',
-						CREATEUSER: 'yxy',
-						CREATETIME: '2019/12/27',
-						ACCOUNTEFFECTTIME: '2019/12/27',
-						ACCOUNTEXPIRETIME: '2019/12/31',
-						ROW_ID: 3
-					}, {
-						USERNAME: 'yxy4',
-						NAME: '袁晓宇',
-						VALID: '可用',
-						CREATEUSER: 'yxy',
-						CREATETIME: '2019/12/27',
-						ACCOUNTEFFECTTIME: '2019/12/27',
-						ACCOUNTEXPIRETIME: '2019/12/31',
-						ROW_ID: 4
-					}, {
-						USERNAME: 'yxy5',
-						NAME: '袁晓宇',
-						VALID: '可用',
-						CREATEUSER: 'yxy',
-						CREATETIME: '2019/12/27',
-						ACCOUNTEFFECTTIME: '2019/12/27',
-						ACCOUNTEXPIRETIME: '2019/12/31',
-						ROW_ID: 5
-					}, {
-						USERNAME: 'yxy6',
-						NAME: '袁晓宇',
-						VALID: '可用',
-						CREATEUSER: 'yxy',
-						CREATETIME: '2019/12/27',
-						ACCOUNTEFFECTTIME: '2019/12/27',
-						ACCOUNTEXPIRETIME: '2019/12/31',
-						ROW_ID: 6
-					}, {
-						USERNAME: 'yxy7',
-						NAME: '袁晓宇',
-						VALID: '可用',
-						CREATEUSER: 'yxy',
-						CREATETIME: '2019/12/27',
-						ACCOUNTEFFECTTIME: '2019/12/27',
-						ACCOUNTEXPIRETIME: '2019/12/31',
-						ROW_ID: 7
-					}, {
-						USERNAME: 'yxy8',
-						NAME: '袁晓宇',
-						VALID: '可用',
-						CREATEUSER: 'yxy',
-						CREATETIME: '2019/12/27',
-						ACCOUNTEFFECTTIME: '2019/12/27',
-						ACCOUNTEXPIRETIME: '2019/12/31',
-						ROW_ID: 8
-					}, {
-						USERNAME: 'yxy9',
-						NAME: '袁晓宇',
-						VALID: '可用',
-						CREATEUSER: 'yxy',
-						CREATETIME: '2019/12/27',
-						ACCOUNTEFFECTTIME: '2019/12/27',
-						ACCOUNTEXPIRETIME: '2019/12/31',
-						ROW_ID: 9
-					}, {
-						USERNAME: 'yxy10',
-						NAME: '袁晓宇',
-						VALID: '可用',
-						CREATEUSER: 'yxy',
-						CREATETIME: '2019/12/27',
-						ACCOUNTEFFECTTIME: '2019/12/27',
-						ACCOUNTEXPIRETIME: '2019/12/31',
-						ROW_ID: 10
-					}],
-        columns: [{
-            prop: 'USERNAME',
-            label: '用户名'
-          }, {
-            prop: 'NAME',
-            label: '中文名称'
-          }, {
-            prop: 'VALID',
-            label: '是否可用'
-          }, {
-            prop: 'CREATEUSER',
-            label: '创建者'
-          }, {
-            prop: 'CREATETIME',
-            label: '创建时间'
-          }, {
-            prop: 'ACCOUNTEFFECTTIME',
-            label: '账号生效时间'
-          }, {
-            prop: 'ACCOUNTEXPIRETIME',
-            label: '账号过期时间'
-          }]
-				// columns: [{
-    //         prop: 'name',
-    //         label: '用户名'
-    //       }, {
-    //         prop: 'nameCn',
-    //         label: '中文名称'
-    //       }, {
-    //         prop: 'bumen',
-    //         label: '部门'
-    //       }, {
-    //         prop: 'keyong',
-    //         label: '是否可用'
-    //       }, {
-    //         prop: 'creator',
-    //         label: '创建者'
-    //       }, {
-    //         prop: 'createTime',
-    //         label: '创建时间'
-    //       }, {
-    //         prop: 'startTime',
-    //         label: '账户有效期开始时间'
-    //       }, {
-    //         prop: 'endTime',
-    //         label: '账户有效期结束时间'
-    //       }]
 			}
 		},
 		computed: {
-      userFlag: {
+      currentDepId: {
         get: function () {
-          return this.$store.state.loadData.userFlag
+          return this.$store.state.loadData.currentDepId
         },
         set: function () {}
       },
@@ -381,30 +164,6 @@
       },
     },
     mounted: function () {
-			let _this = this
-			this.$refs.userMiddle.addEventListener('mousedown',function (e) {
-				let startX = e.clientX
-				let middleLeft = _this.$refs.userMiddle.offsetLeft
-				console.log( _this.$refs.userMiddle.offsetLeft)
-				document.onmousemove = function (e) {
-					let endX = e.clientX
-					let moveLen = middleLeft + (endX - startX)
-					// let maxT = _this.$refs.userContainer.clientWidth - _this.$refs.userMiddle.offsetWidth
-					// console.log(maxT)
-			      	if(moveLen<180) moveLen = 180
-			      	// if(moveLen>maxT-180) moveLen = maxT-180
-			      	// _this.$refs.userMiddle.style.left = moveLen;
-			      	_this.$refs.userLeft.style.width = moveLen + "px";
-			      	// _this.$refs.userRight.style.width = (_this.$refs.userContainer.clientWidth - moveLen - 10) + "px";
-				}
-				document.onmouseup = function (e) {
-					document.onmousemove = null
-					document.onmouseup = null
-					_this.$refs.userMiddle.setCapture && _this.$refs.userMiddle.setCapture()
-				}
-				_this.$refs.userMiddle.setCapture && _this.$refs.userMiddle.setCapture()
-				return false
-			})
       if (this.userOriganFlag) {
         this.treeData = this.userOriganArr
       } else {
@@ -416,32 +175,44 @@
           this.loadingTree = false
         })
       }
-      // this.currentPage = 1
-      let jsonObj = {
-        currentPage: this.currentPage,
-        pageSize: this.pageSize
+      if (this.userObj.userFlag) {
+        this.tableData = this.userObj.userTableArr
+        this.total = parseInt(this.userObj.userTotal)
+        this.pageSize = this.userObj.userPageSize
+        this.currentPage = this.userObj.userCurrentPage
+        this.usernameVal = this.userObj.userNameVal
+      } else {
+        let jsonObj = {
+          currentPage: this.currentPage,
+          pageSize: this.pageSize
+        }
+        // 不传部门默认部门id为0 是所有数据
+        // 不传页码默认是第1页
+        // 不传当前页显示条数默认是10条
+        // 不传输入值默认为空
+        let jsonStr = JSON.stringify(jsonObj)
+        // 第一次什么都不传
+        // 后台默认返回全部数据的前10条数据和所有数据总条数（无参数）0
+        // jsonStr
+        this.getTableData(jsonStr)
       }
-      // 不传部门默认是所有数据
-      // 不传页码默认是第1页
-      // 不传当前页显示条数默认是10条
-      // 不传输入值默认为空
-      let jsonStr = JSON.stringify(jsonObj)
-      // 第一次什么都不传
-      // 后台默认返回全部数据的前10条数据和所有数据总条数（无参数）0
-      // jsonStr
-      this.getUserInfo(jsonStr)
-		},
-		components: {
-			KtButton,
-      KtTable
 		},
 		methods: {
       ...mapMutations({
-        'setUserFlag': 'setUserFlag',
         'setUserObj': 'setUserObj',
         'setUserOriganFlag': 'setUserOriganFlag',
-        'setUserOriganArr': 'setUserOriganArr'
+        'setUserOriganArr': 'setUserOriganArr',
+        'setCurrentDepId': 'setCurrentDepId'
       }),
+      changeShortCutInfo: function (obj,row) {
+        this.userId = obj.id
+        this.editAble = false
+        this.rowObj = row
+        this.$refs.ktTable.clickRow(this.tableData[row.index])
+        this.setResourceDisplay(obj.showShortCut)
+        this.setResourceLeft(obj.x+'px')
+        this.setResourceTop(obj.y+15+'px')
+      },
       selectionChange: function (selection) {
         if (selection.length == 1) {
           this.editAble = false
@@ -460,11 +231,9 @@
       },
       clickCell: function (row,column) { // 点击table中的单元格
          if (column.type != 'selection') {
+           this.rowObj = row
            this.editAble = false
-           let index = parseInt(row.ROW_ID)%parseInt(this.pageSize)==0? parseInt(this.pageSize): parseInt(row.ROW_ID)%parseInt(this.pageSize)
-           this.$refs.ktTable.clickRow(this.tableData[index-1])
-           // this.$refs.elTable.clearSelection()
-           // this.$refs.elTable.toggleRowSelection(this.tableData.content[index-1])
+           this.$refs.ktTable.clickRow(this.tableData[row.index])
          }
       },
       addInfo: function () {
@@ -473,6 +242,12 @@
         // this.$set(this.dataForm,'createTime',date1.toLocaleString())
         // this.$set(this.dataForm,'accountEffectTime',date1.toLocaleString())
         date2.setDate(date1.getDate()+90)
+        console.log(this.currentDepId)
+        // 点击添加时,清空弹框中input的值
+        this.$set(this.dataForm,'organid',this.currentDepId)
+        this.$set(this.dataForm,'username','')
+        this.$set(this.dataForm,'name','')
+        console.log(this.dataForm)
         // this.$set(this.dataForm,'accountExpireTime',date2.toLocaleString())
         this.dialogVisible = true
         this.operation = true
@@ -483,6 +258,10 @@
         // this.$set(this.dataForm,'createTime',date1.toLocaleString())
         // this.$set(this.dataForm,'accountEffectTime',date1.toLocaleString())
         date2.setDate(date1.getDate()+90)
+        // 点击编辑时,带出所要编辑行的信息
+        // this.$set(this.dataForm,'organid',this.currentDepId)
+        this.$set(this.dataForm,'username',this.rowObj.USERNAME)
+        this.$set(this.dataForm,'name',this.rowObj.NAME)
         // this.$set(this.dataForm,'accountExpireTime',date2.toLocaleString())
         this.dialogVisible = true
         this.operation = false
@@ -503,7 +282,7 @@
                pageSize: _this.pageSize
              }
              let jsonStr = JSON.stringify(jsonObj)
-             _this.getUserInfo()
+             _this.getTableData(jsonStr)
            } else {
              _this.$message({message: '操作失败, ' + res.msg, type: 'error'})
            }
@@ -516,7 +295,7 @@
           		_this.$confirm('确认提交吗？', '提示', {}).then(() => {
           			_this.editLoading = true
                 let User = Object.assign({}, _this.dataForm)
-                User.organid = _this.currentDepId
+                // User.organid = _this.currentDepId
                 if (_this.operation) { // 处理添加
                   User = JSON.stringify(User)
                   _this.$api.user.addUser(User).then((res) => {
@@ -531,8 +310,7 @@
                         pageSize: _this.pageSize
                       }
                       let jsonStr = JSON.stringify(jsonObj)
-                      _this.setUserFlag(false)
-                      _this.getUserInfo()
+                      _this.getTableData(jsonStr)
                     } else {
                       _this.$message({message: '添加失败, ' + res.msg, type: 'error'})
                     }
@@ -552,8 +330,7 @@
                         pageSize: _this.pageSize
                       }
                       let jsonStr = JSON.stringify(jsonObj)
-                      _this.setUserFlag(false)
-                      _this.getUserInfo()
+                      _this.getTableData(jsonStr)
                     } else {
                       _this.$message({message: '编辑失败, ' + res.msg, type: 'error'})
                     }
@@ -563,23 +340,22 @@
           	}
           })
       },
-      getUserInfo: function (jsonStr) {
-        if (this.userFlag) {
-          this.loadingTable = false
-          this.tableData = this.userObj.data
-          this.total = parseInt(this.userObj.total)
-        } else {
-          this.loadingTable = true
-          this.$api.user.getPageList(jsonStr).then((res) => {
-            console.log(res.data)
-            this.tableData= res.data
-            this.loadingTable = false
-            this.total = parseInt(res.total)
-            this.setUserObj(res)
-            this.setUserFlag(true)
+      getTableData: function (jsonStr) {
+        this.loading = true
+        this.$api.user.getPageList(jsonStr).then((res) => {
+          console.log(res.data)
+          this.tableData= res.data
+          this.loading = false
+          this.total = parseInt(res.total)
+          this.setUserObj({
+            userFlag: true,
+            userTableArr: this.tableData,
+            userTotal: this.total,
+            userCurrentPage: this.currentPage,
+            userPageSize: this.pageSize,
+            userNameVal: this.usernameVal
           })
-        }
-
+        })
       },
 			openAll: function() {
         // this.$nextTick(function () {
@@ -595,79 +371,102 @@
 				  this.$refs.tree.store._getAllNodes()[i].expanded=false
 				}
 			},
+      // 点击左边部门树时
 			handleNodeClick: function(data) {
 				console.log(data)
-        this.currentDepId = data.Id
-        console.log(data.Id)
+        this.setCurrentDepId(data.Id)
+        this.$set(this.dataForm,'organid',data.Id)
         console.log(this.pageSize)
+        this.currentPage = 1
         this.usernameVal = ''
         // 点击某个部门,把当前部门id传到后台（部门id）2  每页显示条数
         // 后台默认返回当前部门的前‘每页显示条数’数据和该部门总条数
         let jsonObj = {
+          organId: data.Id,
+          pageSize: this.pageSize
+        }
+        let jsonStr = JSON.stringify(jsonObj)
+        this.getTableData(jsonStr)
+			},
+      changeBox: function () {
+      },
+      searchUserName: function () {
+        // console.log(this.dateValue)
+        // 当输入用户名,点击查询时
+        // 把当前部门id,每页显示条数,输入的字段值（3个参数）
+        // 返回前‘每页显示条数’条数据和总条数
+        let jsonObj = {
+          username: this.usernameVal,
           organId: this.currentDepId,
           pageSize: this.pageSize
         }
         let jsonStr = JSON.stringify(jsonObj)
-        this.setUserFlag(false)
-        this.getUserInfo(jsonStr)
-			},
-	      changeBox: function () {
-	      },
-	      searchUserName: function () {
-	        // console.log(this.dateValue)
-          // 当输入用户名,点击查询时
-          // 把当前部门id,每页显示条数,输入的字段值（3个参数）
-          // 返回前‘每页显示条数’条数据和总条数
-          let jsonObj = {
-            username: this.usernameVal,
-            organId: this.currentDepId,
-            pageSize: this.pageSize
-          }
-          let jsonStr = JSON.stringify(jsonObj)
-          this.setUserFlag(false)
-          this.getUserInfo(jsonStr)
-          this.currentPage = 1
-          // this.usernameVal = ''
-	      },
-	      handleSizeChange: function (pageSize) {
-          // 当每页显示条数变化时,
-          // 把当前部门id和条数传至后台（部门id和条数），当前输入的字段值3（不传输入值默认为空）
-          // 返回当前部门的前"刚传的条数"的数据和当前部门的总条数
-          console.log(pageSize)
-          this.pageSize = pageSize
-          let jsonObj = {
-            username: this.usernameVal,
-            organId: this.currentDepId,
-            pageSize: this.pageSize
-          }
-          let jsonStr = JSON.stringify(jsonObj)
-          this.setUserFlag(false)
-          this.getUserInfo(jsonStr)
-          this.currentPage = 1
-	      },
-        handleCurrentChange: function (currentPage) {
-          // 当页数变化时，把当前页数传到后台
-          // 还要把当前部门id传至后台(不传id默认是全部数据)（部门id和页数），当前输入的字段值（不传输入值默认为空）
-          // 每页显示多少条数据  传4个参数
-          // 返回该部门当前页的数据和当前部门的总条数
-          console.log(currentPage)
-          this.currentPage = currentPage
-          let jsonObj = {
-            username: this.usernameVal,
-            organId: this.currentDepId,
-            pageSize: this.pageSize,
-            currentPage: this.currentPage
-          }
-          let jsonStr = JSON.stringify(jsonObj)
-          this.setUserFlag(false)
-          this.getUserInfo(jsonStr)
-        },
-		}
+        this.getTableData(jsonStr)
+        this.currentPage = 1
+      },
+      handleSizeChange: function (pageSize) {
+        // 当每页显示条数变化时,
+        // 把当前部门id和条数传至后台（部门id和条数），当前输入的字段值3（不传输入值默认为空）
+        // 返回当前部门的前"刚传的条数"的数据和当前部门的总条数
+        console.log(pageSize)
+        this.pageSize = pageSize
+        let jsonObj = {
+          username: this.usernameVal,
+          organId: this.currentDepId,
+          pageSize: this.pageSize
+        }
+        let jsonStr = JSON.stringify(jsonObj)
+        this.getTableData(jsonStr)
+        this.currentPage = 1
+      },
+      handleCurrentChange: function (currentPage) {
+        // 当页数变化时，把当前页数传到后台
+        // 还要把当前部门id传至后台(不传id默认是全部数据)（部门id和页数），当前输入的字段值（不传输入值默认为空）
+        // 每页显示多少条数据  传4个参数
+        // 返回该部门当前页的数据和当前部门的总条数
+        console.log(currentPage)
+        this.currentPage = currentPage
+        let jsonObj = {
+          username: this.usernameVal,
+          organId: this.currentDepId,
+          pageSize: this.pageSize,
+          currentPage: this.currentPage
+        }
+        console.log(jsonObj)
+        let jsonStr = JSON.stringify(jsonObj)
+        this.getTableData(jsonStr)
+      },
+      initColumns: function () {
+        this.columns = [{
+            prop: 'USERNAME',
+            label: '用户名'
+          }, {
+            prop: 'NAME',
+            label: '中文名称'
+          }, {
+            prop: 'VALID',
+            label: '是否可用'
+          }, {
+            prop: 'CREATEUSER',
+            label: '创建者'
+          }, {
+            prop: 'CREATETIME',
+            label: '创建时间'
+          }, {
+            prop: 'ACCOUNTEFFECTTIME',
+            label: '账号生效时间'
+          }, {
+            prop: 'ACCOUNTEXPIRETIME',
+            label: '账号过期时间'
+          }]
+      },
+    }
 	}
 </script>
 
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
+    @import "../../../../common/stylus/variable"
     .user-container
       display: flex
       border: 1px solid #dad9e6
@@ -688,7 +487,7 @@
       // margin: 2px 4px
       .user-depit
         text-align: left
-        font-size: 14px
+        font-size: $font-size-medium-s
         font-weight: bold
         background-color: #f9f9f9
         padding: 5px 10px
@@ -701,11 +500,11 @@
         flex: 1
     .user-middle
       // float: left
-      width: 5px
+      width: 3px
       height: 100%
       cursor: col-resize
       box-sizing: border-box
-      background-color: #f0f2f5
+      background-color: #ddd
       overflow: hidden
     .user-right
       width: 70%
@@ -725,12 +524,6 @@
       align-items: center
     .user-search-btn
       margin-right: 15px
-    .search-container
-        padding: 5px 20px
-        display: flex
-       // margin: 15px
-       // position: relative
-       // min-height: 10px
     .checkbox-more
       position: absolute
       left: 20px
@@ -788,17 +581,6 @@
 	    box-sizing: border-box
 	    text-align: left
 	    padding: 0 10px
-	.btn-container
-    padding: 3px 0
-	   display: flex
-	   // border: 1px solid green
-	   border-top: none
-	.btn-container .el-button
-    border-radius: 0
-	  // margin-left: 0
-  .btn-container .el-button+.el-button
-    margin-left: 0px !important
-    border-left: 1px solid #fff
     // margin-left: 5px !important
 	.input-left
 	  margin-right: 10px

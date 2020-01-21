@@ -53,41 +53,121 @@
     height: 100%;
     background:none;
   }
-  #container{
-    height:100%;
-  }
-  #splitBarProxy,#splitBar{
-    height:auto !important;
-    top: 0 !important;
-    bottom: 40px !important;
-  }
-  #navTab-tabssss{
-    position:absolute;
-    left: 0 !important;
-  }
-  .tabsPage .tabsPageContent{
-    overflow:auto !important;
-  }
+  /* 左侧样式 */
   #leftside{
+    position:absolute;
+    top: 0;
+    bottom: 40px;
+    width: 200px;
+    border: 1px solid #b8d0d6;
+    border-right: none;
+    left: 8px;
+    box-sizing: border-box;
+  }
+  #mytitle{
+    display: none;
+  }
+  #sidebar_s{
     position:absolute;
     top: 0;
     bottom: 0;
   }
   #sidebar{
     height:auto !important;
+    width: 100%;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    /* border: 1px solid red; */
+    background-color: #fff;
+  }
+  /* 左边部分带边框，让宽度包含边框 */
+  .toggleCollapse,
+  .accordion,
+  .accordion .accordionContent{
+    box-sizing: border-box;
+  }
+  /* 左侧部分，title样式 */
+  .toggleCollapse{
+    height: 27px;
+  }
+  /* 左边部分，展示左侧导航的样式 */
+  .accordion{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    /* top: 27px; */
+    bottom: 0;
+    border: none;
+  }
+  /* 左边部分，展示左侧导航最内层样式 */
+  .accordion .accordionContent{
+    height: 100% !important;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    border: none;
+  }
+  /* 左侧导航菜单图标样式 */
+  .se1{
+    display:flex;
+    align-items: center;
+  }
+  .se2{
+    height: 14px;
+    width: 12px;
+    margin-left: -5px;
+  }
+  .se3{
+    margin-left: 5px;
+  }
+  /* 左侧隐藏的>> */
+  #sidebar_s .collapse{
+    height: 100% !important;
+    box-sizing: border-box;
+  }
+  /* 中间可拖动部分的样式 */
+  #splitBarProxy,#splitBar{
+    height:auto !important;
+    top: 0 !important;
+    bottom: 40px !important;
+    display:none;
+  }
+  /* 右边容器样式 */
+  #container{
+    /* height:100%; */
+    position:absolute;
     top: 0;
     bottom: 40px;
+    left: 204px;
+    z-index: 2222;
   }
+  .tabsMore{
+    display: none !important;
+  }
+  /* 右边tab和面板 */
   #navTab{
     height:100%;
   }
+  /* 右边容器ul  tab的样式 */
+  #navTab-tabssss{
+    position:absolute;
+    left: 0 !important;
+  }
+  /* 右边部分，tab的高度 */
+  #navTab .tabsPageHeaderContent{
+    height: 26px;
+  }
+  /* 右边容器 面板的样式 */
   #div_content_id{
     position:absolute;
-    top: 28px;
-    bottom: 40px;
+    top: 27px;
+    bottom: 0;
     height:auto !important;
     width:100%;
-    overflow:hidden;
+    box-sizing: border-box;
+    overflow:hidden !important;
   }
   #div_content_id .page{
     height:100%;
@@ -95,6 +175,7 @@
     overflow-x:hidden;
     overflow-y:auto;
   }
+  /* 我的主页 面板的样式 */
   #div_content_id .page .pageFormContent{
     height:100%;
     width: 100%;
@@ -111,11 +192,14 @@
     filter: gray;
     opacity: 1;
   }
+  /* 右边部分，带边框改为宽度包含边框 */
   #navTab,
   #navTab .tabsPageHeader,
   #navTab .tabsPageHeaderContent{
     width: 100%;
+    box-sizing:border-box;
   }
+  /* 底部样式 */
   .footer-container{
     background-color: #d5dee6;
     margin-top: 15px;
@@ -161,11 +245,11 @@
 			contentType:"application/json",
 			url: "/workbench/menu/getMenuTree?type="+type,//请求的action路径
 			error: function () {//请求失败处理函数
-				alert('请求失败');
+				// alert('请求失败');
 			},
 			success:function(data){ //请求成功后处理函数。
 				$('#menutree').html(data.menuTree);
-				$('#mytitle').html(data.mytitle);
+				// $('#mytitle').html(data.mytitle);
 				$("a").click(function(){
 					saveEomslog($(this).html());
 				});
@@ -274,7 +358,6 @@
 var mytabid = "";
 function openUrl(){
 	var me="null";
-	//alert(me);
 	if(me!='null'){
 		var title = "<%=urlName%>";
 		var tabid = "<%=urlCode%>";
@@ -283,7 +366,6 @@ function openUrl(){
 		if("<%=external%>"=='true')
 			external=true;
 		navTab.openTab(tabid, me,{title:title,fresh:true,external:external});
-		//navTab.reloadFlag(tabid);
 	}
 	setTimeout(function (){//800毫秒后刷新tab
 		navTab.reloadFlag(mytabid);

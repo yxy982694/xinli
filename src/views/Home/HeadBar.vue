@@ -1,68 +1,49 @@
 <template>
   <div class="header-container">
-  <div class="headbar">
-    <!-- 导航收缩 -->
-      <div class="header-left">
-        <h1><img src="../../common/image/ChinaMobile.png" ></h1>
-        <h3>河南移动集中运维管理系统</h3>
-        <div class="header-center">
-          <p class="header-center-bg1"></p>
-          <p class="header-center-bg2"></p>
-          <p class="header-center-bg3"></p>
+    <div class="headbar">
+      <!-- 导航收缩 -->
+        <div class="header-left">
+          <h1><img src="../../common/image/ChinaMobile.png" ></h1>
+          <h3>河南移动集中运维管理系统</h3>
+          <div class="header-center">
+            <p class="header-center-bg1"></p>
+            <p class="header-center-bg2"></p>
+            <p class="header-center-bg3"></p>
+          </div>
+        </div>
+        <div class="header-right">
+          <div class="header-business">
+            <p class="header-business-item user-name" :title="userName+' 欢迎您'">{{userName}} 欢迎您</p>
+            <p class="header-business-item">
+              <i class="iconfont icon-xiaoxi"></i>
+              <span>消息</span>
+            </p>
+            <p class="header-business-item">
+              <i class="iconfont icon-tuichu"></i>
+              <span>退出</span>
+            </p>
+            <p class="header-business-item">
+              <i class="iconfont icon-icon_rukou"></i>
+              <span>旧版入口</span>
+            </p>
+            <p class="header-business-item">
+              <i class="iconfont icon-shouji"></i>
+              <span>掌上运维客户端</span>
+            </p>
+            <p class="header-business-item">
+              <i class="iconfont icon-yewu"></i>
+              <span>业务开通</span>
+            </p>
+          </div>
+          <div class="navbar">
+            <el-menu ref="navmenu" mode="horizontal" default-active="1" :class="collapse?'menu-bar-collapse-width':'menu-bar-width'" class="el-menu-demo" background-color="transparent"
+                       :collapse="collapse" :collapse-transition="true" :unique-opened="true" text-color="#fff" active-text-color="#fff"
+                       @open="handleopen" @close="handleclose" @select="handleselect">
+              <menu-tree v-for="item in navTree" :key="item.id" :menu="item"></menu-tree>
+            </el-menu>
+          </div>
         </div>
       </div>
-      <div class="header-right">
-        <div class="header-business">
-          <p class="header-business-item user-name" :title="userName+' 欢迎您'">{{userName}} 欢迎您</p>
-          <p class="header-business-item">
-            <i class="iconfont icon-xiaoxi"></i>
-            <span>消息</span>
-          </p>
-          <p class="header-business-item">
-            <i class="iconfont icon-tuichu"></i>
-            <span>退出</span>
-          </p>
-          <p class="header-business-item">
-            <i class="iconfont icon-icon_rukou"></i>
-            <span>旧版入口</span>
-          </p>
-          <p class="header-business-item">
-            <i class="iconfont icon-shouji"></i>
-            <span>掌上运维客户端</span>
-          </p>
-          <p class="header-business-item">
-            <i class="iconfont icon-yewu"></i>
-            <span>业务开通</span>
-          </p>
-        </div>
-        <div class="navbar">
-          <el-menu ref="navmenu" mode="horizontal" default-active="1" :class="collapse?'menu-bar-collapse-width':'menu-bar-width'" class="el-menu-demo" background-color="transparent"
-                     :collapse="collapse" :collapse-transition="true" :unique-opened="true" text-color="#fff" active-text-color="#fff"
-                     @open="handleopen" @close="handleclose" @select="handleselect">
-            <menu-tree v-for="item in navTree" :key="item.id" :menu="item"></menu-tree>
-          </el-menu>
-        </div>
-      </div>
-    <!-- 导航菜单 -->
-    <!-- 工具栏 -->
-    <!-- <div class="toolbar">
-      <el-popover ref="popover-message" placement="bottom-end" trigger="click">
-        <el-badge :value="5" :max="99" class="badge" slot="reference">
-          <i class="fa fa-envelope-o fa-lg"></i>
-        </el-badge>
-        <message-panel></message-panel>
-      </el-popover>
-      <el-popover ref="popover-personal" placement="bottom-end" trigger="click" visible-arrow="true">
-        <span slot="reference" class="user-info">{{user.nickName}}<img :src="user.avatar" /></span>
-        <personal-panel :user="user"></personal-panel>
-      </el-popover>
-    </div> -->
-    </div>
-    <!-- <div class="header-center">
-      <p class="header-center-bg1"></p>
-      <p class="header-center-bg2"></p>
-      <p class="header-center-bg3"></p>
-    </div> -->
   </div>
 </template>
 

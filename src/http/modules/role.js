@@ -1,6 +1,6 @@
 import axios from '../axios'
 
-/* 
+/*
  * 角色管理模块
  */
 
@@ -49,5 +49,44 @@ export const saveRoleMenus = (data) => {
         url: '/role/saveRoleMenus',
         method: 'post',
         data
+    })
+}
+// 查询全部角色
+export const getAllRoles = (jsonStr) => {
+    return axios({
+        url: '/bsf/role/findAll',
+        method: 'post',
+        data: jsonStr
+    })
+}
+// 添加角色
+export const addRole = (jsonStr) => {
+    return axios({
+        url: '/bsf/role/addRole',
+        method: 'post',
+        data: jsonStr
+    })
+}
+// 编辑角色
+export const editRole = (jsonStr) => {
+    return axios({
+        url: '/bsf/role/editRole',
+        method: 'post',
+        data: jsonStr
+    })
+}
+// 根据名字查询角色
+export const findRoleByName = (jsonStr) => {
+    return axios({
+        url: '/bsf/role/findRoleByName',
+        method: 'post',
+        data: jsonStr
+    })
+}
+// 删除角色
+export const delRole = (roleId) => {
+    return axios({
+        url: '/bsf/role/delRole/'+roleId,
+        method: 'get'
     })
 }

@@ -14,23 +14,11 @@
      width: 100%
      height: 70px
      border-color: rgba(180, 190, 190, 0.8)
-     // padding:0 20px
      display: flex
-     // justify-content: space-between
-     // background: url(../image/headerImg.png) no-repeat
      background-size: 100% 100%
-     @media screen and (max-width: 1200px)
-      // padding:0 8px
 // header中logo样式
 .header-left
-   // flex-basis: 530px
-   // float: left
-   // width: 40%
    flex: 1
-   // width: 530px !important
-   // display: flex
-   // align-items: center
-   // justify-content: space-between
    padding-left: 20px
    background-color: #2152bb
    box-sizing: border-box
@@ -47,7 +35,6 @@
      font-size: $font-size-large-x
      margin-left: 10px
      margin-top: 24px
-     // line-height: 25px
      float: left
      @media screen and (max-width: 1350px)
        font-size: 18px
@@ -55,16 +42,14 @@
        margin-top: 24px
      @media screen and (max-width: 1250px)
        font-size: 16px
-       // width: 160px
        line-height: 20px
        margin-top: 25px
-       // line-height: 16px
      @media screen and (max-width: 1230px)
        width: 150px
        margin-top: 18px
+// 中间3个斜线的样式
 .header-center
   position: absolute
-  // left: 500px
   right: -30px
   top: 0
   height: 70px
@@ -90,12 +75,11 @@
   background-color: #0e1a3c
   flex: 1
   transform: skew(-30deg)
+  // 右边导航和基本信息的样式
 .header-right
   padding: 11px 20px 0 20px
   background-color: #0b1026
   box-sizing: border-box
-  // float: right
-  // width: 60%
   width: 850px
   display: flex
   flex-direction: column
@@ -106,6 +90,7 @@
     width: 65%
   @media screen and (max-width: 1300px)
     width: 835px
+// 顶部各个业务的样式
 .header-business
   display: flex
   padding-left: 40px
@@ -116,7 +101,7 @@
    no-wrap()
    .icon-xiaoxi
      position: relative
-     &:after{
+     &:after
        content: ''
        display: inline-block
        width: 5px
@@ -126,7 +111,6 @@
        position: absolute
        right: 2px
        top: 2px
-     }
 .header-business-item:first-child
    padding: 0 20px 0 0
    max-width: 180px
@@ -137,14 +121,9 @@
   padding: 0 20px
 .header-business .header-business-item:last-child
   padding: 0 10px 0 18px
+  // 用户名的颜色
 .user-name
   color: #4effde
-@media screen and (max-width: 1200px)
- .header-left img
-   // height: 40px
-@media screen and (max-width: 1100px)
- .header-left img
-   // height: 30px
 // 导航菜单的样式
 .navbar
    height: 33px
@@ -153,18 +132,12 @@
 .root-title
 .el-menu-item
   font-size: $font-size-medium !important
-  @media screen and (max-width: 1200px)
-    // font-size: 14px !important
 // 修改element-ui插件导航栏样式
 .el-submenu
   padding: 0 10px
-  @media screen and (max-width: 1200px)
-    // padding: 0 5px
 // 导航菜单中每一项的样式
 .el-submenu__title
     padding: 0 10px !important
-    @media screen and (max-width: 1200px)
-      // padding: 0 5px !important
 // 导航菜单鼠标放上的样式
 .header-right .menuRoot:hover,
 .header-right .el-submenu:hover,
@@ -203,141 +176,36 @@
           height: 100%
           display: flex
           align-items: center
-  @media screen and (max-width: 1200px)
-    // padding: 0 0 0 8px
 // 修改element-ui导航菜单中下拉菜单的样式
 .el-menu--collapse .el-menu .el-submenu, .el-menu--popup
     min-width: 150px !important
-// 右边信封和个人信息样式
-.toolbar
-   cursor: pointer
-   min-width: 100px
-   display: flex
-   align-items: center
-   .el-menu
-     .el-menu-item
-       // padding: 0 12px !important
-     @media screen and (max-width: 1200px)
-      .el-menu-item
-        // padding: 0 0 0 15px!important
-// 个人信息样式
-.user-info
-   font-size: 16px
-   color: #fff
-   display: flex
-   align-items: center
-   img
-     width: 36px
-     height: 36px
-     border-radius: 10px
-     margin: 10px 0px 10px 10px
-     float: right
-     @media screen and (max-width: 1200px)
-       // width: 24px
-       // height: 24px
-       // margin: 18px 0px 18px 5px
-// 右边信封的样式
-.fa-envelope-o
-  color: #fff
-@media screen and (max-width: 1200px)
-  .fa-lg
-    // font-size: 18px !important
-// 信封上面数字的样式
-.badge
-   line-height: 18px
-   margin: 0 12px 0 6px
-   @media screen and (max-width: 1200px)
-     // margin: 0 8px 0 4px
 // 切换菜单的样式
 .tab-container
     height: 45px
-    // border-bottom: 2px solid #edfbf2
-    // box-shadow: 0 1px 0 2px #edfbf2
     background-color: #fff
-    // margin-top: 60px
     box-sizing: border-box
-// 切换菜单左边的样式，修改element-ui切换菜单 激活时的样式
-.el-tabs--card>.el-tabs__header .el-tabs__item.is-active
-  // background-color: $color-lightgray !important
-  color: #2761de !important
-  border: none !important
-  border-bottom: 2px solid #2761de !important
-.tab-container .el-tabs__item.is-active
-  height: 43px !important
-.el-tabs--card>.el-tabs__header .el-tabs__item
-  border-left: none !important
-// 修改element-ui切换菜单 去掉框架自带的边框
-.el-tabs--card>.el-tabs__header .el-tabs__nav
-  border: none !important
-.el-tabs--card>.el-tabs__header
-  border-bottom: none !important
 .el-tabs--card>.el-tabs__header
   border-bottom: none !important
   margin: 0 !important
-// 切换菜单背景色
-.tabs
-  position: fixed
-  top: 70px
-  right: 0
-  left: 0px
-  z-index: 1020
-  height: 45px
-  line-height: 45px
-  font-size: 14px
-  padding-left: 20px
-  // background-color: $color-lightblue
-.el-tabs--card>.el-tabs__header .el-tabs__item.is-active.is-closable
-
-// 右边快捷键的样式
-  .tabs-tools
-    position: fixed !important
-    top: 60px
-    right: 0
-    z-index: 1020
-    height: 40px
-    font-size: 14px
-    line-height: 40px
-    cursor: pointer
-    background-color:rgb(255,255,255)
-    border-left: 1px solid rgba(200, 206, 206, 0.5)
-    &:hover
-      background: $color-lightgray
-// 快捷键的宽度
-  .down-icon
-    font-size:20px
-    width:50px
-// 右边快捷键箭头的颜色
-  .el-dropdown
-    color: $color-blue !important
-  .el-container .el-tabs__content
-     overflow-x: auto
-     overflow-y: auto
-     /* IE 浏览器 */
-     /*三角箭头的颜色*/
-     // scrollbar-arrow-color: #fff
-     /*滚动条滑块按钮的颜色*/
-     // scrollbar-face-color: #0099dd
-     /*滚动条整体颜色*/
-     // scrollbar-highlight-color: #0099dd
-     /*滚动条阴影*/
-     // scrollbar-shadow-color: #0099dd
-     /*滚动条轨道颜色*/
-     // scrollbar-track-color: #0066ff
-     /*滚动条3d亮色阴影边框的外观颜色——左边和上边的阴影色*/
-     // scrollbar-3dlight-color:#0099dd
-     /*滚动条3d暗色阴影边框的外观颜色——右边和下边的阴影色*/
-     // scrollbar-darkshadow-color: #0099dd
-     /*滚动条基准颜色*/
-     // scrollbar-base-color: #0099dd
-     /* chrome & safari 浏览器 */
-     &::-webkit-scrollbar
-       width: 6px
-       height: 6px
-       background: transparent
-     &::-webkit-scrollbar-thumb
-       background: transparent
-       border-radius: 4px
-     &:hover::-webkit-scrollbar-thumb
-       background: hsla(0, 0%, 53%, 0.4)
-     &:hover::-webkit-scrollbar-track
-       background: hsla(0, 0%, 53%, 0.1)
+// 修改element-ui切换菜单 去掉框架自带的边框，一整行的样式
+.el-tabs--card>.el-tabs__header .el-tabs__nav
+  border: none !important
+// 切换菜单的样式，修改element-ui切换菜单 激活时的样式
+// tab每一项的样式
+.el-tabs--card>.el-tabs__header .el-tabs__item
+  border-left: none !important
+// tab每一项,激活的样式
+.el-tabs--card>.el-tabs__header .el-tabs__item.is-active
+  color: #2761de !important
+  border: none !important
+  border-bottom: 2px solid #2761de !important
+  // tab项中小叉号的样式
+.el-tabs--card>.el-tabs__header .el-tabs__item .el-icon-close
+  top: -2px
+ // 只有主菜单切换tab的样式
+ .tab-container .el-tabs__nav
+   padding: 0 5px
+.tab-container .el-tabs__item
+  font-size: $font-size-medium-s !important
+.tab-container .el-tabs__item.is-active
+  height: 43px !important

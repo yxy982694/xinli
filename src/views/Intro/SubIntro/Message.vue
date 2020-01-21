@@ -19,7 +19,7 @@
       </p>
     </div>
     <div class="message-items">
-      <div class="message-item font-smallnum" v-for="item in messageData" :key="item.ID">
+      <div class="message-item" v-for="item in messageData" :key="item.ID">
         <p class="text-left">
           <span class="text-name">{{item.NAME}}</span>
           <span class="text-content"><i class="message-quot">“</i><i class="text-content-title">{{item.TITLE}}</i><i class="message-quot">”</i></span>
@@ -90,7 +90,7 @@
         .text-name
           display: inline-block
           width: 60px
-          font-size: $font-size-medium
+          font-size: $font-size-medium-s
           color: $color-textblue
         .message-quot
           color: #bed0f6
@@ -99,6 +99,7 @@
         .text-content-title
           margin: 0 3px
           font-style: normal
+          font-size: $font-size-medium-s
       .text-right
         width: 30%
         text-align: right

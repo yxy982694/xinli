@@ -35,6 +35,7 @@
           @selection-change="selectionChange"
           @select-all="selectAll"
           ref="elTable"
+          :row-style="tableRowClassName"
           > <!-- :tree-props="treeProps"  :default-expand-all="defaultExpandAll" :row-key="rowKey" -->
       <el-table-column type="selection" width="40" v-if="showCheckBox"></el-table-column><!-- :max-height="maxHeight" -->
       <el-table-column v-for="column in columns" header-align="center" :align="column.align?column.align:'center'"
@@ -66,26 +67,15 @@
           :page-sizes="pageSizes"
           :page-size="pageSize"
           layout="total, sizes, prev, pager, next, jumper"
-          :total="total">
+          :total="total"
+          >
         </el-pagination>
-      <!-- <el-pagination layout="total, prev, pager, next, jumper"
-      @current-change="refreshPageRequest"
-        :current-page="pageRequest.pageNum"
-        :page-size="pageRequest.pageSize"
-        :total="data.totalSize"
-        style="float:right;">
-      </el-pagination> -->
     </div>
-    <!-- <div class="shortcut-container" v-if="ifShortCut" v-show="showShortCut">
-      <kt-button icon="fa fa-plus" :label="$t('action.add')" @click="addInfo" />
-      <kt-button icon="fa fa-edit" :label="$t('action.edit')" @click="handleEdit" />
-      <kt-button icon="fa fa-trash" :label="$t('action.delete')" @click="handleDelete" />
-    </div> -->
   </div>
 </template>
 
 <script>
-import KtButton from "@/components/KtButton/index"
+import KtButton from "@/components/KtButton/KtButton"
 import { mapMutations } from 'vuex'
 export default {
   name: 'KtTable',
@@ -111,7 +101,7 @@ export default {
     },
     border: {  // 是否显示边框
       type: Boolean,
-      default: false
+      default: true
     },
     stripe: {  // 是否显示斑马线
       type: Boolean,
@@ -182,6 +172,9 @@ export default {
       // 'setResourceLeft': 'setResourceLeft',
       // 'setResourceTop': 'setResourceTop',
     }),
+    tableRowClassName: function ({row, rowIndex}) {
+      row.index = rowIndex
+    },
     shortCutMenu: function (row,column,e) {
       e.stopPropagation()
       e.preventDefault()
@@ -191,45 +184,25 @@ export default {
       let offsetTopElMain = document.querySelector('.table-container').scrollTop
       let x = e.clientX-180
       let y = e.clientY+scrollTop+offsetTopElMain-170
-      this.shortCutInfo.x = x+'px'
-      this.shortCutInfo.y = y+'px'
-      this.$emit('changeShortCutInfo',this.shortCutInfo)
+      this.shortCutInfo.x = x // 也可以在使用的组件中单独修改x的值
+      this.shortCutInfo.y = y // 也可以在使用的组件中单独修改y的值
+      this.$emit('changeShortCutInfo',this.shortCutInfo,row)
     },
     getCellRow: function () {
-      let domsCell = document.querySelectorAll('.resource-container .cell')
-      Array.prototype.forEach.call(domsCell,function (item) {
-        if (item.innerHTML.trim() == '有效' || item.innerHTML.trim() == '是') {
-          item.style.color = 'green'
-        } else if (item.innerHTML.trim() == '失效' || item.innerHTML.trim() == '否') {
-          item.style.color = 'red'
-        }
-      })
-    },
-
-    // cellClass: function ({row, column, rowIndex, columnIndex}) {
-    //   if (columnIndex == 0) {
-    //     return 'align-left'
-    //   }
-    //   if (columnIndex == 2) {
-    //     return 'cursor-pointer'
-    //   }
-    // },
-    // handleClass: function (row,id) {
-    //   // this.tempArr.push(row)
-    //   // console.log(this.tempArr)
-    //     // return 'clrow'+row.row.id
-    // },
-    // 分页查询
-    findPage: function () {
-        // this.loading = true
-        let callback = res => {
-          this.loading = false
-        }
-      this.$emit('findPage', {pageRequest:this.pageRequest, callback:callback})
+      // let domsCell = document.querySelectorAll('.resource-container .cell')
+      // console.log(domsCell)
+      // Array.prototype.forEach.call(domsCell,function (item) {
+      //   console.log('jkjk')
+      //   if (item.innerHTML.trim() == '有效' || item.innerHTML.trim() == '是') {
+      //     item.style.color = 'green'
+      //   } else if (item.innerHTML.trim() == '失效' || item.innerHTML.trim() == '否') {
+      //     item.style.color = 'red'
+      //   }
+      // })
     },
     // 点击某个单元格时
     clickCell: function (row,column,cell,event) {
-      this.$emit('clickCell', row,column,event)
+      this.$emit('clickCell', row,column,cell,event)
     },
     // 点击某一行前面的复选框
     selectionChange: function (selection) {
@@ -239,6 +212,7 @@ export default {
     selectAll: function (selection) {
       this.$emit('selectAll', selection)
     },
+    // 供外部调用的方法
     clickRow: function (obj) {
       this.$refs.elTable.clearSelection()
       this.$refs.elTable.toggleRowSelection(obj)
@@ -248,11 +222,6 @@ export default {
     },
     handleCurrentChange: function (currentPage) {
       this.$emit('handleCurrentChange', currentPage)
-    },
-    // 换页刷新
-		refreshPageRequest: function (pageNum) {
-      this.pageRequest.pageNum = pageNum
-      this.findPage()
     },
     addInfo: function () {
       this.$emit('addInfo',true)
@@ -297,25 +266,6 @@ export default {
   },
   mounted() {
     console.log('table-mounted')
-    // this.getCellRow()
-    // document.querySelector('.el-con .table-container').style.height = document.querySelector('.el-con .el-tabs__content').style.height-40 + 'px'
-      // var _this = this
-      // document.querySelector('.table-container').style.height = document.body.clientHeight-210 + 'px'
-      // window.addEventListener('resize',function () {
-      //   document.querySelector('.table-container').style.height = document.body.clientHeight-210 + 'px'
-      // })
-    // console.log(this.columns)
-    // this.$nextTick(function () {
-      // console.log(this.data)
-    // })
-    // this.refreshPageRequest(1)
-    // this.pageRequest.pageNum = 1
-    // this.findPage()
-    // this.$nextTick(function () {
-    //   window.addEventListener('resize',function () {
-
-    //   })
-    // })
   }
 }
 </script>
@@ -330,7 +280,7 @@ export default {
     padding: 0 5px 0px 5px
     overflow: hidden
     // height: 40px
-    margin-top: 5px
+    margin-top: 2px
     height: 100%
   .toolbar
     padding-right: 20px

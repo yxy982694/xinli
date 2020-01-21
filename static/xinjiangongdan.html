@@ -5520,7 +5520,7 @@
    //加载xml文件配置的js
 
 	        		$(function(){
-
+                  console.log('909kkkkkkk----------')
 	        		    var otn=$("select[name='oneLevelTthNetwork']",navTab.getCurrentPanel()).val();
 	                    if(otn != '05'){
 	       			       $('#p_businessDamage',navTab.getCurrentPanel()).hide();
@@ -5604,15 +5604,16 @@
 
    					 function shows(){
                alert('9090')
-	                     var s=$("select[name='oneLevelTthNetwork']",navTab.getCurrentPanel()).val();
-	                     if(s != '05'){
+	                  var s=$("select[name='oneLevelTthNetwork']",navTab.getCurrentPanel()).val();
+	                  if(s != '05'){
 	       			        $('#p_businessDamage',navTab.getCurrentPanel()).hide();
 	       			        $('#div_businessDamage',navTab.getCurrentPanel()).hide();
 	       		         }else{
 	       		            $('#p_businessDamage',navTab.getCurrentPanel()).show();
 	       			        $('#div_businessDamage',navTab.getCurrentPanel()).show();
 	       		         }
-	                 }
+                     alert('pop')
+	           }
 
    					 function changeTime(){
 						    var createTime=$('#createTime',navTab.getCurrentPanel()).val();

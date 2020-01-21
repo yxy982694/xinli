@@ -6,7 +6,8 @@
 </template>
 
 <script>
-    import AsideTab from '@/components/AsideTab/index'
+    // 点击主菜单,都跳转至这个组件
+    import AsideTab from '@/components/AsideTab/AsideTab'
     import { leftListMixin } from '@/common/js/mixin.js'
     export default {
         data: function () {
@@ -34,24 +35,12 @@
             set: function () {}
           }
         },
-        // watch: {
-          // routerId: function () {
-            // console.log('>>>>>>----------')
-            // if (document.querySelector('.tab-iframe')) {
-            //   document.querySelector('.tab-iframe').style.height = document.body.clientHeight-133 + 'px'
-            // }
-          // }
-        // },
         mixins: [leftListMixin],
         components:{
             AsideTab
         },
         mounted: function () {
-          // console.log('--------------')
-          // console.log(document.body.clientHeight-133)
-          // if (document.querySelector('.tab-iframe')) {
-          //   document.querySelector('.tab-iframe').style.height = document.body.clientHeight-133 + 'px'
-          // }
+          console.log('MainToTab.vue mounted')
         }
     }
 </script>

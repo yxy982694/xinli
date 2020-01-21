@@ -8,8 +8,8 @@
       <p @click="refreshCurrentHandle">刷新</p>
     </div>
     <el-tab-pane v-for="(item,index) in editableTabs" :key="item.id+index" :label="item.label" :name="item.id">
-      <sub-main :who="who" :iframeUrl="iframeUrl" :locationUrl="locationUrl"></sub-main>
     </el-tab-pane>
+    <sub-main :who="who" :iframeUrl="iframeUrl"></sub-main>
   </el-tabs>
 </template>
 
@@ -24,7 +24,7 @@
           return {
             who: '',// 显示哪个tab的内容 根据url路径
             iframeUrl: '', // 显示含有http的iframe
-            locationUrl: '', //
+            // locationUrl: '', //
             shortcutId: null, // 点击右键时，当时tab的id
             tabObj: null, // 临时保存根据主菜单id存的数据
           }
@@ -100,7 +100,7 @@
           },
         },
         mounted: function () {
-          // console.log('this.tabObj')
+          console.log('SubTabs.vue mounted')
           this.initData()
           var _this = this
           window.addEventListener('click',function () {
@@ -108,20 +108,6 @@
           })
         },
         watch: {
-          // currentTabId: function () {
-          //   this.locationUrl = this.currentTabLabel
-          //   console.log(this.locationUrl)
-          //   if (this.currentTabLabel && this.currentTabLabel.indexOf('http') > -1) {
-          //     this.who = ''
-          //     this.iframeUrl = this.currentTabLabel
-          //   } else if (this.currentTabLabel && this.currentTabLabel.indexOf('http') == -1) {
-          //     this.iframeUrl = ''
-          //     let array = this.currentTabLabel.split('/')
-          //     this.who = array[array.length-2]+array[array.length-1]
-          //     console.log(this.who)
-          //   }
-          //   this.bindShortcut()
-          // }
           routerId: function () {
             this.initData()
           },
@@ -129,10 +115,10 @@
             handler: function () {
               this.locationUrl = this.currentTabLabel
               console.log(this.locationUrl)
-              if (this.currentTabLabel && this.currentTabLabel.indexOf('http') > -1 || this.currentTabLabel.indexOf('.html') > -1) {
+              if (this.currentTabLabel && this.currentTabLabel.indexOf('http') > -1 || this.currentTabLabel.indexOf('.html') > -1 || this.currentTabLabel.indexOf('?') > -1) {
                 this.who = ''
                 this.iframeUrl = this.currentTabLabel
-              } else if (this.currentTabLabel && this.currentTabLabel.indexOf('http') == -1) {
+              } else if (this.currentTabLabel) {
                 this.iframeUrl = ''
                 let array = this.currentTabLabel.split('/')
                 this.who = array[array.length-2]+array[array.length-1]
@@ -197,7 +183,7 @@
               'setSwitch': 'setSwitch',
               'setSwitchLabel': 'setSwitchLabel',
               'setChildContextLeft': 'setChildContextLeft',
-              'setCenterMenuId': 'setCenterMenuId',
+              // 'setCenterMenuId': 'setCenterMenuId',
               'setMainIdStoreTabObj': 'setMainIdStoreTabObj'
             }),
             //右键时，关闭当前tab
@@ -302,8 +288,9 @@
                   console.log(sessionStorage.getItem('id'))
                   console.log(this.mainIdStoreTabObj)
               }
-              console.log(this.existTabs)
-              console.log(this.editableTabs)
+              console.log(this.currentTabId)
+              // console.log(this.existTabs)
+              // console.log(this.editableTabs)
             },
             // 点击右键的关闭或tab的小叉号时，移除功能
             removeTab(targetId) {
@@ -351,7 +338,7 @@
               for (var i=0;i<this.editableTabs.length;i++) {
                 if (this.editableTabs[i].label == objectTab.label) {
                   let id = this.editableTabs[i].id
-                  this.setCenterMenuId(id)
+                  // this.setCenterMenuId(id)
                   this.setCurrentTabId(id)
                   console.log(this.currentTabId)
                   this.setCurrentTabLabel(this.editableTabs[i].name)

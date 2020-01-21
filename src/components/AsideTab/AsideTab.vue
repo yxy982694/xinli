@@ -1,5 +1,5 @@
 <template>
-  <div class="left-right-container">  <!-- :style="{height: conHeight}" -->
+  <div class="left-right-container">
     <el-container class="el-con">
       <div class="left-aside-container">
         <div class="aside-scroll">
@@ -12,10 +12,9 @@
             </div>
           </el-aside>
         </div>
-        <div class="left-right-splitbar"></div>
+        <div class="left-right-splitbar" ref="leftRightSplitbar"></div>
       </div>
       <el-container class="el-con2">
-        <!-- <i class="iconfont icon-tubiao115"></i> -->
         <el-main>
           <sub-tabs ref="subTabs" :leftList="leftList"></sub-tabs>
         </el-main>
@@ -35,42 +34,20 @@
             SubTabs,
             FooterBar
         },
-        data: function () {
-          return {
-            // conHeight: null
-          }
-        },
         props: ['leftList'],
         methods: {
             ...mapMutations({
-              'setCenterMenuId': 'setCenterMenuId'
+              'setCenterMenuId': 'setCenterMenuId',
+              'setCurrentTabId': 'setCurrentTabId',
             }),
+            // 点击左菜单时执行的函数
             addSubTab(targetName,name,id){
               // 点击左侧导航时,获取所点击按钮的id
-              this.setCenterMenuId(id)
+              this.setCurrentTabId(id)
               // 并把id传到对应的中间部分切换tab的导航中
               // 为了后期在点击切换tab导航时，根据id找到对应平铺按钮的数据
               this.$refs.subTabs.addTab(targetName,name,id)
             },
-            // getClientHeight(){
-            //   var clientHeight=0
-            //   if(document.body.clientHeight&&document.documentElement.clientHeight){
-            //   var clientHeight = (document.body.clientHeight<document.documentElement.clientHeight)?document.body.clientHeight:document.documentElement.clientHeight
-            //   }else{
-            //   var clientHeight = (document.body.clientHeight>document.documentElement.clientHeight)?document.body.clientHeight:document.documentElement.clientHeight
-            //   }
-            //   return clientHeight
-            // }
-        },
-        mounted() {
-          // document.querySelector('.left-right-container').style.height = document.body.clientHeight-131 + 'px'
-          // document.querySelector('.el-con').style.height = document.body.clientHeight-150 + 'px'
-            // var _this = this
-            // this.conHeight = this.getClientHeight() -100 + 'px'
-            // window.onresize = function () {
-            //   _this.conHeight = _this.getClientHeight() -100 + 'px'
-            //   console.log(_this.getClientHeight())
-            // }
         }
     }
 </script>
@@ -78,11 +55,13 @@
   @import "../../common/stylus/variable"
   @import "../../common/stylus/mixin"
   .left-right-container
-    // height: 100vh
-    // overflow: hidden
-    // background:url('../../common/image/contentImg.png') no-repeat
-    // background-size: 100% 100%
-    // position: relative
+    padding: 10px 0 0 0
+    display: flex
+    flex-direction: column
+    justify-content: space-between
+    height: 100%
+    overflow: hidden
+    box-sizing: border-box
   .el-con
     flex: 1
     overflow: hidden
@@ -91,8 +70,10 @@
   .left-aside-container
     width: 180px
     margin-left: 8px
-    border: 1px solid $color-border
+    border: 1px solid $color-border-tab
+    border-right: none
     position: relative
+    background-color: #fff
   .aside-scroll
     font-size: 14px
     height: 100%
@@ -118,12 +99,15 @@
   .aside-title
     cursor: pointer
     color: #333
+    font-size: $font-size-small !important
     // color: rgb(191, 203, 217)
-    border-bottom: 1px solid $color-border
+    border-bottom: 1px solid #2d6f7c
     height: 46px
     line-height: 46px
     text-align: left
     padding-left: 15px
+    .fa
+      color: #5241e0
   .el-con .el-main
     // background-color: #fff
     // background: url('../../common/image/contentImg.png') no-repeat
@@ -145,8 +129,8 @@
     height: 100%
     overflow: hidden
     position: relative
-    margin-left: 1px
-    margin-right: 8px
+    // margin-left: 1px
+    margin-right: 10px
     flex: 1
     // .icon-tubiao115
     //   position: absolute
