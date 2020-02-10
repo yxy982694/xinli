@@ -40,8 +40,8 @@
       return {
         loading: false,
         loginForm: {
-          username: '',
-          password: '',
+          username: 'zhaodanping',
+          password: '123',
           captcha: '',
           src: ''
         },
@@ -73,9 +73,11 @@
                }
                let userValue = qs.stringify(userInfo)
                 console.log(userValue)
-                // http://10.89.138.133:9091/
-                axios.post('http://10.89.138.145:9091/login',
+                // http://10.89.138.133:9091/ http://192.168.139.10:9011
+                // axios.post('http://10.89.138.145:9091/login',
+                axios.post('http://192.168.139.10:9011/login',  
                // axios.post('http://10.217.1.31:8080/login',
+               // axios.post('http://10.89.138.133:9011/login',
                // axios.post('/login',
                  userValue,
                  // {
@@ -83,13 +85,8 @@
                  // }
                ).then((res) => {
                  console.log(res)
-                 // if (res.data.code != '00') {
-                 // if (res.data.code == '00') {
-                   // if (res.data.code == '99999') {
-                   if (!res.data.msg) {
-                     Cookies.set('token', res.data.data.token)
-                     // console.log(res.data)
-                   // Cookies.set('token', res.data.responseBody.token) // 放置token到Cookie
+                 if (res.data.code == '00') { // 添加1
+                   Cookies.set('token', res.data.responseBody.token) // 放置token到Cookie // 添加2
                    sessionStorage.setItem('user', userInfo.username) // 保存用户到本地会话
                    this.$store.commit('menuRouteLoaded', false) //要求重新加载导航菜单
                    this.$router.push('/') // 登录成功，跳转到主页
@@ -98,18 +95,6 @@
                      message: res.data.message,
                      type: 'error'
                    })
-                   // console.log('00')
-                   // Cookies.set('token', res.data.data.token)
-                   // sessionStorage.setItem('user', userInfo.username)
-                   // this.$store.commit('menuRouteLoaded', false)
-                   // console.log(res.data)
-                   // Cookies.set('token', res.data.responseBody.token) // 放置token到Cookie
-                   // // Cookies.set('Ltpatoken2', res.data.responseBody.LtpaToken2) // 放置token到Cookie
-                   // Cookies.set('token', res.data.data.token) // 放置token到Cookie
-                   // Cookies.set('Ltpatoken2', res.data.LtpaToken2) // 放置token到Cookie
-                   // sessionStorage.setItem('user', userInfo.username) // 保存用户到本地会话
-                   // this.$store.commit('menuRouteLoaded', false) //要求重新加载导航菜单
-                   // this.$router.push('/') // 登录成功，跳转到主页
                  }
                  this.loading = false
                }).catch(function(error) {

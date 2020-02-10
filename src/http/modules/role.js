@@ -90,3 +90,11 @@ export const delRole = (roleId) => {
         method: 'get'
     })
 }
+// 角色授权
+export const grantRole = (jsonObject) => {
+    return axios({
+        url: '/bsf/role/grantRole',
+        method: 'post',
+        data: jsonObject
+    })
+}

@@ -13,7 +13,7 @@
         <kt-button type="danger" icon="fa fa-trash" :disabled="editAble" :label="$t('action.delete')" @click="deleteInfo"></kt-button>
         <kt-button type="primary" icon="fa fa-calendar" :disabled="editAble" label="启用"></kt-button>
         <kt-button type="primary" icon="fa fa-calendar" :disabled="editAble" label="停用"></kt-button>
-        <kt-button type="primary" icon="fa fa-calendar" :disabled="editAble" label="授权"></kt-button>
+        <kt-button type="primary" icon="fa fa-calendar" :disabled="editAble" @click="grantRoleFn" label="授权"></kt-button>
         <kt-button type="primary" icon="fa fa-calendar" :disabled="editAble" label="批量授权"></kt-button>
     </div>
     <!-- 表格内容 -->
@@ -232,6 +232,17 @@
         this.setResourceDisplay(obj.showShortCut)
         this.setResourceLeft(obj.x+'px')
         this.setResourceTop(obj.y+15+'px')
+      },
+      // 点击角色授权时执行
+      grantRoleFn: function () {
+        let jsonObj = {
+          roleId: this.rowObj.id,// 角色id
+          resIds:'1&2&3' // 针对的菜单项
+        }
+        let jsonObject = JSON.stringify(jsonObj)
+        this.$api.role.grantRole().then(function () {
+            console.log('授权成功');
+        })
       },
       // 添加
       addInfo: function () {

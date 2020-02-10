@@ -18,7 +18,7 @@
               <i class="iconfont icon-xiaoxi"></i>
               <span>消息</span>
             </p>
-            <p class="header-business-item">
+            <p class="header-business-item" @click="exitSys">
               <i class="iconfont icon-tuichu"></i>
               <span>退出</span>
             </p>
@@ -59,6 +59,7 @@
   import MenuTree from "@/components/MenuTree"
   import Home from '@/views/Home/Home'
   import Intro from '@/views/Intro/Intro'
+  import Cookies from "js-cookie"
   export default {
     components:{
       Hamburger,
@@ -84,7 +85,21 @@
       ...mapMutations({
         'setTabChildId': 'setTabChildId'
       }),
-      // 切换主题
+      //点击退出时，执行
+      exitSys: function () {
+        var _this = this
+        this.$api.login.logout().then(function(res){
+          if (res.code==200) {
+              _this.$confirm('确认退出吗？', '提示', {}).then(() => {
+                console.log('退出当前用户')
+                Cookies.set('token', '')
+                sessionStorage.setItem('user','')
+                _this.$router.push('/login')
+              })
+          }
+        })
+      },
+      // 切换主题=
       onThemeChange: function(themeColor) {
         this.$store.commit('setThemeColor', themeColor)
       },
