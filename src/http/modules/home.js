@@ -33,10 +33,19 @@ export const getMessageData = () => {
     url: '/home/getMessageData',
     method: 'post'
   })
-}//首页我的待办
+}
+//首页我的待办
 export const getDbList = () => {
   return axios({
     url: '/home/getDbList',
     method: 'post'
+  })
+}
+// 新建留言板
+export const addMessage = (jsonStr) => {
+  return axios({
+    url: '/bsf/messageboard/addMessage',
+    method: 'post',
+    data: jsonStr
   })
 }

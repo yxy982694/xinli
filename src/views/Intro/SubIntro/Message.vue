@@ -15,7 +15,7 @@
         <!-- <i class="iconfont icon-liuyan message-color"></i> -->
         <span class="message-bg"></span>
         <span class="message-color" @click="clickNew">新建留言</span>
-        <span>全部 >></span>
+        <span @click="selectAll">全部 >></span>
       </p>
     </div>
     <div class="message-items">
@@ -27,6 +27,30 @@
         <p class="text-right">{{item.MESSAGETIME}}</p>
       </div>
     </div>
+    <el-dialog title="新建留言" width="40%" :visible.sync="dialogVisible" :close-on-click-modal="false">
+      <el-form :model="dataForm" label-width="110px" :rules="dataFormRules" ref="dataForm"
+        label-position="right">
+        <el-form-item label="用户名:" prop="name" v-if="false">
+          <el-input v-model="dataForm.name" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="标题:" prop="title">
+          <el-input v-model="dataForm.title" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="留言:" prop="content">
+          <el-input type="textarea" v-model="dataForm.content" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="日期:" prop="messagetime" v-if="false">
+          <el-input v-model="dataForm.messagetime" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="附件:" prop="messagetime">
+          <input ref="fileInput" type="file" @change="selectFile">
+        </el-form-item>
+      </el-form>
+      <div slot="footer">
+        <el-button @click.native="dialogVisible = false">取消</el-button>
+        <el-button type="primary" @click.native="submitForm" :loading="editLoading">发表</el-button>
+      </div>
+    </el-dialog>
   </div>
 
 </template>
@@ -35,6 +59,23 @@
     export default {
         data() {
             return {
+                editLoading: false,
+                fileData: null,
+                dialogVisible: false,
+                dataForm: {
+                  name: sessionStorage.getItem('user'),
+                  title: '',
+                  content: '',
+                  messagetime: new Date()
+                },
+                dataFormRules: { // 规定哪些字段为必填项
+                  title: [
+                    { required: true, message: '请输入标题', trigger: 'blur' }
+                  ],
+                  content: [
+                    { required: true, message: '请输入留言信息', trigger: 'blur' }
+                  ]
+                },
                 messageData: [ // 留言板数据
                     {
                         content: "张三-故障管理工单处理有问题，请处理",
@@ -56,6 +97,7 @@
         },
         created() {
             this.$api.home.getMessageData().then((res) => {
+                console.log(res);
                 const result = res;
                 // const result = eval('(' + res + ')');
                 this.messageData = result.data
@@ -63,7 +105,37 @@
         },
         methods: {
           clickNew () {
-            this.$emit('newwindow')
+            this.dialogVisible = true
+            // this.$emit('newwindow')
+          },
+          selectAll () {
+            console.log('全部')
+          },
+          submitForm () {
+            let _this = this
+            this.$refs.dataForm.validate((valid) => {
+              if (valid) {
+                _this.$confirm('确认发表吗？', '提示', {}).then(() => {
+                  _this.editLoading = true
+                  let jsonObj = Object.assign({}, _this.dataForm)
+                  let jsonStr = JSON.stringify(jsonObj)
+                  _this.$api.home.addMessage(jsonStr).then((res) => {
+                    if(res.code == 0) {
+                      _this.dialogVisible = false
+                      _this.editLoading = false
+                      _this.$message({ message: '发表成功', type: 'success' })
+                    }
+                  })
+                  this.$refs['dataForm'].resetFields()
+                })
+              }
+            })
+          },
+          selectFile () {
+            this.fileData = this.$refs.fileInput.files[0]
+            // let formData = new FormData()
+            // formData.append('fileImg', file)
+            // formData.append('id', this.currentId)
           }
         }
     }
