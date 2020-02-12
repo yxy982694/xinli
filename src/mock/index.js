@@ -49,7 +49,7 @@ function fnCreate (mod, isOpen = true) {
           //   url = url + "/"
           // }
           url = url + res.url
-          // console.log(url)
+          console.log(url)
           // 模拟后台接口,当前台axios的url和type匹配mock中的url和type时,会执行mock里面的回调函数
           // 回调函数返回的数据,就是axios请求后响应的数据
           // opts参数是axios中传入的配置参数

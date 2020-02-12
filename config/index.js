@@ -12,11 +12,12 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/': {
+          target: 'http://192.168.139.17:9091/',
           // target: 'http://10.89.138.133:9011/',
           // target: 'http://10.89.138.133:9091/',
           // target: 'http://10.217.1.31:8080/',
           // target: 'http://10.217.1.31:9082/',
-          target: 'http://192.168.139.10:9011/',
+          // target: 'http://192.168.139.10:9011/',
           // target: 'http://10.89.138.145:9091/',
           changeOrigin: true,
           logLevel: 'debug'

@@ -68,3 +68,12 @@ export function getDbList() {
     data: dbList
   }
 }
+
+export function addMessage () {
+  let dbList = {"code":0}
+  return {
+    url: 'bsf/messageboard/addMessage',
+    method: 'post',
+    data: dbList
+  }
+}

@@ -3072,3 +3072,19 @@ export function findByName() {
     data: findByNameData
   }
 }
+
+export function resourceManage() {
+    let resourceManageData = {
+        code: 200,
+        msg: null,
+        data: [{
+            id: '11',
+            name: '基础管理'
+        }]
+    }
+    return {
+        url: 'resourceManage/100080101',
+        method: 'get',
+        data: resourceManageData
+    }
+}

@@ -39,7 +39,7 @@
         <el-form-item label="留言:" prop="content">
           <el-input type="textarea" v-model="dataForm.content" auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="日期:" prop="messagetime" v-if="false">
+        <el-form-item label="日期:" prop="messagetime"> <!-- v-if="false" -->
           <el-input v-model="dataForm.messagetime" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item label="附件:" prop="messagetime">
@@ -62,12 +62,7 @@
                 editLoading: false,
                 fileData: null,
                 dialogVisible: false,
-                dataForm: {
-                  name: sessionStorage.getItem('user'),
-                  title: '',
-                  content: '',
-                  messagetime: new Date()
-                },
+                dataForm: null,
                 dataFormRules: { // 规定哪些字段为必填项
                   title: [
                     { required: true, message: '请输入标题', trigger: 'blur' }
@@ -76,23 +71,7 @@
                     { required: true, message: '请输入留言信息', trigger: 'blur' }
                   ]
                 },
-                messageData: [ // 留言板数据
-                    {
-                        content: "张三-故障管理工单处理有问题，请处理",
-                        time: "2019-10-20"
-                    },
-                    {
-                        content: "张三-故障管理工单处理有问题，请处理",
-                        time: "2019-10-20"
-                    },
-                    {
-                        content: "张三-故障管理工单处理有问题，请处理",
-                        time: "2019-10-20"
-                    },
-                    {
-                        content: "张三-故障管理工单处理有问题，请处理",
-                        time: "2019-10-20"
-                    }]
+                messageData: [] // 留言板数据
             }
         },
         created() {
@@ -102,6 +81,32 @@
                 // const result = eval('(' + res + ')');
                 this.messageData = result.data
             })
+            Date.prototype.format = function(fmt) { 
+               var o = { 
+                  "M+" : this.getMonth()+1,                 //月份 
+                  "d+" : this.getDate(),                    //日 
+                  "h+" : this.getHours(),                   //小时 
+                  "m+" : this.getMinutes(),                 //分 
+                  "s+" : this.getSeconds(),                 //秒 
+                  "q+" : Math.floor((this.getMonth()+3)/3), //季度 
+                  "S"  : this.getMilliseconds()             //毫秒 
+              }; 
+              if(/(y+)/.test(fmt)) {
+                fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length)); 
+              }
+               for(var k in o) {
+                  if(new RegExp("("+ k +")").test(fmt)){
+                       fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+                   }
+               }
+              return fmt; 
+          }
+          this.dataForm = {
+              name: sessionStorage.getItem('user'),
+              title: '',
+              content: '',
+              messagetime: (new Date()).format('yyyy-MM-dd hh:mm:ss')
+            }
         },
         methods: {
           clickNew () {
@@ -115,7 +120,7 @@
             let _this = this
             this.$refs.dataForm.validate((valid) => {
               if (valid) {
-                _this.$confirm('确认发表吗？', '提示', {}).then(() => {
+                _this.$confirm('确认发布吗？', '提示', {}).then(() => {
                   _this.editLoading = true
                   let jsonObj = Object.assign({}, _this.dataForm)
                   let jsonStr = JSON.stringify(jsonObj)
@@ -123,10 +128,15 @@
                     if(res.code == 0) {
                       _this.dialogVisible = false
                       _this.editLoading = false
-                      _this.$message({ message: '发表成功', type: 'success' })
+                      _this.$message({ message: '发布成功', type: 'success' })
                     }
                   })
-                  this.$refs['dataForm'].resetFields()
+                  _this.dataForm = {
+                    name: sessionStorage.getItem('user'),
+                    title: '',
+                    content: '',
+                    messagetime: (new Date()).format('yyyy-MM-dd hh:mm:ss')
+                  }
                 })
               }
             })
